@@ -15,14 +15,11 @@
 //  Revision History:
 //
 /////////////////////////////////////////////////////////////////////////////
-#include "includes.h"
-#include "SEGGER_RTT.h"
 #include "drv_global.h"
-#include <string.h>
+#include <stdio.h>
 
 #define DEBUG_JTAG          0
 #define DEBUG_STLINK        1
-
 #define DEBUG_INTEFACE      DEBUG_STLINK
 
 static GlobalType_t driver_initialize(void);
@@ -31,8 +28,9 @@ static GlobalType_t system_clock_init(void);
 //main entery function
 int main(void)
 {  
-    uint8_t key_io = KEY0_READ_PIN();
-    uint32_t key_tick = 0;
+    uint32_t tick = 0;
+    static uint16_t adc_value;
+    double temperature, voltage;
     
     HAL_Init();
     
@@ -44,22 +42,20 @@ int main(void)
     
     while(1)
     {
-        //run task every 100ms
-        if(drv_tick_difference(key_tick, HAL_GetTick()) > 100)
+         //run task every 2 second
+        if(drv_tick_difference(tick, HAL_GetTick()) > 2000)
         {
-            key_tick = HAL_GetTick();
+            tick = HAL_GetTick();
             
+            adc_value = adc_avg_value_read(ADC_CHANNEL_TEMPSENSOR);
+            temperature = (float)adc_value*(3.3/4096);	
+            temperature = (temperature-0.76)/0.0025 + 25;
             
-            key_io = io_anti_shake(get_key0_ansh_tick(), key_io, KEY0_READ_PIN());        
-            if(key_io == 1)
-            {
-                LED_ON;
-            }
-            else
-            {
-                LED_OFF;
-            }
-        }
+            adc_value = adc_avg_value_read(ADC_CHANNEL_6);
+            voltage = (float)adc_value*(3.3/4096);
+            
+            printf("tempature:%f, voltage:%f!\r\n", temperature, voltage);
+        }       
     }
 }
 

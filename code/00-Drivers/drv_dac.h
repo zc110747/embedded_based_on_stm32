@@ -3,42 +3,38 @@
 //  All Rights Reserved
 //
 //  Name:
-//      drv_global.h
+//      dac.h
 //
 //  Purpose:
+//      dac interface init and set_voltage.
 //
-//  Author:
+// Author:
 //      @zc
 //
 //  Assumptions:
-//	
+//
 //  Revision History:
 //
 /////////////////////////////////////////////////////////////////////////////
-#ifndef _DRV_GLOBAL_H
-#define _DRV_GLOBAL_H
+#ifndef __DRV_DAC_H
+#define __DRV_DAC_H
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
 #include "includes.h"
-#include "SEGGER_RTT.h"
 
-#if DRIVER_GPIO_ENABLE == 1
-#include "drv_gpio.h"
-#endif
+//reference voltage, uint:mv
+#define DAC_REFERENCE_VOL           3300
 
-#if DRIVER_EXTI_ENABLE == 1
-#include "drv_exti.h"
-#endif
+//dac max output value
+#define DAC_MAX_VALUE               4095
 
-#if DRIVER_RTC_ENABLE == 1
-#include "drv_rtc.h"
-#endif
+void dac_set(uint16_t mv);   
+GlobalType_t dac_driver_init(void);
 
 #ifdef __cplusplus
 }
-#endif
-
+#endif   
 #endif
