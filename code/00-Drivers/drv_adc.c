@@ -36,7 +36,7 @@ static uint16_t ADC_Buffer[ADC_BUFFER_SIZE];
 //internal function
 static GlobalType_t adc_calibration(void);
 
-#if ADC_RUN_MODE == NORMAL_MODE
+#if ADC_RUN_MODE == RUN_MODE_NORMAL
 GlobalType_t adc_driver_init(void)
 {
     GPIO_InitTypeDef GPIO_InitStruct = {0};

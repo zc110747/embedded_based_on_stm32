@@ -25,7 +25,6 @@
 #define DEBUG_INTEFACE      DEBUG_STLINK
 
 static void ITM_RunTest(void);
-static void RTT_RunTest(void);
 static GlobalType_t SystemClock_Config(void);
 
 //main entery function
@@ -58,14 +57,6 @@ static void ITM_RunTest(void)
     {
         ITM_SendChar((uint32_t)(pbuffer[index]));
     }
-}
-
-//with jlink can use
-static void RTT_RunTest(void)
-{
-    char *pbuffer = "RTT Send Test!";
-    
-    SEGGER_RTT_printf(0, pbuffer);
 }
 
 //system clock config

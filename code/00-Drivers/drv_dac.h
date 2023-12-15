@@ -25,6 +25,8 @@ extern "C" {
 
 #include "includes.h"
 
+#define DAC_RUN_MODE                RUN_MODE_DMA
+
 //reference voltage, uint:mv
 #define DAC_REFERENCE_VOL           3300
 

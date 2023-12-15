@@ -32,7 +32,7 @@
 
 //internal variable
 static DAC_HandleTypeDef hdac;
-#if DAC_RUN_MODE == DMA_MODE
+#if DAC_RUN_MODE == RUN_MODE_DMA
 static const uint16_t vol_cycle[DAC_CYCLE_SIZE] = {
     2048, 2368, 2680, 2977, 3251,
     3496, 3704, 3872, 3995, 4070,
@@ -48,7 +48,7 @@ static DMA_HandleTypeDef hdma_dac1;
 static TIM_HandleTypeDef htim;
 #endif
 
-#if DAC_RUN_MODE == NORMAL_MODE
+#if DAC_RUN_MODE == RUN_MODE_NORMAL
 GlobalType_t dac_driver_init(void)
 {
     DAC_ChannelConfTypeDef sConfig = {0};
