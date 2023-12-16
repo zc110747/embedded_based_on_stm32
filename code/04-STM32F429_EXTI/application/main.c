@@ -6,6 +6,7 @@
 //      main.c
 //
 //  Purpose:
+//			press key1, LED Toggle.			
 //
 //  Author:
 //      @zc
@@ -39,11 +40,7 @@ int main(void)
     {
         if(get_key1_press() == 1)
         {
-            LED_ON;
-        }
-        else
-        {
-            LED_OFF;
+            LED_TOGGLE;
         }
     }
 }

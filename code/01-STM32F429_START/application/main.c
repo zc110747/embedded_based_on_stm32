@@ -51,7 +51,7 @@ int main(void)
 volatile int32_t ITM_RxBuffer = ITM_RXBUFFER_EMPTY;
 static void ITM_RunTest(void)
 {
-    char *pbuffer = "ITM Send Test!";
+    char *pbuffer = "ITM Send Test!\r\n";
     uint8_t index;
     
     for(index=0; index<strlen(pbuffer); index++)
@@ -63,7 +63,7 @@ static void ITM_RunTest(void)
 //with jlink can use
 static void RTT_RunTest(void)
 {
-    char *pbuffer = "RTT Send Test!";
+    char *pbuffer = "RTT Send Test!\r\n";
     
     SEGGER_RTT_printf(0, pbuffer);
 }

@@ -19,11 +19,6 @@
 #include "SEGGER_RTT.h"
 #include <string.h>
 
-#define DEBUG_JTAG          0
-#define DEBUG_STLINK        1
-
-#define DEBUG_INTEFACE      DEBUG_STLINK
-
 static void ITM_RunTest(void);
 static GlobalType_t SystemClock_Config(void);
 
@@ -36,11 +31,7 @@ int main(void)
     
     while(1)
     {
-        #if DEBUG_INTEFACE == DEBUG_JTAG
-        RTT_RunTest();
-        #else
         ITM_RunTest();
-        #endif
         
         HAL_Delay(1000);
     }
@@ -50,7 +41,7 @@ int main(void)
 volatile int32_t ITM_RxBuffer = ITM_RXBUFFER_EMPTY;
 static void ITM_RunTest(void)
 {
-    char *pbuffer = "ITM Send Test!";
+    char *pbuffer = "ITM Send Test!\r\n";
     uint8_t index;
     
     for(index=0; index<strlen(pbuffer); index++)

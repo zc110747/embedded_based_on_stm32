@@ -4,8 +4,9 @@
 //
 //  Name:
 //      main.c
-//
+//			
 //  Purpose:
+//			State: press key0, LED ON, not press, LED OFF.
 //
 //  Author:
 //      @zc
@@ -19,11 +20,6 @@
 #include "SEGGER_RTT.h"
 #include "drv_global.h"
 #include <string.h>
-
-#define DEBUG_JTAG          0
-#define DEBUG_STLINK        1
-
-#define DEBUG_INTEFACE      DEBUG_STLINK
 
 static GlobalType_t driver_initialize(void);
 static GlobalType_t system_clock_init(void);
