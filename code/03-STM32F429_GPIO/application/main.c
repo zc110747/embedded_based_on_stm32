@@ -38,15 +38,15 @@ int main(void)
     //driver initialize.
     driver_initialize();
     
-    while(1)
+    while (1)
     {
         //run task every 100ms
-        if(drv_tick_difference(key_tick, HAL_GetTick()) > 100)
+        if (drv_tick_difference(key_tick, HAL_GetTick()) > 100)
         {
             key_tick = HAL_GetTick();
                  
             key_io = io_anti_shake(get_key0_ansh_tick(), key_io, KEY0_READ_PIN());        
-            if(key_io == 1)
+            if (key_io == 1)
             {
                 LED_ON;
             }
@@ -89,11 +89,11 @@ static GlobalType_t system_clock_init(void)
     RCC_OscInitStruct.PLL.PLLSource = RCC_PLLSOURCE_HSE;
     
     //SYSCLK HSECLK/PLLM*PLLN/PLLP=25Mhz/25*360/2=180Mhz
-    //PLLQCLK for I2S = 90M
+    //PLLQCLK for I2S = 45M
     RCC_OscInitStruct.PLL.PLLM = 25;
     RCC_OscInitStruct.PLL.PLLN = 360;
     RCC_OscInitStruct.PLL.PLLP = RCC_PLLP_DIV2;
-    RCC_OscInitStruct.PLL.PLLQ = 4;
+    RCC_OscInitStruct.PLL.PLLQ = 8;
     if (HAL_RCC_OscConfig(&RCC_OscInitStruct) != HAL_OK)
     {
         return RT_FAIL;

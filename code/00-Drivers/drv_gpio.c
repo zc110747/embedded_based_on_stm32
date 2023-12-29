@@ -56,11 +56,11 @@ uint8_t io_anti_shake(uint8_t *tick_ptr, uint8_t now_io, uint8_t read_io)
 
     (*tick_ptr) += 1;
 
-    if(now_io == 0)
+    if (now_io == 0)
     {
-        if(read_io == 1)
+        if (read_io == 1)
         {
-            if(*tick_ptr > ANTI_SHAKE_TICK)
+            if (*tick_ptr > ANTI_SHAKE_TICK)
             {
                 out_io = 1;
                 *tick_ptr = 0;
@@ -71,11 +71,11 @@ uint8_t io_anti_shake(uint8_t *tick_ptr, uint8_t now_io, uint8_t read_io)
             *tick_ptr = 0;
         }
     }
-    else if(now_io == 1)
+    else if (now_io == 1)
     {
-        if(read_io == 0)
+        if (read_io == 0)
         {
-            if(*tick_ptr > ANTI_SHAKE_TICK)
+            if (*tick_ptr > ANTI_SHAKE_TICK)
             {
                 out_io = 0;
                 *tick_ptr = 0;

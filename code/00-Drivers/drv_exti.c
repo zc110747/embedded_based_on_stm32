@@ -43,15 +43,15 @@ GlobalType_t exti_driver_init(void)
 
 uint8_t get_key1_press(void)
 {
-    if(key1_interrupt == 1)
+    if (key1_interrupt == 1)
     {
-        if(drv_tick_difference(key1_delay_tick, HAL_GetTick()) > 200)
+        if (drv_tick_difference(key1_delay_tick, HAL_GetTick()) > 200)
         {
             key1_interrupt = 0;
             __HAL_GPIO_EXTI_CLEAR_IT(KEY1_PIN);
             HAL_NVIC_EnableIRQ(KEY1_IRQn); 
             
-            if(KEY1_READ_PIN() == 0)
+            if (KEY1_READ_PIN() == 0)
             {
                 return 1;
             }
@@ -63,7 +63,7 @@ uint8_t get_key1_press(void)
 
 void EXTI2_IRQHandler(void)
 {
-    if(__HAL_GPIO_EXTI_GET_IT(KEY1_PIN) != RESET)
+    if (__HAL_GPIO_EXTI_GET_IT(KEY1_PIN) != RESET)
     {
         __HAL_GPIO_EXTI_CLEAR_IT(KEY1_PIN);
         

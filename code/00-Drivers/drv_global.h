@@ -33,6 +33,10 @@ extern "C" {
 #include "drv_exti.h"
 #endif
 
+#if DRIVER_USART_ENABLE == 1
+#include "drv_usart.h"
+#endif
+
 #if DRIVER_RTC_ENABLE == 1
 #include "drv_rtc.h"
 #endif
@@ -43,6 +47,10 @@ extern "C" {
 
 #if DRIVER_ADC_ENABLE == 1
 #include "drv_adc.h"
+#endif
+
+#if DRIVER_SPI_ENABLE == 1
+#include "drv_spi.h"
 #endif
 
 #ifdef __cplusplus

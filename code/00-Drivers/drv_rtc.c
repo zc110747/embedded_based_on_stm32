@@ -52,7 +52,7 @@ GlobalType_t rtc_driver_init(void)
     HAL_PWR_EnableBkUpAccess();
 
     result = rtc_hardware_init();
-    if(result == RT_OK)
+    if (result == RT_OK)
     {
         rtc_alarm_register(0, 0, 0, 5);
     }
@@ -85,28 +85,28 @@ void rtc_alarm_register(uint8_t day, uint8_t hour, uint8_t min, uint8_t sec)
     rtc_update();
     
     alarm_sec += rtc_info_.time.Seconds + sec;
-    if(alarm_sec >= 60)
+    if (alarm_sec >= 60)
     {
         alarm_sec -= 60;
         alarm_min++;
     }
     
     alarm_min += rtc_info_.time.Minutes + min;
-    if(alarm_min >= 60)
+    if (alarm_min >= 60)
     {
         alarm_min -= 60;
         alarm_hour++;
     }
     
     alarm_hour += rtc_info_.time.Hours + hour;
-    if(alarm_hour >= 24)
+    if (alarm_hour >= 24)
     {
         alarm_hour -= 24;
         alarm_week++;
     }
     
     alarm_week += rtc_info_.date.WeekDay + day;
-    if(alarm_week > 7)
+    if (alarm_week > 7)
     {
         alarm_week -= 7;
     }
@@ -128,9 +128,9 @@ void RTC_Alarm_IRQHandler(void)
 {
     RTC_HandleTypeDef *prtc_handler = &rtc_handler_;
 
-    if(__HAL_RTC_ALARM_GET_IT(prtc_handler, RTC_IT_ALRA))
+    if (__HAL_RTC_ALARM_GET_IT(prtc_handler, RTC_IT_ALRA))
     {
-        if((uint32_t)(prtc_handler->Instance->CR & RTC_IT_ALRA) != (uint32_t)RESET)
+        if ((uint32_t)(prtc_handler->Instance->CR & RTC_IT_ALRA) != (uint32_t)RESET)
         {
             /* Clear the Alarm interrupt pending bit */
             __HAL_RTC_ALARM_CLEAR_FLAG(prtc_handler, RTC_FLAG_ALRAF);                   
@@ -193,7 +193,7 @@ static GlobalType_t rtc_hardware_init(void)
     if (HAL_RTC_Init(&rtc_handler_) != HAL_OK)
         return RT_FAIL;
 
-    if(HAL_RTCEx_BKUPRead(&rtc_handler_, RTC_BKP_DR0) != RTC_SET_FLAGS)
+    if (HAL_RTCEx_BKUPRead(&rtc_handler_, RTC_BKP_DR0) != RTC_SET_FLAGS)
     {
         RTC_TimeTypeDef time;
         RTC_DateTypeDef date;
@@ -204,7 +204,7 @@ static GlobalType_t rtc_hardware_init(void)
         time.Seconds = rtc_init_def.second;
         time.DayLightSaving = RTC_DAYLIGHTSAVING_NONE;
         time.StoreOperation = RTC_STOREOPERATION_RESET;
-        if(HAL_RTC_SetTime(&rtc_handler_, &time, RTC_FORMAT_MODE) != HAL_OK)
+        if (HAL_RTC_SetTime(&rtc_handler_, &time, RTC_FORMAT_MODE) != HAL_OK)
             return RT_FAIL;
         
         date.Year = rtc_init_def.year;
@@ -212,7 +212,7 @@ static GlobalType_t rtc_hardware_init(void)
         date.Date = rtc_init_def.day;
         date.WeekDay = rtc_init_def.weekday;
         
-        if(HAL_RTC_SetDate(&rtc_handler_, &date, RTC_FORMAT_MODE) != HAL_OK)
+        if (HAL_RTC_SetDate(&rtc_handler_, &date, RTC_FORMAT_MODE) != HAL_OK)
             return RT_FAIL;
         
         HAL_RTCEx_BKUPWrite(&rtc_handler_, RTC_BKP_DR0, RTC_SET_FLAGS);

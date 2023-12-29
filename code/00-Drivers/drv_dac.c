@@ -67,12 +67,12 @@ GlobalType_t dac_driver_init(void)
     
     /*step3: config dac*/
     hdac.Instance = DAC;
-    if(HAL_DAC_Init(&hdac) != HAL_OK)
+    if (HAL_DAC_Init(&hdac) != HAL_OK)
         return RT_FAIL;
 
     sConfig.DAC_Trigger = DAC_TRIGGER_NONE;
     sConfig.DAC_OutputBuffer = DAC_OUTPUTBUFFER_ENABLE;
-    if(HAL_DAC_ConfigChannel(&hdac, &sConfig, DAC_CHANNEL) != HAL_OK)
+    if (HAL_DAC_ConfigChannel(&hdac, &sConfig, DAC_CHANNEL) != HAL_OK)
         return RT_FAIL;
  
     dac_set(1000);
@@ -84,7 +84,7 @@ void dac_set(uint16_t mv)
 {
     float adc_value;
     
-    if(mv > DAC_REFERENCE_VOL)
+    if (mv > DAC_REFERENCE_VOL)
         mv = DAC_REFERENCE_VOL;
 
     adc_value = (float)mv/DAC_REFERENCE_VOL * DAC_MAX_VALUE;
@@ -116,12 +116,12 @@ GlobalType_t dac_driver_init(void)
 
     /*step3: config dac, TIM4 update trigger DAC Update*/
     hdac.Instance = DAC;
-    if(HAL_DAC_Init(&hdac) != HAL_OK)
+    if (HAL_DAC_Init(&hdac) != HAL_OK)
         return RT_FAIL;
 
     sConfig.DAC_Trigger = DAC_TRIGGER_T4_TRGO;
     sConfig.DAC_OutputBuffer = DAC_OUTPUTBUFFER_DISABLE;
-    if(HAL_DAC_ConfigChannel(&hdac, &sConfig, DAC_CHANNEL_1) != HAL_OK)
+    if (HAL_DAC_ConfigChannel(&hdac, &sConfig, DAC_CHANNEL_1) != HAL_OK)
         return RT_FAIL;
 
     /*step4: config dma, when trigger, DMA translate*/
@@ -179,11 +179,11 @@ void dac_set(uint16_t mv)
     uint8_t i;
     float percent;
 
-    if(mv > DAC_REFERENCE_VOL)
+    if (mv > DAC_REFERENCE_VOL)
         mv = DAC_REFERENCE_VOL;    
 
     percent = (float)mv/DAC_REFERENCE_VOL;
-    for(i=0; i<DAC_CYCLE_SIZE; i++)
+    for (i=0; i<DAC_CYCLE_SIZE; i++)
     {
         vol_convert_cycle[i] = percent*vol_cycle[i];
     }

@@ -35,7 +35,7 @@ int main(void)
     
     SystemClock_Config();
     
-    while(1)
+    while (1)
     {
         #if DEBUG_INTEFACE == DEBUG_JTAG
         RTT_RunTest();
@@ -54,7 +54,7 @@ static void ITM_RunTest(void)
     char *pbuffer = "ITM Send Test!\r\n";
     uint8_t index;
     
-    for(index=0; index<strlen(pbuffer); index++)
+    for (index=0; index<strlen(pbuffer); index++)
     {
         ITM_SendChar((uint32_t)(pbuffer[index]));
     }
@@ -89,7 +89,7 @@ static GlobalType_t SystemClock_Config(void)
     RCC_OscInitStruct.PLL.PLLM = 16;
     RCC_OscInitStruct.PLL.PLLN = 360;
     RCC_OscInitStruct.PLL.PLLP = RCC_PLLP_DIV2;
-    RCC_OscInitStruct.PLL.PLLQ = 4;
+    RCC_OscInitStruct.PLL.PLLQ = 8;
     if (HAL_RCC_OscConfig(&RCC_OscInitStruct) != HAL_OK)
     {
         return RT_FAIL;

@@ -94,7 +94,7 @@ uint16_t adc_avg_value_read(uint32_t channel)
     uint32_t temp = 0;
     uint8_t index;
     
-    for(index=0; index<ADC_AVG_TIMES; index++)
+    for (index=0; index<ADC_AVG_TIMES; index++)
     {
         temp += adv_value_read(channel);
     }
@@ -183,7 +183,7 @@ GlobalType_t adc_driver_init(void)
 
 void DMA2_Stream0_IRQHandler(void)
 {
-    if(__HAL_DMA_GET_FLAG(&hdma_adc1, DMA_FLAG_TCIF0_4) != RESET)
+    if (__HAL_DMA_GET_FLAG(&hdma_adc1, DMA_FLAG_TCIF0_4) != RESET)
     {      
        __HAL_DMA_CLEAR_FLAG(&hdma_adc1, DMA_FLAG_TCIF0_4);
        __HAL_DMA_CLEAR_FLAG(&hdma_adc1, DMA_FLAG_TEIF0_4);
@@ -196,7 +196,7 @@ uint16_t adc_avg_value_read(uint32_t channel)
     uint8_t index;
     uint16_t *pstart;
     
-    switch(channel)
+    switch (channel)
     {
         case ADC_CHANNEL_6:
             pstart = ADC_Buffer;
@@ -209,7 +209,7 @@ uint16_t adc_avg_value_read(uint32_t channel)
             break;   
     }
     
-    for(index=0; index<ADC_AVG_TIMES; index++)
+    for (index=0; index<ADC_AVG_TIMES; index++)
     {
         temp += pstart[index*2];
     }
@@ -244,7 +244,7 @@ static GlobalType_t adc_calibration(void)
 
     HAL_ADCEx_InjectedStart(&hadc1);
     
-    if(HAL_ADCEx_InjectedPollForConversion(&hadc1, 100) != HAL_OK)
+    if (HAL_ADCEx_InjectedPollForConversion(&hadc1, 100) != HAL_OK)
     {
         return RT_FAIL;
     }
