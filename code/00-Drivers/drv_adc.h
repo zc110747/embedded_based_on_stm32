@@ -3,7 +3,7 @@
 //  All Rights Reserved
 //
 //  Name:
-//      drv_gpio.h
+//      drv_adc.h
 //
 //  Purpose:
 //      driver for adc module.

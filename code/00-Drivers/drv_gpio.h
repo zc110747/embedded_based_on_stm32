@@ -29,7 +29,7 @@ extern "C" {
 #include "includes.h"
 
 //i/o anti-shake
-#define ANTI_SHAKE_TICK     3
+#define ANTI_SHAKE_TICK     2
 
 //LED Information
 #define LED_CLK_ENABLE()    __HAL_RCC_GPIOB_CLK_ENABLE()

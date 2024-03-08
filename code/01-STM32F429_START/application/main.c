@@ -6,6 +6,8 @@
 //      main.c
 //
 //  Purpose:
+//      ch01.overview_and_kernel
+//          feature: segger_rtt or itm.
 //
 //  Author:
 //      @zc

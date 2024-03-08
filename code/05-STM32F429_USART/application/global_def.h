@@ -40,4 +40,9 @@ typedef enum
 #define RUN_MODE_DMA            1
 #define RUN_MODE_INTERRUPT      2
 
+#define RUN_WITH_RTOS_NULL  0
+#define RUN_WITH_FREERTOS   1
+#define RUN_WITH_RTTHREAD   2
+
+#define RUN_OS_MODE         RUN_WITH_RTOS_NULL
 #endif

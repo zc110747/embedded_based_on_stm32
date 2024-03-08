@@ -23,8 +23,39 @@
 #include <stdarg.h>
 #include <stdio.h>
 #include "logger.h"
+#include "drv_target.h"
 
 //internal variable
+#if defined(RUN_OS_MODE) && RUN_OS_MODE == RUN_WITH_FREERTOS
+#include "FreeRTOS.h"
+#include "semphr.h"
+static SemaphoreHandle_t xLoggerSemaphore;
+static uint8_t is_os_run = 0;
+#define LOGGER_PROTECT_INIT()  do { \
+                                        xLoggerSemaphore = xSemaphoreCreateMutex(); \
+                                        if(xLoggerSemaphore == NULL) \
+                                            return RT_FAIL; \
+                               }while(0);
+#define LOGGER_PROTECT_ENTRY()  do { \
+                                    is_os_run = get_os_on(); \
+                                    if(is_os_run == 1) \
+                                    { \
+                                        if(xSemaphoreTake(xLoggerSemaphore, (TickType_t)4) != pdTRUE) \
+                                            return RT_FAIL; \
+                                    } \
+                                }while(0);
+#define LOGGER_PROTECT_EXTI()  do {\
+                                    if(is_os_run == 1) \
+                                    { \
+                                        xSemaphoreGive(xLoggerSemaphore); \
+                                    } \
+                               }while(0);
+#else
+#define LOGGER_PROTECT_INIT()
+#define LOGGER_PROTECT_ENTRY()
+#define LOGGER_PROTECT_EXTI()
+#endif
+
 static UART_HandleTypeDef huart1;
 static LOGGER_INFO g_logger_info = {0};
 
@@ -47,7 +78,9 @@ GlobalType_t logger_module_init(void)
 
     result = logger_uart_init();
     if (result != RT_OK)
-        return RT_FAIL;
+        return RT_FAIL;    
+
+    LOGGER_PROTECT_INIT();
     
     g_logger_info.device = LOG_DEVICE_USART;
     g_logger_info.ready = 1;
@@ -68,8 +101,10 @@ int print_log(LOG_LEVEL level, uint32_t tick, const char* fmt, ...)
 
     if (level < g_logger_info.level)
         return -2;
-
+    
     {
+        LOGGER_PROTECT_ENTRY();
+        
         va_list	valist;
         
         len = LOGGER_MAX_BUFFER_SIZE;
@@ -79,6 +114,7 @@ int print_log(LOG_LEVEL level, uint32_t tick, const char* fmt, ...)
         len = snprintf(pbuf, bufferlen, "level:%d times:%d info:", level, tick);
         if ((len<=0) || (len>=bufferlen))
         {
+            LOGGER_PROTECT_EXTI();
             return -3;
         }
         outlen += len;
@@ -90,6 +126,7 @@ int print_log(LOG_LEVEL level, uint32_t tick, const char* fmt, ...)
         va_end(valist);
         if ((len<=0) || (len>=bufferlen))
         {
+            LOGGER_PROTECT_EXTI();
             return -4;
         } 
         outlen += len;
@@ -98,6 +135,7 @@ int print_log(LOG_LEVEL level, uint32_t tick, const char* fmt, ...)
         
         if (bufferlen < 3)
         {
+            LOGGER_PROTECT_EXTI();
             return -4;
         }
         
@@ -105,8 +143,9 @@ int print_log(LOG_LEVEL level, uint32_t tick, const char* fmt, ...)
         pbuf[1] = '\n';
         outlen += 2;
         logger_dev_tx_buffer((uint8_t *)LoggerMaxBuffer, outlen);
+        LOGGER_PROTECT_EXTI();
     }
-    
+   
     return outlen;
 }
 
@@ -186,7 +225,7 @@ static GlobalType_t logger_put_rx_buffer(uint8_t *ptr, uint8_t size)
 
 static GlobalType_t logger_get_tx_byte(uint8_t *data)
 {
-    uint8_t c;
+    uint8_t c = 0;
     
     //device not use as logger interface
     if (g_logger_info.ready != 1 )

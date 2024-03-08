@@ -386,7 +386,7 @@
             <File>
               <FileName>startup_stm32f429xx.s</FileName>
               <FileType>2</FileType>
-              <FilePath>..\..\00-Extend_Library\startup_stm32f429xx.s</FilePath>
+              <FilePath>.\startup_stm32f429xx.s</FilePath>
             </File>
             <File>
               <FileName>system_stm32f4xx.c</FileName>
@@ -409,11 +409,6 @@
               <FilePath>..\..\00-STM32F4xx_HAL_Driver\Src\stm32f4xx_hal_rcc.c</FilePath>
             </File>
             <File>
-              <FileName>stm32f4xx_hal_tim.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\00-STM32F4xx_HAL_Driver\Src\stm32f4xx_hal_tim.c</FilePath>
-            </File>
-            <File>
               <FileName>stm32f4xx_hal_dma.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\00-STM32F4xx_HAL_Driver\Src\stm32f4xx_hal_dma.c</FilePath>
@@ -422,11 +417,6 @@
               <FileName>stm32f4xx_hal_dma_ex.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\00-STM32F4xx_HAL_Driver\Src\stm32f4xx_hal_dma_ex.c</FilePath>
-            </File>
-            <File>
-              <FileName>stm32f4xx_hal_tim_ex.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\00-STM32F4xx_HAL_Driver\Src\stm32f4xx_hal_tim_ex.c</FilePath>
             </File>
             <File>
               <FileName>stm32f4xx_hal_flash.c</FileName>
@@ -478,6 +468,16 @@
               <FileType>1</FileType>
               <FilePath>..\..\00-STM32F4xx_HAL_Driver\Src\stm32f4xx_hal_uart.c</FilePath>
             </File>
+            <File>
+              <FileName>stm32f4xx_hal_tim.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\00-STM32F4xx_HAL_Driver\Src\stm32f4xx_hal_tim.c</FilePath>
+            </File>
+            <File>
+              <FileName>stm32f4xx_hal_tim_ex.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\00-STM32F4xx_HAL_Driver\Src\stm32f4xx_hal_tim_ex.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -492,11 +492,6 @@
               <FileName>stm32f4xx_it.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\application\stm32f4xx_it.c</FilePath>
-            </File>
-            <File>
-              <FileName>stm32f4xx_hal_timebase_tim.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\application\stm32f4xx_hal_timebase_tim.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -563,6 +558,11 @@
               <FileType>1</FileType>
               <FilePath>..\..\00-Drivers\drv_dac.c</FilePath>
             </File>
+            <File>
+              <FileName>drv_target.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\00-Drivers\drv_target.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -588,7 +588,7 @@
   <LayerInfo>
     <Layers>
       <Layer>
-        <LayName>&lt;Project Info&gt;</LayName>
+        <LayName>stm32f429</LayName>
         <LayDesc></LayDesc>
         <LayUrl></LayUrl>
         <LayKeys></LayKeys>

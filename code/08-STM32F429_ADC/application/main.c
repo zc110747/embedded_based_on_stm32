@@ -37,13 +37,16 @@ int main(void)
     //system clock tick init.
     system_clock_init();
     
+    //logger module on
+    logger_module_init();
+    
     //driver initialize.
     driver_initialize();
     
     while (1)
     {
          //run task every 2 second
-        if (drv_tick_difference(tick, HAL_GetTick()) > 2000)
+        if (drv_tick_difference(tick, HAL_GetTick()) > 1000)
         {
             tick = HAL_GetTick();
             
@@ -54,7 +57,7 @@ int main(void)
             adc_value = adc_avg_value_read(ADC_CHANNEL_6);
             voltage = (float)adc_value*(3.3/4096);
             
-            PRINT_LOG(LOG_INFO, HAL_GetTick(), "tempature:%f, voltage:%f!\r\n", temperature, voltage);
+            PRINT_LOG(LOG_INFO, HAL_GetTick(), "tempature:%f, voltage:%f!", temperature, voltage);
         }       
     }
 }

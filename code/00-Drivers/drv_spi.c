@@ -7,7 +7,7 @@
 //
 //  Purpose:
 //      driver for spi module.
-//      HW: CS-PF6, SPI5-PF7, PF8, PF9
+//      HW: CS-PF6, SPI5-PF7(clk), PF8(rx), PF9(tx)
 //
 //  Author:
 //      @zc
@@ -137,7 +137,7 @@ GlobalType_t spi_driver_init(void)
     hspi5.Init.CLKPolarity = SPI_POLARITY_HIGH;
     hspi5.Init.CLKPhase = SPI_PHASE_2EDGE;
     hspi5.Init.NSS = SPI_NSS_SOFT;
-    hspi5.Init.BaudRatePrescaler = SPI_BAUDRATEPRESCALER_8;
+    hspi5.Init.BaudRatePrescaler = SPI_BAUDRATEPRESCALER_32;
     hspi5.Init.FirstBit = SPI_FIRSTBIT_MSB;
     hspi5.Init.TIMode = SPI_TIMODE_DISABLE;
     hspi5.Init.CRCCalculation = SPI_CRCCALCULATION_DISABLE;
@@ -162,7 +162,7 @@ GlobalType_t spi_driver_init(void)
         return RT_FAIL;
     }
     
-    __HAL_LINKDMA(&hspi5,hdmarx,hdma_spi5_rx);
+    __HAL_LINKDMA(&hspi5, hdmarx, hdma_spi5_rx);
 
     /* SPI5_TX Init */
     hdma_spi5_tx.Instance = DMA2_Stream4;
@@ -202,22 +202,27 @@ uint8_t spi_rw_byte(uint8_t data, HAL_StatusTypeDef *err)
     return rx_data;
 }
 
+uint8_t tx_buffer[6] = {0x90, 0x00, 0x00, 0x00, 0xff, 0xff};
+uint8_t rx_buffer[6] = {0x00};
+    
 uint16_t wq_read_chipid(void)
 {
     uint16_t id = 0;
-    uint8_t tx_buffer[] = {0x90, 0x00, 0x00, 0x00};
-    uint8_t rx_buffer[] = {0xFF, 0xFF};
     
     WQ25_CS_ON();
-    spi_write_dma(tx_buffer, 4);
-    while(spi_write_check_ok() != HAL_OK)
-    {}
-			
-    spi_read_dma(rx_buffer, 2);
+
+    __HAL_DMA_CLEAR_FLAG(&hdma_spi5_tx, DMA_FLAG_TCIF0_4);
+    __HAL_DMA_CLEAR_FLAG(&hdma_spi5_rx, DMA_FLAG_TCIF3_7);
+    HAL_DMA_Abort(&hdma_spi5_tx);
+    hdma_spi5_tx.State = HAL_DMA_STATE_READY;
+    HAL_DMA_Abort(&hdma_spi5_rx);
+    hdma_spi5_rx.State = HAL_DMA_STATE_READY;			
+  
+    spi_read_dma(tx_buffer, rx_buffer, 6);
     while(spi_read_check_ok() != HAL_OK)
     {}   
     
-    id = rx_buffer[0]<<8 | rx_buffer[1];
+    id = rx_buffer[4]<<8 | rx_buffer[5];
     WQ25_CS_OFF(); 
     
     return id;  
@@ -239,14 +244,14 @@ uint8_t spi_write_check_ok(void)
     if(__HAL_DMA_GET_FLAG(&hdma_spi5_tx, DMA_FLAG_TCIF0_4) != RESET)
     {
         __HAL_DMA_CLEAR_FLAG(&hdma_spi5_tx, DMA_FLAG_TCIF0_4);
-				HAL_DMA_Abort(&hdma_spi5_tx);
-				hdma_spi5_tx.State = HAL_DMA_STATE_READY;
+        HAL_DMA_Abort(&hdma_spi5_tx);
+        hdma_spi5_tx.State = HAL_DMA_STATE_READY;
         return HAL_OK;
     }
     return HAL_ERROR;
 }
 
-uint8_t spi_read_dma(uint8_t *data, uint16_t size)
+uint8_t spi_read_dma(uint8_t *tx_buffer, uint8_t *rx_buffer, uint16_t size)
 {
     //close dma tx and rx
     __HAL_DMA_CLEAR_FLAG(&hdma_spi5_tx, DMA_FLAG_TCIF0_4);
@@ -255,22 +260,16 @@ uint8_t spi_read_dma(uint8_t *data, uint16_t size)
     __HAL_DMA_DISABLE(&hdma_spi5_tx);
     
     //dma start rx read
-    HAL_DMA_Start(&hdma_spi5_rx, (uint32_t)&hspi5.Instance->DR, (uint32_t)data, size);
+    HAL_DMA_Start(&hdma_spi5_rx,  (uint32_t)rx_buffer, (uint32_t)&hspi5.Instance->DR, size);
     
     //dma start tx translate
-    return HAL_DMA_Start(&hdma_spi5_tx, (uint32_t)&hspi5.Instance->DR, (uint32_t)data, size);
+    return HAL_DMA_Start(&hdma_spi5_tx, (uint32_t)tx_buffer, (uint32_t)&hspi5.Instance->DR, size);
 }
 
 uint8_t spi_read_check_ok(void)
 {
     if(__HAL_DMA_GET_FLAG(&hdma_spi5_rx, DMA_FLAG_TCIF3_7) != RESET)
-    {
-        __HAL_DMA_CLEAR_FLAG(&hdma_spi5_tx, DMA_FLAG_TCIF0_4);
-        __HAL_DMA_CLEAR_FLAG(&hdma_spi5_rx, DMA_FLAG_TCIF3_7);
-				HAL_DMA_Abort(&hdma_spi5_tx);
-				hdma_spi5_tx.State = HAL_DMA_STATE_READY;
-				HAL_DMA_Abort(&hdma_spi5_rx);
-				hdma_spi5_rx.State = HAL_DMA_STATE_READY;			
+    {		
         return HAL_OK;
     }
     

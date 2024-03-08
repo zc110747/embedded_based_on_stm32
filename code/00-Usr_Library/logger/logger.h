@@ -51,7 +51,7 @@ typedef struct
 {
     //device weather ready    
     uint8_t ready;
-    
+   
     //device used to run on
     LOG_DEVICE device;
     

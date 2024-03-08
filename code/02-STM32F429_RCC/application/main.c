@@ -6,6 +6,7 @@
 //      main.c
 //
 //  Purpose:
+//      ch02.rcc_system_clock    
 //
 //  Author:
 //      @zc
@@ -15,9 +16,9 @@
 //  Revision History:
 //
 /////////////////////////////////////////////////////////////////////////////
+#include <string.h>
 #include "includes.h"
 #include "SEGGER_RTT.h"
-#include <string.h>
 
 static void ITM_RunTest(void);
 static GlobalType_t SystemClock_Config(void);

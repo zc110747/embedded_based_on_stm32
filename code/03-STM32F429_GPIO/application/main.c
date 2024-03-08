@@ -27,8 +27,9 @@ static GlobalType_t system_clock_init(void);
 //main entery function
 int main(void)
 {  
-    uint8_t key_io = KEY0_READ_PIN();
-    uint32_t key_tick = 0;
+    uint8_t key_io, last_key_io;
+    uint8_t led_mode = 0;
+    uint32_t key_tick, loop_tick;
     
     HAL_Init();
     
@@ -38,22 +39,46 @@ int main(void)
     //driver initialize.
     driver_initialize();
     
+    last_key_io = KEY0_READ_PIN();
+    key_io = KEY0_READ_PIN();
+    loop_tick = HAL_GetTick();
+    key_tick = HAL_GetTick();
+    
     while (1)
     {
         //run task every 100ms
-        if (drv_tick_difference(key_tick, HAL_GetTick()) > 100)
+        if (drv_tick_difference(key_tick, HAL_GetTick()) > 50)
         {
             key_tick = HAL_GetTick();
                  
             key_io = io_anti_shake(get_key0_ansh_tick(), key_io, KEY0_READ_PIN());        
-            if (key_io == 1)
+            if(last_key_io != key_io)
             {
-                LED_ON;
+                if(key_io == 0)
+                {
+                    led_mode = ~led_mode;
+                }
+                last_key_io = key_io;
+                
+                if(led_mode != 0)
+                {
+                   LED_OFF;  
+                }
+                else
+                {
+                    LED_ON;
+                    loop_tick = HAL_GetTick();
+                }
             }
-            else
+        }
+        
+        if (drv_tick_difference(loop_tick, HAL_GetTick()) > 500)
+        {  
+            loop_tick = HAL_GetTick();
+            if(led_mode == 0)
             {
-                LED_OFF;
-            }
+                LED_TOGGLE;
+            }           
         }
     }
 }

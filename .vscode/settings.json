@@ -1,0 +1,10 @@
+{
+    "files.associations": {
+        "includes.h": "c",
+        "drv_usart.h": "c",
+        "stm32f4xx_hal.h": "c",
+        "drv_global.h": "c",
+        "logger.h": "c",
+        "global_def.h": "c"
+    }
+}

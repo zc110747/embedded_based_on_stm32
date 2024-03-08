@@ -29,14 +29,15 @@ static GlobalType_t system_clock_init(void);
 int main(void)
 {  
     uint16_t chip_id = 0;
+    uint32_t tick = HAL_GetTick();
     
     HAL_Init();
     
     //system clock tick init.
     system_clock_init();
     
-		//logger module init
-		logger_module_init();
+    //logger module init
+    logger_module_init();
 	
     //driver initialize.
     driver_initialize();
@@ -46,7 +47,13 @@ int main(void)
     PRINT_LOG(LOG_INFO, HAL_GetTick(), "wq chip id:0x%x", chip_id);
     
     while (1)
-    {     
+    { 
+       if (drv_tick_difference(tick, HAL_GetTick()) > 200)
+       {
+            tick = HAL_GetTick();
+            chip_id = wq_read_chipid();
+            PRINT_LOG(LOG_INFO, HAL_GetTick(), "wq chip id:0x%x", chip_id);
+       }
     }
 }
 

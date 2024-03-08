@@ -21,6 +21,8 @@
 #define DEBUG_STLINK        1
 #define DEBUG_INTEFACE      DEBUG_STLINK
 
+#define DAC_PERIOD          100
+
 static GlobalType_t driver_initialize(void);
 static GlobalType_t system_clock_init(void);
 
@@ -29,22 +31,23 @@ int main(void)
 {  
     uint16_t voltage = 500;
     uint32_t tick = 0;
-    
+    uint8_t increase = 1;
+
     HAL_Init();
-    
+
     //system clock tick init.
     system_clock_init();
-    
+
     //init logger module for translate.   
     logger_module_init();
-    
+
     //driver initialize.
     driver_initialize();
     
     while (1)
     {
          //run task every 2 second
-        if (drv_tick_difference(tick, HAL_GetTick()) > 2000)
+        if (drv_tick_difference(tick, HAL_GetTick()) > 200)
         {
             tick = HAL_GetTick();
             
@@ -52,13 +55,25 @@ int main(void)
             dac_set(voltage);
 
             PRINT_LOG(LOG_INFO, HAL_GetTick(), "set voltagele:%d!", voltage);
-
-            voltage += 500;
-            if (voltage > DAC_REFERENCE_VOL)
+						
+            if(increase == 1)
             {
-                voltage = 500;
+                voltage += DAC_PERIOD;
+                if (voltage > DAC_REFERENCE_VOL)
+                {
+                    increase = 0;
+                    voltage = DAC_REFERENCE_VOL;
+                }
             }
-
+            else
+            {
+                voltage -= DAC_PERIOD;
+                if(voltage <= DAC_PERIOD)
+                {
+                    increase = 1;
+                    voltage = DAC_PERIOD;
+                }
+            }
         }       
     }
 }

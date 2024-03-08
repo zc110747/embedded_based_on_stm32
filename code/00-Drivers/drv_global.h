@@ -24,6 +24,7 @@ extern "C" {
 
 #include "includes.h"
 #include "SEGGER_RTT.h"
+#include "drv_target.h"
 
 #if DRIVER_GPIO_ENABLE == 1
 #include "drv_gpio.h"
@@ -51,6 +52,46 @@ extern "C" {
 
 #if DRIVER_SPI_ENABLE == 1
 #include "drv_spi.h"
+#endif
+
+#if DRIVER_I2C_ENABLE == 1
+#include "drv_i2c_ap3216.h"
+#endif
+
+#if DRIVER_I2C_PCF8574_ENABLE == 1
+#include "drv_i2c_pcf8574.h"
+#endif
+
+#if DRIVER_TIME_ENABLE == 1
+#include "drv_timer.h"
+#endif
+
+#if DRIVER_WDG_ENABLE == 1
+#include "drv_wdg.h"
+#endif
+
+#if DRIVER_DMA_ENABLE == 1
+#include "drv_dma.h"
+#endif
+
+#if DRIVER_SDIO_ENABLE == 1
+#include "drv_sdio.h"
+#endif
+
+#if DRIVER_SDRAM_ENABLE == 1
+#include "drv_sdram.h"
+#endif
+
+#if DRIVER_LCD_ENABLE == 1
+#include "drv_lcd.h"
+#endif
+
+#if DRIVER_CAN_ENABLE == 1
+#include "drv_can.h"
+#endif
+
+#if DRIVER_ALG_ENABLE == 1
+#include "drv_alg.h"
 #endif
 
 #ifdef __cplusplus

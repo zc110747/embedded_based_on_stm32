@@ -26,7 +26,7 @@ extern "C" {
 
 #include "includes.h"
 
-#define SPI_RUN_MODE        RUN_MODE_SOFT
+#define SPI_RUN_MODE        RUN_MODE_NORMAL
 
 #define WQ25_CS_ON()        HAL_GPIO_WritePin(GPIOF, GPIO_PIN_6, GPIO_PIN_RESET);
 #define WQ25_CS_OFF()       HAL_GPIO_WritePin(GPIOF, GPIO_PIN_6, GPIO_PIN_SET);
@@ -38,7 +38,7 @@ uint16_t wq_read_chipid(void);
 uint8_t spi_write_check_ok(void);
 uint8_t spi_read_check_ok(void);
 uint8_t spi_write_dma(uint8_t *data, uint16_t size);
-uint8_t spi_read_dma(uint8_t *data, uint16_t size);
+uint8_t spi_read_dma(uint8_t *tx_buffer, uint8_t *rx_buffer, uint16_t size);
 uint8_t spi_rw_byte(uint8_t data, HAL_StatusTypeDef *err);
 
 #ifdef __cplusplus

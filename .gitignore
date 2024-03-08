@@ -13,7 +13,8 @@
 *.dep
 *.__i
 *.iex
+*.log
+*._ia
 
 stm32f429.uvguix.*
-stm32f429.uvoptx
 
