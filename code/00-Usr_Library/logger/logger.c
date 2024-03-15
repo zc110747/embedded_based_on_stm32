@@ -102,7 +102,7 @@ GlobalType_t logger_module_init(void)
 
     LOGGER_PROTECT_INIT();
     
-    g_logger_info.device = LOG_DEVICE_ETH;
+    g_logger_info.device = LOG_DEFAULT_DEVICE;
     g_logger_info.ready = 1;
     g_logger_info.level = LOG_INFO;
     return RT_OK;

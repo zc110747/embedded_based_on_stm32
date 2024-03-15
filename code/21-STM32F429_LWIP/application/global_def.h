@@ -18,6 +18,12 @@
 #ifndef _GLOBAL_DEF_H
 #define _GLOBAL_DEF_H
 
+typedef enum
+{
+    RT_OK = 0,
+    RT_FAIL,
+}GlobalType_t;
+
 //global module defined
 #define LOGGER_MODULE_ON        1
 
@@ -46,12 +52,6 @@
 #define SUPPORT_ASCII_3216      1
 #endif
 
-typedef enum
-{
-    RT_OK = 0,
-    RT_FAIL,
-}GlobalType_t;
-
 #ifndef UINT_MAX
 #define UINT_MAX    0xFFFFFFFF
 #endif
@@ -70,5 +70,6 @@ typedef enum
 #define I2C_USE_HARDWARE        0
 #define I2C_USE_SOFTWARE        1
 #define I2C_RUN_MODE            I2C_USE_HARDWARE
+#define LOG_DEFAULT_DEVICE      LOG_DEVICE_ETH
 
 #endif

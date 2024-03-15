@@ -61,7 +61,7 @@ osThreadAttr_t attributes;
   * LwIP initialization function
   */
 
-#include "tcp_server.h"
+#include "logger_client.h"
 
 void MX_LWIP_Init(void)
 {

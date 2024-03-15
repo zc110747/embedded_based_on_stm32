@@ -3,7 +3,7 @@
 //  All Rights Reserved
 //
 //  Name:
-//      tcp_server.c
+//      logger_client.c
 //
 //  Purpose:
 //
@@ -15,7 +15,7 @@
 //  Revision History:
 //
 /////////////////////////////////////////////////////////////////////////////
-#include "tcp_server.h"
+#include "logger_client.h"
 #include "lwip/sockets.h"
 #include <stdbool.h>
 
@@ -57,7 +57,6 @@ extern u8_t netif_link_up(void);
 void tcp_server_task(void *argument)
 {
 	struct sockaddr_in server_addr;
-
 
 	ip_addr_t ipaddr;
 	int bytes_received;
@@ -119,7 +118,8 @@ void tcp_server_task(void *argument)
 				}
 				else
 				{
-                    
+                    logger_recv_buffer[bytes_received] = '\0';
+                    PRINT_LOG(LOG_WARN, xTaskGetTickCount(), "tcp receive:%s", logger_recv_buffer);
 				}
 			}
 
@@ -132,16 +132,19 @@ void tcp_server_task(void *argument)
 }
 
 GlobalType_t eth_logger_write(uint8_t *ptr, uint8_t size)
-{ 
-    LOGGER_MESSAGE msg;
-    
+{   
     if(LoggerSystem.xTxQueue != NULL)
     {
+        LOGGER_MESSAGE msg;
         msg.data = (char *)ptr;
         msg.length = size;
         if(xQueueSend(LoggerSystem.xTxQueue, &msg, (portTickType)1) != pdTRUE)
         {
         }
+    }
+    else
+    {
+        SEGGER_RTT_Write(0, ptr, size);
     }
     return RT_OK;   
 }
@@ -176,14 +179,18 @@ static void logger_tx_thread(void *arg)
 	}
 }
 
-GlobalType_t tcp_server_init(void)
+GlobalType_t logger_client_init(void)
 {
     LoggerSystem.xTxQueue = xQueueCreate(LOGGER_TX_QUEUE_LEN, sizeof(LOGGER_MESSAGE));
     
     TcpTaskHandle = osThreadNew(tcp_server_task, NULL, &TcpTask_attributes);
+    if(TcpTaskHandle == NULL)
+    {
+        return RT_FAIL;
+    }
+    
     LoggerTxHandle = osThreadNew(logger_tx_thread, NULL, &LoggerTxTask_attributes);
-    if(TcpTaskHandle == NULL
-    || LoggerTxHandle == NULL)
+    if(LoggerTxHandle == NULL)
     {
         return RT_FAIL;
     }

@@ -3,7 +3,7 @@
 //  All Rights Reserved
 //
 //  Name:
-//      tcp_server.h
+//      logger_client.h
 //
 //  Purpose:
 //
@@ -15,8 +15,8 @@
 //  Revision History:
 //
 /////////////////////////////////////////////////////////////////////////////
-#ifndef _INCLUDE_TCP_SERVER_H
-#define _INCLUDE_TCP_SERVER_H
+#ifndef _INCLUDE_LOGGER_CLIENT_H
+#define _INCLUDE_LOGGER_CLIENT_H
 
 #include "drv_global.h"
 #include "cmsis_os.h"
@@ -46,6 +46,6 @@ typedef struct
 	uint16_t logger_port;
 }NetInfo_t;
 
-GlobalType_t tcp_server_init(void);
+GlobalType_t logger_client_init(void);
 NetInfo_t *get_net_info(void);
 #endif

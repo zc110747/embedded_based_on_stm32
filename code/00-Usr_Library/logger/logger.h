@@ -47,6 +47,10 @@ typedef enum
     LOG_DEVICE_ETH,
 }LOG_DEVICE;
 
+#ifndef LOG_DEFAULT_DEVICE
+#define LOG_DEFAULT_DEVICE LOG_DEVICE_USART
+#endif
+
 typedef struct
 {
     //device weather ready    

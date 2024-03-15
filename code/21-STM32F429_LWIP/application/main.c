@@ -19,7 +19,7 @@
 #include <stdio.h>
 #include "cmsis_os.h"
 #include "lwip.h"
-#include "tcp_server.h"
+#include "logger_client.h"
 
 #define DEBUG_JTAG          0
 #define DEBUG_STLINK        1
@@ -76,7 +76,7 @@ void StartDefaultTask(void *argument)
     /* init code for LWIP */
     MX_LWIP_Init();
 
-    tcp_server_init();
+    logger_client_init();
     
     for(;;)
     {
@@ -103,7 +103,7 @@ static GlobalType_t driver_initialize(void)
 {
     GlobalType_t xReturn;
     
-    xReturn = gpio_driver_init();
+    xReturn = gpio_driver_init(); 
     
     xReturn |= pcf8574_driver_init();
     
