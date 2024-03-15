@@ -3380,7 +3380,7 @@
                 <mxCell id="lctONTrl22NPf0pIsUyv-9" value="数据链路层" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
                     <mxGeometry x="360" y="360" width="140" height="40" as="geometry"/>
                 </mxCell>
-                <mxCell id="lctONTrl22NPf0pIsUyv-13" value="路由，网关等" style="rounded=0;whiteSpace=wrap;html=1;dashed=1;" parent="1" vertex="1">
+                <mxCell id="lctONTrl22NPf0pIsUyv-13" value="路由, 网关等" style="rounded=0;whiteSpace=wrap;html=1;dashed=1;" parent="1" vertex="1">
                     <mxGeometry x="240" y="440" width="110" height="40" as="geometry"/>
                 </mxCell>
                 <mxCell id="lctONTrl22NPf0pIsUyv-14" value="" style="endArrow=classic;html=1;exitX=0.75;exitY=1;exitDx=0;exitDy=0;entryX=0;entryY=0.25;entryDx=0;entryDy=0;" parent="1" source="msZXLYc6durK7SnopKeU-6" target="lctONTrl22NPf0pIsUyv-13" edge="1">
@@ -3473,7 +3473,7 @@
                         <mxPoint x="360" y="299.86" as="targetPoint"/>
                     </mxGeometry>
                 </mxCell>
-                <mxCell id="lctONTrl22NPf0pIsUyv-28" value="寻址，路由" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;dashed=1;fontSize=7;" parent="1" vertex="1">
+                <mxCell id="lctONTrl22NPf0pIsUyv-28" value="寻址, 路由" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;dashed=1;fontSize=7;" parent="1" vertex="1">
                     <mxGeometry x="280" y="290" width="45" height="10" as="geometry"/>
                 </mxCell>
                 <mxCell id="lctONTrl22NPf0pIsUyv-29" value="" style="endArrow=none;dashed=1;html=1;dashPattern=1 3;strokeWidth=2;fontSize=10;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" parent="1" edge="1">

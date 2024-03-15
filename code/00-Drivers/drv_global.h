@@ -52,6 +52,7 @@ extern "C" {
 
 #if DRIVER_SPI_ENABLE == 1
 #include "drv_spi.h"
+#include "drv_spi_wq.h"
 #endif
 
 #if DRIVER_I2C_ENABLE == 1

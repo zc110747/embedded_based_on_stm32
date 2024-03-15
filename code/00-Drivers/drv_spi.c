@@ -86,20 +86,9 @@ uint8_t spi_rw_byte(uint8_t data, HAL_StatusTypeDef *err)
     return rx_data;
 }
 
-uint16_t wq_read_chipid(void)
+uint8_t spi_rw_byte_nocheck(uint8_t data)
 {
-    uint16_t id = 0;
-    
-    WQ25_CS_ON();
-    spi_rw_byte(0x90, NULL);
-    spi_rw_byte(0x00, NULL);
-    spi_rw_byte(0x00, NULL);
-    spi_rw_byte(0x00, NULL);
-    id = spi_rw_byte(0xff, NULL)<<8;
-    id |= spi_rw_byte(0xff, NULL);
-    WQ25_CS_OFF(); 
-    
-    return id;  
+    return spi_rw_byte(data, NULL);
 }
 
 #elif SPI_RUN_MODE == RUN_MODE_DMA

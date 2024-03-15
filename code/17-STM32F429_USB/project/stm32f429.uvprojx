@@ -488,6 +488,16 @@
               <FileType>1</FileType>
               <FilePath>..\..\00-STM32F4xx_HAL_Driver\Src\stm32f4xx_hal_pcd_ex.c</FilePath>
             </File>
+            <File>
+              <FileName>stm32f4xx_hal_i2c.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\00-STM32F4xx_HAL_Driver\Src\stm32f4xx_hal_i2c.c</FilePath>
+            </File>
+            <File>
+              <FileName>stm32f4xx_hal_i2c_ex.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\00-STM32F4xx_HAL_Driver\Src\stm32f4xx_hal_i2c_ex.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -572,6 +582,16 @@
               <FileName>drv_target.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\00-Drivers\drv_target.c</FilePath>
+            </File>
+            <File>
+              <FileName>drv_soft_i2c.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\00-Drivers\drv_soft_i2c.c</FilePath>
+            </File>
+            <File>
+              <FileName>drv_i2c_pcf8574.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\00-Drivers\drv_i2c_pcf8574.c</FilePath>
             </File>
           </Files>
         </Group>

@@ -34,6 +34,7 @@ extern "C" {
 #define SDMMC_BLOCK_SIZE                512
 #define SDMMC_CLOCK_DIV                 2
 
+#define _SDIO_DMA_SUPPORT               1
 
 GlobalType_t sdcard_driver_init(void);
 HAL_StatusTypeDef sdcard_read_disk(uint8_t *buf, uint32_t startBlocks, uint32_t NumberOfBlocks);

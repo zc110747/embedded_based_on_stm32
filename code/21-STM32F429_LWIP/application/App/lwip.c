@@ -60,21 +60,26 @@ osThreadAttr_t attributes;
 /**
   * LwIP initialization function
   */
+
+#include "tcp_server.h"
+
 void MX_LWIP_Init(void)
 {
+  NetInfo_t *net_info_ptr = get_net_info();
+    
   /* IP addresses initialization */
-  IP_ADDRESS[0] = 192;
-  IP_ADDRESS[1] = 168;
-  IP_ADDRESS[2] = 3;
-  IP_ADDRESS[3] = 98;
-  NETMASK_ADDRESS[0] = 255;
-  NETMASK_ADDRESS[1] = 255;
-  NETMASK_ADDRESS[2] = 255;
-  NETMASK_ADDRESS[3] = 0;
-  GATEWAY_ADDRESS[0] = 192;
-  GATEWAY_ADDRESS[1] = 168;
-  GATEWAY_ADDRESS[2] = 3;
-  GATEWAY_ADDRESS[3] = 1;
+  IP_ADDRESS[0] = net_info_ptr->ipaddr[0];
+  IP_ADDRESS[1] = net_info_ptr->ipaddr[1];
+  IP_ADDRESS[2] = net_info_ptr->ipaddr[2];
+  IP_ADDRESS[3] = net_info_ptr->ipaddr[3];
+  NETMASK_ADDRESS[0] = net_info_ptr->netmask[0];
+  NETMASK_ADDRESS[1] = net_info_ptr->netmask[1];
+  NETMASK_ADDRESS[2] = net_info_ptr->netmask[2];
+  NETMASK_ADDRESS[3] = net_info_ptr->netmask[3];
+  GATEWAY_ADDRESS[0] = net_info_ptr->gateway[0];
+  GATEWAY_ADDRESS[1] = net_info_ptr->gateway[1];
+  GATEWAY_ADDRESS[2] = net_info_ptr->gateway[2];
+  GATEWAY_ADDRESS[3] = net_info_ptr->gateway[3];
 
 /* USER CODE BEGIN IP_ADDRESSES */
 /* USER CODE END IP_ADDRESSES */
@@ -119,6 +124,11 @@ void MX_LWIP_Init(void)
 /* USER CODE BEGIN 3 */
 
 /* USER CODE END 3 */
+}
+
+u8_t netif_link_up(void)
+{
+    return netif_is_link_up(&gnetif);
 }
 
 #ifdef USE_OBSOLETE_USER_CODE_SECTION_4

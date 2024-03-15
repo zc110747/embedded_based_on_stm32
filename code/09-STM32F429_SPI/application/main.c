@@ -43,16 +43,15 @@ int main(void)
     driver_initialize();
     
     //read spi flahs chip id.
-    chip_id = wq_read_chipid();
+    chip_id = wq_get_id();
     PRINT_LOG(LOG_INFO, HAL_GetTick(), "wq chip id:0x%x", chip_id);
     
     while (1)
     { 
-       if (drv_tick_difference(tick, HAL_GetTick()) > 200)
+       if (drv_tick_difference(tick, HAL_GetTick()) > 500)
        {
             tick = HAL_GetTick();
-            chip_id = wq_read_chipid();
-            PRINT_LOG(LOG_INFO, HAL_GetTick(), "wq chip id:0x%x", chip_id);
+            LED_TOGGLE;
        }
     }
 }
@@ -63,10 +62,12 @@ static GlobalType_t driver_initialize(void)
     
     xReturn = gpio_driver_init();
     
-    xReturn |= spi_driver_init();
-    
+    xReturn |= wq_driver_init();
+
     if (xReturn == RT_OK)
     {
+        wq_rw_test();
+    
         PRINT_LOG(LOG_INFO, HAL_GetTick(), "device driver init success!");
     }
 

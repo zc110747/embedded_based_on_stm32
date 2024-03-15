@@ -19,6 +19,7 @@
 #include <stdio.h>
 #include "cmsis_os.h"
 #include "lwip.h"
+#include "tcp_server.h"
 
 #define DEBUG_JTAG          0
 #define DEBUG_STLINK        1
@@ -75,11 +76,13 @@ void StartDefaultTask(void *argument)
     /* init code for LWIP */
     MX_LWIP_Init();
 
+    tcp_server_init();
+    
     for(;;)
     {
         LED_TOGGLE;
         
-        vTaskDelay(100);
+        vTaskDelay(500);
     }
 }
 

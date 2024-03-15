@@ -69,6 +69,26 @@ static GlobalType_t logger_dev_tx_buffer(uint8_t *ptr, uint8_t size);
 static void UART_SendData(UART_HandleTypeDef* huart, uint16_t Data);
 static GlobalType_t logger_dev_tx_buffer(uint8_t *ptr, uint8_t size);
 
+#define LOGGER_MAX_BUFFER_SIZE      256
+#define MEMORY_BUFFER_TOTAL_SIZE 	8192
+
+static char MemoryBuffer[MEMORY_BUFFER_TOTAL_SIZE + 1];
+static char *nextBufferPointer = MemoryBuffer;
+static char *MemoryBufferEndPoint = &MemoryBuffer[MEMORY_BUFFER_TOTAL_SIZE];
+
+char *LogGetMemoryBuffer(uint16_t size)
+{
+	char *textBufferPointer;
+
+	textBufferPointer = nextBufferPointer;
+	if((nextBufferPointer = textBufferPointer + size)  >  MemoryBufferEndPoint)
+	{
+		textBufferPointer = MemoryBuffer;
+		nextBufferPointer = textBufferPointer + size;
+	}
+	return(textBufferPointer);
+}
+
 GlobalType_t logger_module_init(void)
 {
     GlobalType_t result;
@@ -82,18 +102,16 @@ GlobalType_t logger_module_init(void)
 
     LOGGER_PROTECT_INIT();
     
-    g_logger_info.device = LOG_DEVICE_USART;
+    g_logger_info.device = LOG_DEVICE_ETH;
     g_logger_info.ready = 1;
     g_logger_info.level = LOG_INFO;
     return RT_OK;
 }
 
-#define LOGGER_MAX_BUFFER_SIZE      128
-static char LoggerMaxBuffer[LOGGER_MAX_BUFFER_SIZE];
 int print_log(LOG_LEVEL level, uint32_t tick, const char* fmt, ...)
 {
     int len, bufferlen;
-    char *pbuf;
+    char *pbuf, *buf;
     int outlen = 0;
     
     if (g_logger_info.ready != 1)
@@ -107,9 +125,10 @@ int print_log(LOG_LEVEL level, uint32_t tick, const char* fmt, ...)
         
         va_list	valist;
         
+        buf = LogGetMemoryBuffer(LOGGER_MAX_BUFFER_SIZE);
         len = LOGGER_MAX_BUFFER_SIZE;
         bufferlen = len - 1;
-        pbuf = LoggerMaxBuffer;
+        pbuf = buf;
         
         len = snprintf(pbuf, bufferlen, "level:%d times:%d info:", level, tick);
         if ((len<=0) || (len>=bufferlen))
@@ -142,7 +161,7 @@ int print_log(LOG_LEVEL level, uint32_t tick, const char* fmt, ...)
         pbuf[0] = '\r';
         pbuf[1] = '\n';
         outlen += 2;
-        logger_dev_tx_buffer((uint8_t *)LoggerMaxBuffer, outlen);
+        logger_dev_tx_buffer((uint8_t *)buf, outlen);
         LOGGER_PROTECT_EXTI();
     }
    

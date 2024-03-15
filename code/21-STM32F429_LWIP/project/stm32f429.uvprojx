@@ -1065,6 +1065,16 @@
             </File>
           </Files>
         </Group>
+        <Group>
+          <GroupName>tcpserver</GroupName>
+          <Files>
+            <File>
+              <FileName>tcp_server.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\application\App\tcp_server.c</FilePath>
+            </File>
+          </Files>
+        </Group>
       </Groups>
     </Target>
   </Targets>

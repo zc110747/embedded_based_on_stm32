@@ -225,12 +225,6 @@ static uint8_t spi_soft_rw_byte_phase_3(SOFT_SPI_INFO* spi_info_ptr, uint8_t dat
 }
 
 typedef uint8_t (*spi_rw_func)(SOFT_SPI_INFO*, uint8_t);
-//static spi_rw_func function_list[] = {
-//    spi_soft_rw_byte_phase_0,
-//    spi_soft_rw_byte_phase_1,
-//    spi_soft_rw_byte_phase_2,
-//    spi_soft_rw_byte_phase_3
-//};
 
 uint8_t spi_soft_rw_byte(uint8_t soft_spi_num, uint8_t *wdata, uint8_t *rdata, uint8_t size)
 {

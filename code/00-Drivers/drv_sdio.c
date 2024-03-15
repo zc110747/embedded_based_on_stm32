@@ -21,6 +21,8 @@
 #include "drv_target.h"
 
 static SD_HandleTypeDef hsdcard1;
+static DMA_HandleTypeDef hdma_sdio_rx;
+static DMA_HandleTypeDef hdma_sdio_tx;
 
 GlobalType_t sdcard_driver_init(void)
 {
@@ -69,7 +71,73 @@ GlobalType_t sdcard_driver_init(void)
     if (HAL_SD_ConfigWideBusOperation(&hsdcard1, SDIO_BUS_WIDE_4B) != HAL_OK)
         return RT_FAIL;
 
+#ifdef _SDIO_DMA_SUPPORT
+        /* SDIO DMA Init */
+    /* SDIO_RX Init */
+    hdma_sdio_rx.Instance = DMA2_Stream3;
+    hdma_sdio_rx.Init.Channel = DMA_CHANNEL_4;
+    hdma_sdio_rx.Init.Direction = DMA_PERIPH_TO_MEMORY;
+    hdma_sdio_rx.Init.PeriphInc = DMA_PINC_DISABLE;
+    hdma_sdio_rx.Init.MemInc = DMA_MINC_ENABLE;
+    hdma_sdio_rx.Init.PeriphDataAlignment = DMA_PDATAALIGN_WORD;
+    hdma_sdio_rx.Init.MemDataAlignment = DMA_MDATAALIGN_WORD;
+    hdma_sdio_rx.Init.Mode = DMA_PFCTRL;
+    hdma_sdio_rx.Init.Priority = DMA_PRIORITY_HIGH;
+    hdma_sdio_rx.Init.FIFOMode = DMA_FIFOMODE_ENABLE;
+    hdma_sdio_rx.Init.FIFOThreshold = DMA_FIFO_THRESHOLD_FULL;
+    hdma_sdio_rx.Init.MemBurst = DMA_MBURST_INC4;
+    hdma_sdio_rx.Init.PeriphBurst = DMA_PBURST_INC4;
+    if (HAL_DMA_Init(&hdma_sdio_rx) != HAL_OK)
+    {
+        return RT_FAIL;
+    }
+    __HAL_LINKDMA(&hsdcard1, hdmarx, hdma_sdio_rx);
+
+    /* SDIO_TX Init */
+    hdma_sdio_tx.Instance = DMA2_Stream6;
+    hdma_sdio_tx.Init.Channel = DMA_CHANNEL_4;
+    hdma_sdio_tx.Init.Direction = DMA_MEMORY_TO_PERIPH;
+    hdma_sdio_tx.Init.PeriphInc = DMA_PINC_DISABLE;
+    hdma_sdio_tx.Init.MemInc = DMA_MINC_ENABLE;
+    hdma_sdio_tx.Init.PeriphDataAlignment = DMA_PDATAALIGN_WORD;
+    hdma_sdio_tx.Init.MemDataAlignment = DMA_MDATAALIGN_WORD;
+    hdma_sdio_tx.Init.Mode = DMA_PFCTRL;
+    hdma_sdio_tx.Init.Priority = DMA_PRIORITY_HIGH;
+    hdma_sdio_tx.Init.FIFOMode = DMA_FIFOMODE_ENABLE;
+    hdma_sdio_tx.Init.FIFOThreshold = DMA_FIFO_THRESHOLD_FULL;
+    hdma_sdio_tx.Init.MemBurst = DMA_MBURST_INC4;
+    hdma_sdio_tx.Init.PeriphBurst = DMA_PBURST_INC4;
+    if (HAL_DMA_Init(&hdma_sdio_tx) != HAL_OK)
+    {
+        return RT_FAIL;
+    }
+    __HAL_LINKDMA(&hsdcard1, hdmatx, hdma_sdio_tx);
+#endif
+
     return RT_OK;
+}
+
+#if _SDIO_DMA_SUPPORT == 1
+static volatile  uint32_t  WriteStatus = 0, ReadStatus = 0;
+
+void DMA2_Stream3_IRQHandler(void)
+{
+  HAL_DMA_IRQHandler(&hdma_sdio_rx);
+}
+
+void DMA2_Stream6_IRQHandler(void)
+{
+  HAL_DMA_IRQHandler(&hdma_sdio_tx);
+}
+
+void BSP_SD_WriteCpltCallback(void)
+{
+  WriteStatus = 1;
+}
+
+void BSP_SD_ReadCpltCallback(void)
+{
+  ReadStatus = 1;
 }
 
 HAL_StatusTypeDef sdcard_read_disk(uint8_t *buf, uint32_t startBlocks, uint32_t NumberOfBlocks)
@@ -77,9 +145,70 @@ HAL_StatusTypeDef sdcard_read_disk(uint8_t *buf, uint32_t startBlocks, uint32_t 
     HAL_StatusTypeDef status = HAL_OK;
     uint16_t tick = 0;
     
-    __disable_irq();
+    ReadStatus = 0;
+    status = HAL_SD_ReadBlocks_DMA(&hsdcard1, (uint8_t*)buf, startBlocks, NumberOfBlocks);
+    
+    //wait rx finished
+    while(ReadStatus == 0
+    && (tick < SDMMC_READ_WRITE_TIMEOUT))
+    {
+        hal_delay_ms(1);
+        tick++;
+    }
+    
+    //wait card ok.
+    tick = 0;
+    while((HAL_SD_GetCardState(&hsdcard1) != HAL_SD_CARD_TRANSFER)
+    && (tick < SDMMC_READ_WRITE_TIMEOUT))
+    {
+        hal_delay_ms(1);
+        tick++;
+    }
+    if(tick >= SDMMC_READ_WRITE_TIMEOUT)
+    {
+        return HAL_TIMEOUT;
+    }
+    return status;
+}
+
+HAL_StatusTypeDef sdcard_write_disk(const uint8_t *buf, uint32_t startBlocks, uint32_t NumberOfBlocks)
+{
+    HAL_StatusTypeDef status = HAL_OK;
+    uint16_t tick = 0;
+
+    WriteStatus = 0;
+    status = HAL_SD_WriteBlocks_DMA(&hsdcard1, (uint8_t*)buf, startBlocks, NumberOfBlocks);
+     
+    //wait tx finished
+    while(WriteStatus == 0
+    && (tick < SDMMC_READ_WRITE_TIMEOUT))
+    {
+        hal_delay_ms(1);
+        tick++;
+    }
+    
+    //wait card ok.
+    tick = 0;
+    while((HAL_SD_GetCardState(&hsdcard1) != HAL_SD_CARD_TRANSFER)
+    && (tick < SDMMC_READ_WRITE_TIMEOUT))
+    {
+        hal_delay_ms(1);
+        tick++;
+    }
+    if(tick >= SDMMC_READ_WRITE_TIMEOUT)
+    {
+        return HAL_TIMEOUT;
+    }
+
+    return status;
+}
+#else
+HAL_StatusTypeDef sdcard_read_disk(uint8_t *buf, uint32_t startBlocks, uint32_t NumberOfBlocks)
+{
+    HAL_StatusTypeDef status = HAL_OK;
+    uint16_t tick = 0;
+    
     status = HAL_SD_ReadBlocks(&hsdcard1, (uint8_t*)buf, startBlocks, NumberOfBlocks, SDMMC_READ_WRITE_TIMEOUT);
-    __enable_irq();
     
     //wait card ok.
     while((HAL_SD_GetCardState(&hsdcard1) != HAL_SD_CARD_TRANSFER)
@@ -100,9 +229,7 @@ HAL_StatusTypeDef sdcard_write_disk(const uint8_t *buf, uint32_t startBlocks, ui
     HAL_StatusTypeDef status = HAL_OK;
     uint16_t tick = 0;
 
-    __disable_irq();
     status = HAL_SD_WriteBlocks(&hsdcard1, (uint8_t*)buf, startBlocks, NumberOfBlocks, SDMMC_READ_WRITE_TIMEOUT);
-    __enable_irq();
     
     //wait card ok.
     while((HAL_SD_GetCardState(&hsdcard1) != HAL_SD_CARD_TRANSFER)
@@ -118,3 +245,4 @@ HAL_StatusTypeDef sdcard_write_disk(const uint8_t *buf, uint32_t startBlocks, ui
 
     return status;
 }
+#endif
