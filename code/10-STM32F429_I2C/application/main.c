@@ -15,8 +15,8 @@
 //  Revision History:
 //
 /////////////////////////////////////////////////////////////////////////////
-#include "drv_global.h"
 #include <stdio.h>
+#include "drv_global.h"
 
 #define DEBUG_JTAG          0
 #define DEBUG_STLINK        1
@@ -29,6 +29,8 @@ static GlobalType_t system_clock_init(void);
 int main(void)
 {  
     uint32_t tick = HAL_GetTick();
+    uint32_t tick_ls = HAL_GetTick();
+    RTC_TimerInfo info;
     
     HAL_Init();
     
@@ -46,7 +48,30 @@ int main(void)
         if(drv_tick_difference(tick, HAL_GetTick()) > 200)
         {
             tick = HAL_GetTick();
-            ap3216_loop_run_test();
+            //ap3216_loop_run_test();
+        }
+        
+        if(drv_tick_difference(tick_ls, HAL_GetTick()) > 1000)
+        {
+            tick_ls = HAL_GetTick();
+            
+            if(pcf8563_read_timer(&info) == RT_OK)
+            {
+                PRINT_LOG(LOG_INFO, HAL_GetTick(), "RTC Info:%d-%d-%d, %d, %d:%d:%d",
+                    info.year, info.month, info.date, 
+                    info.weekday, info.hour, info.minutes, info.seconds);
+                
+                if(get_clear_alarm())
+                {
+                    RTC_AlarmInfo alarm_info;
+                    
+                    alarm_info = pcf8563_formward_minute(&info, 1);
+                    pcf8563_set_alarm(&alarm_info);
+                    pcf8563_ctrl_alarm(ENABLE);
+                    
+                    PRINT_LOG(LOG_INFO, HAL_GetTick(), "alarm action, next:%d %d:%d", alarm_info.weekday, alarm_info.hour, alarm_info.minutes);
+                }
+            } 
         }
     }
 }
@@ -57,7 +82,9 @@ static GlobalType_t driver_initialize(void)
     
     xReturn = gpio_driver_init();
     
-    xReturn |= ap3216_driver_init();
+    //xReturn |= ap3216_driver_init();
+     
+    xReturn |= pcf8563_driver_init();
     
     if (xReturn == RT_OK)
     {

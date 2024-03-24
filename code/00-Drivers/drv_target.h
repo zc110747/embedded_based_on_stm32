@@ -31,6 +31,9 @@ uint8_t get_os_on(void);
 void hal_delay_ms(uint16_t time);
 uint32_t drv_tick_difference(uint32_t value, uint32_t now_tick);
 
+uint8_t bcdToDec(uint8_t val);
+uint8_t decToBcd(uint8_t val);
+
 #ifdef __cplusplus
 }
 #endif

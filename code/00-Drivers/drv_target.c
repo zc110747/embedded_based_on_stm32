@@ -76,3 +76,13 @@ uint32_t drv_tick_difference(uint32_t value, uint32_t now_tick)
 {
     return (now_tick >= value) ? now_tick - value : UINT_MAX - value + now_tick + 1;
 }
+
+uint8_t bcdToDec(uint8_t val) 
+{
+	return ((val/16*10) + (val%16));
+}
+
+uint8_t decToBcd(uint8_t val) 
+{
+	return ( (val/10*16) + (val%10));
+}

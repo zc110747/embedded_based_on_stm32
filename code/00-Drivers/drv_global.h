@@ -59,7 +59,15 @@ extern "C" {
 #include "drv_i2c_ap3216.h"
 #endif
 
-#if DRIVER_I2C_PCF8574_ENABLE == 1
+#if DRIVER_DS3213_ENABLE == 1
+#include "drv_i2c_ds3213.h"
+#endif
+
+#if DRIVER_PCF8563_ENABLE == 1
+#include "drv_i2c_pcf8563.h"
+#endif
+
+#if DRIVER_PCF8574_ENABLE == 1
 #include "drv_i2c_pcf8574.h"
 #endif
 

@@ -189,7 +189,7 @@
             <hadIRAM2>1</hadIRAM2>
             <hadIROM2>0</hadIROM2>
             <StupSel>8</StupSel>
-            <useUlib>1</useUlib>
+            <useUlib>0</useUlib>
             <EndSel>0</EndSel>
             <uLtcg>0</uLtcg>
             <nSecure>0</nSecure>
@@ -528,6 +528,11 @@
               <FileType>5</FileType>
               <FilePath>..\..\00-Drivers\drv_i2c_ap3216.h</FilePath>
             </File>
+            <File>
+              <FileName>drv_i2c_pcf8563.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\00-Drivers\drv_i2c_pcf8563.h</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -572,6 +577,11 @@
               <FileName>drv_i2c_pcf8574.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\00-Drivers\drv_i2c_pcf8574.c</FilePath>
+            </File>
+            <File>
+              <FileName>drv_i2c_pcf8563.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\00-Drivers\drv_i2c_pcf8563.c</FilePath>
             </File>
           </Files>
         </Group>
