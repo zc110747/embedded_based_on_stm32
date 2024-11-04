@@ -16,7 +16,5 @@
 *.log
 *._ia
 
-code/25-STM32F429_MICROPYTHON/*
-code/26-2-STM32F429_ModbusOS/*
 stm32f429.uvguix.*
 
