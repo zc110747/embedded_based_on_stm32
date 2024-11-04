@@ -1,0 +1,7 @@
+{
+    "files.associations": {
+        "mqttpacket.h": "c",
+        "mqttlinux.h": "c",
+        "mqttfreertos.h": "c"
+    }
+}

@@ -113,6 +113,7 @@ int print_log(LOG_LEVEL level, uint32_t tick, const char* fmt, ...)
     int len, bufferlen;
     char *pbuf, *buf;
     int outlen = 0;
+    va_list	valist;
     
     if (g_logger_info.ready != 1)
         return -1;
@@ -122,8 +123,6 @@ int print_log(LOG_LEVEL level, uint32_t tick, const char* fmt, ...)
     
     {
         LOGGER_PROTECT_ENTRY();
-        
-        va_list	valist;
         
         buf = LogGetMemoryBuffer(LOGGER_MAX_BUFFER_SIZE);
         len = LOGGER_MAX_BUFFER_SIZE;

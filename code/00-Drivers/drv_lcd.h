@@ -96,11 +96,13 @@ extern "C" {
 #endif
 
 GlobalType_t lcd_driver_init(void);
+void lcd_write_ram_prepare(void);
 void lcd_driver_clear(uint32_t color);
+void lcd_set_cursor(uint16_t Xpos, uint16_t Ypos);
 void lcd_driver_showstring(uint16_t x,uint16_t y,uint16_t width,uint16_t height, uint8_t size, char *p);
 void lcd_driver_show_num(uint16_t x,uint16_t y,uint32_t num,uint8_t len,uint8_t size,uint8_t mode);
 void lcd_driver_show_extra_num(uint16_t x,uint16_t y, uint32_t num, uint8_t len, uint8_t size, uint8_t mode);
-
+LCD_INFO *get_lcd_info(void);
 #ifdef __cplusplus
 }
 #endif

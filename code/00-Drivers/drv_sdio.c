@@ -28,7 +28,11 @@ GlobalType_t sdcard_driver_init(void)
 {
     GPIO_InitTypeDef GPIO_InitStruct = {0};
 
-    //clock enable
+    //clock rst and enable
+    __HAL_RCC_SDIO_FORCE_RESET();
+    HAL_Delay(1);
+    __HAL_RCC_SDIO_RELEASE_RESET();
+    
     __HAL_RCC_SDIO_CLK_ENABLE();
     __HAL_RCC_GPIOC_CLK_ENABLE();
     __HAL_RCC_GPIOD_CLK_ENABLE();
@@ -118,26 +122,26 @@ GlobalType_t sdcard_driver_init(void)
 }
 
 #if _SDIO_DMA_SUPPORT == 1
-static volatile  uint32_t  WriteStatus = 0, ReadStatus = 0;
+static volatile  uint32_t  WriteCallback_Status = 0, ReadCallback_Status = 0;
 
 void DMA2_Stream3_IRQHandler(void)
 {
-  HAL_DMA_IRQHandler(&hdma_sdio_rx);
+    HAL_DMA_IRQHandler(&hdma_sdio_rx);
 }
 
 void DMA2_Stream6_IRQHandler(void)
 {
-  HAL_DMA_IRQHandler(&hdma_sdio_tx);
+    HAL_DMA_IRQHandler(&hdma_sdio_tx);
 }
 
 void BSP_SD_WriteCpltCallback(void)
 {
-  WriteStatus = 1;
+    WriteCallback_Status = 1;
 }
 
 void BSP_SD_ReadCpltCallback(void)
 {
-  ReadStatus = 1;
+    ReadCallback_Status = 1;
 }
 
 HAL_StatusTypeDef sdcard_read_disk(uint8_t *buf, uint32_t startBlocks, uint32_t NumberOfBlocks)
@@ -145,15 +149,23 @@ HAL_StatusTypeDef sdcard_read_disk(uint8_t *buf, uint32_t startBlocks, uint32_t 
     HAL_StatusTypeDef status = HAL_OK;
     uint16_t tick = 0;
     
-    ReadStatus = 0;
+    ReadCallback_Status = 0;
     status = HAL_SD_ReadBlocks_DMA(&hsdcard1, (uint8_t*)buf, startBlocks, NumberOfBlocks);
+    if (status == HAL_ERROR)
+    {
+       return HAL_ERROR; 
+    }
     
     //wait rx finished
-    while(ReadStatus == 0
+    while(ReadCallback_Status == 0
     && (tick < SDMMC_READ_WRITE_TIMEOUT))
     {
         hal_delay_ms(1);
         tick++;
+    }
+    if(tick >= SDMMC_READ_WRITE_TIMEOUT)
+    {
+        return HAL_TIMEOUT;
     }
     
     //wait card ok.
@@ -176,15 +188,23 @@ HAL_StatusTypeDef sdcard_write_disk(const uint8_t *buf, uint32_t startBlocks, ui
     HAL_StatusTypeDef status = HAL_OK;
     uint16_t tick = 0;
 
-    WriteStatus = 0;
+    WriteCallback_Status = 0;
     status = HAL_SD_WriteBlocks_DMA(&hsdcard1, (uint8_t*)buf, startBlocks, NumberOfBlocks);
-     
+    if (status == HAL_ERROR)
+    {
+       return HAL_ERROR; 
+    }
+    
     //wait tx finished
-    while(WriteStatus == 0
+    while(WriteCallback_Status == 0
     && (tick < SDMMC_READ_WRITE_TIMEOUT))
     {
         hal_delay_ms(1);
         tick++;
+    }
+    if(tick >= SDMMC_READ_WRITE_TIMEOUT)
+    {
+        return HAL_TIMEOUT;
     }
     
     //wait card ok.

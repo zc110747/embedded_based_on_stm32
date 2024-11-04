@@ -72,20 +72,22 @@ int MMC_disk_initialize(void)
 
 int MMC_disk_read(BYTE *buff, LBA_t sector, UINT count)
 {
-    if(sdcard_read_disk(buff, sector, count) == HAL_OK)
+    if(sdcard_read_disk(buff, sector, count) != HAL_OK)
     {
-        return 0;
+        sdcard_driver_init();
+        return -1;
     }
-    return -1;
+    return 0;
 }
 
 int MMC_disk_write(const BYTE *buff, LBA_t sector, UINT count)
 {
-    if(sdcard_write_disk(buff, sector, count) == HAL_OK)
+    if(sdcard_write_disk(buff, sector, count) != HAL_OK)
     {
-        return 0;
+        sdcard_driver_init();
+        return -1;
     }
-    return -1;
+    return 0;
 }
 
 int MMC_disk_ioctl(BYTE cmd, void *buff)

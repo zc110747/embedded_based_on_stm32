@@ -16,7 +16,7 @@ set BuildPathList[10]=11-STM32F429_TIME\project
 set BuildPathList[11]=12-STM32F429_WD\project
 set BuildPathList[12]=13-STM32F429_DMA\project
 set BuildPathList[13]=14-STM32F429_SDIO\project
-set BuildPathList[14]=15-STM32F429_FSMC\project
+set BuildPathList[14]=15-STM32F429_FMC\project
 set BuildPathList[15]=16-STM32F429_CAN\project
 set BuildPathList[16]=17-STM32F429_USB\project
 

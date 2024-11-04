@@ -50,7 +50,7 @@ GlobalType_t can_driver_init(void)
     /* CAN Module Init */
     hcan1.Instance = CAN1;
     hcan1.Init.Prescaler = 6;
-    hcan1.Init.Mode = CAN_MODE_LOOPBACK;
+    hcan1.Init.Mode = CAN_MODE_LOOPBACK;              //环回模式, 测试CAN接口
     hcan1.Init.SyncJumpWidth = CAN_SJW_1TQ;
     hcan1.Init.TimeSeg1 = CAN_BS1_8TQ;
     hcan1.Init.TimeSeg2 = CAN_BS2_6TQ;

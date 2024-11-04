@@ -30,8 +30,7 @@ int main(void)
 {  
     uint32_t tick = HAL_GetTick();
     uint32_t tick_ls = HAL_GetTick();
-    RTC_TimerInfo info;
-    
+
     HAL_Init();
     
     //system clock tick init.
@@ -48,13 +47,16 @@ int main(void)
         if(drv_tick_difference(tick, HAL_GetTick()) > 200)
         {
             tick = HAL_GetTick();
-            //ap3216_loop_run_test();
+#if DRIVER_AP3216_ENABLE == 1 
+            ap3216_loop_run_test();
+#endif
         }
         
         if(drv_tick_difference(tick_ls, HAL_GetTick()) > 1000)
         {
-            tick_ls = HAL_GetTick();
-            
+#if DRIVER_PCF8563_ENABLE == 1
+            RTC_TimerInfo info;
+                
             if(pcf8563_read_timer(&info) == RT_OK)
             {
                 PRINT_LOG(LOG_INFO, HAL_GetTick(), "RTC Info:%d-%d-%d, %d, %d:%d:%d",
@@ -71,7 +73,12 @@ int main(void)
                     
                     PRINT_LOG(LOG_INFO, HAL_GetTick(), "alarm action, next:%d %d:%d", alarm_info.weekday, alarm_info.hour, alarm_info.minutes);
                 }
-            } 
+            }
+#endif
+            uint32_t adc = HX711_Read();
+            PRINT_LOG(LOG_INFO, HAL_GetTick(), "height:0x%x", adc);
+
+            tick_ls = HAL_GetTick();
         }
     }
 }
@@ -81,10 +88,16 @@ static GlobalType_t driver_initialize(void)
     GlobalType_t xReturn;
     
     xReturn = gpio_driver_init();
-    
-    //xReturn |= ap3216_driver_init();
-     
+
+#if DRIVER_AP3216_ENABLE == 1    
+    xReturn |= ap3216_driver_init();
+#endif
+
+#if DRIVER_PCF8563_ENABLE == 1    
     xReturn |= pcf8563_driver_init();
+#endif
+    
+    xReturn |= hx711_driver_init();
     
     if (xReturn == RT_OK)
     {

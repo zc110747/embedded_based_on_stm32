@@ -27,7 +27,7 @@ extern "C" {
 
 #include "includes.h"
 
-#define USART_RUN_MODE  RUN_MODE_DMA
+#define USART_RUN_MODE  RUN_MODE_NULL
 
 GlobalType_t usart_driver_init(void);
 void usart_loop_run(void);

@@ -65,7 +65,7 @@ GlobalType_t dma_translate(uint32_t SrcAddress, uint32_t DstAddress, uint32_t Da
         return RT_FAIL;
     }
     
-    return RT_OK;
+    return RT_OK;                                                                                                
 }
 
 GlobalType_t dma_check_finish(uint32_t timeout_ms)

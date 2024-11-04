@@ -30,7 +30,7 @@
 #include "includes.h"
 
 //modify when different sysclk, too small will leader i2c error.
-#define I2C_DELAY_COUNT     140
+#define I2C_DELAY_COUNT     5
 
 //can add for support more i2c interface, default is 3
 #define SOFT_I2C1           0

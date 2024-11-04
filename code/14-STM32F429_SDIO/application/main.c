@@ -60,7 +60,7 @@ void fatfs_app(void)
                     f_read(&fil, work, 64, &bw);
                     if(bw != 0)
                     {
-                        work[bw] = 0;
+                        work[bw] = 0;             
                         PRINT_LOG(LOG_DEBUG, HAL_GetTick(), "%s", work); 
                     }
                     f_close(&fil);

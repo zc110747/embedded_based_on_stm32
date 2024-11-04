@@ -25,17 +25,22 @@
 #include "task.h"
 #endif
 
-//#pragma import(__use_no_semihosting)                            
-//struct __FILE 
-//{ 
-//	int handle; 
-//}; 
+#pragma import(__use_no_semihosting)                            
+struct __FILE 
+{ 
+	int handle; 
+}; 
 
-//FILE __stdout;     
-//void _sys_exit(int x) 
-//{ 
-//	x = x; 
-//}
+FILE __stdout;     
+void _sys_exit(int x) 
+{ 
+	x = x; 
+}
+
+void _ttywrch(int ch)
+{
+    ch = ch;
+}
 
 //use MicroLIB.
 volatile int32_t ITM_RxBuffer = ITM_RXBUFFER_EMPTY;
@@ -85,4 +90,16 @@ uint8_t bcdToDec(uint8_t val)
 uint8_t decToBcd(uint8_t val) 
 {
 	return ( (val/10*16) + (val%10));
+}
+
+void delay_us(uint16_t times)
+{
+    uint16_t i, j;
+    for(i=0; i<times; i++)
+    {
+        for(j=0; j<5; j++)
+        {
+            __NOP();
+        }
+    }
 }

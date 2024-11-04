@@ -32,7 +32,12 @@ GlobalType_t pcf8574_driver_init(void)
     __HAL_RCC_I2C2_CLK_ENABLE();
     __HAL_RCC_GPIOB_CLK_ENABLE();
     __HAL_RCC_GPIOH_CLK_ENABLE();
-
+    
+    __HAL_RCC_I2C2_FORCE_RESET();
+    HAL_Delay(1);
+    __HAL_RCC_I2C2_RELEASE_RESET();   
+    HAL_Delay(1);
+    
     GPIO_InitStruct.Pin = GPIO_PIN_4|GPIO_PIN_5;
     GPIO_InitStruct.Mode = GPIO_MODE_AF_OD;
     GPIO_InitStruct.Pull = GPIO_NOPULL;
@@ -73,15 +78,21 @@ GlobalType_t pcf8574_driver_init(void)
 GlobalType_t pcf8574_i2c_write(uint8_t data)
 {
     if(HAL_I2C_Master_Transmit(&hi2c2, PCF8574_ADDR | 0x00, &data, 1, PCF8574_I2C_TIMEOUT) != HAL_OK)
+    {
+        pcf8574_driver_init();
         return RT_FAIL;
-
+    }
+    
     return RT_OK;    
 }
 
 GlobalType_t pcf8574_i2c_read(uint8_t *pdata)
 {
     if(HAL_I2C_Master_Receive(&hi2c2, PCF8574_ADDR | 0x01, pdata, 1, PCF8574_I2C_TIMEOUT) != HAL_OK)
+    {
+        pcf8574_driver_init();       
         return RT_FAIL;
+    }
     
     return RT_OK;
 }

@@ -569,8 +569,8 @@ void HAL_DCMI_IRQHandler(DCMI_HandleTypeDef *hdcmi)
     hdcmi->State = HAL_DCMI_STATE_ERROR;
     
     /* Set the synchronization error callback */
-    hdcmi->DMA_Handle->XferAbortCallback = DCMI_DMAError;
-
+    DCMI_DMAError(hdcmi->DMA_Handle);
+    
     /* Abort the DMA Transfer */
     HAL_DMA_Abort_IT(hdcmi->DMA_Handle);
   }
@@ -587,7 +587,7 @@ void HAL_DCMI_IRQHandler(DCMI_HandleTypeDef *hdcmi)
     hdcmi->State = HAL_DCMI_STATE_ERROR;
     
     /* Set the overflow callback */
-    hdcmi->DMA_Handle->XferAbortCallback = DCMI_DMAError;
+    DCMI_DMAError(hdcmi->DMA_Handle);
 
     /* Abort the DMA Transfer */
     HAL_DMA_Abort_IT(hdcmi->DMA_Handle);

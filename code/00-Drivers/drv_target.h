@@ -33,6 +33,7 @@ uint32_t drv_tick_difference(uint32_t value, uint32_t now_tick);
 
 uint8_t bcdToDec(uint8_t val);
 uint8_t decToBcd(uint8_t val);
+void delay_us(uint16_t times);
 
 #ifdef __cplusplus
 }

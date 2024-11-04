@@ -55,7 +55,7 @@ extern "C" {
 #include "drv_spi_wq.h"
 #endif
 
-#if DRIVER_I2C_ENABLE == 1
+#if DRIVER_AP3216_ENABLE == 1
 #include "drv_i2c_ap3216.h"
 #endif
 
@@ -69,6 +69,10 @@ extern "C" {
 
 #if DRIVER_PCF8574_ENABLE == 1
 #include "drv_i2c_pcf8574.h"
+#endif
+
+#if DRIVER_HX711_ENABLE == 1
+#include "drv_hx711.h"
 #endif
 
 #if DRIVER_TIME_ENABLE == 1

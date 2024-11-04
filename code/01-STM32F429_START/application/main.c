@@ -30,12 +30,30 @@ static void ITM_RunTest(void);
 static void RTT_RunTest(void);
 static GlobalType_t SystemClock_Config(void);
 
+typedef __packed struct
+{
+    char val1;
+    int val2;
+}STRUCT_PACKED;
+
+typedef struct
+{
+    char val1;
+    __packed int val2;
+}STRUCT_VAL;
+
 //main entery function
 int main(void)
 {  
+    STRUCT_PACKED test1;
+    STRUCT_VAL test2;
+    
     HAL_Init();
     
     SystemClock_Config();
+    
+    test2.val1 = test1.val1;
+    test1.val2 = test2.val1;
     
     while (1)
     {
@@ -51,7 +69,7 @@ int main(void)
 
 //with stlink can use
 volatile int32_t ITM_RxBuffer = ITM_RXBUFFER_EMPTY;
-static void ITM_RunTest(void)
+static void __attribute__((unused)) ITM_RunTest(void)
 {
     char *pbuffer = "ITM Send Test!\r\n";
     uint8_t index;
@@ -63,7 +81,7 @@ static void ITM_RunTest(void)
 }
 
 //with jlink can use
-static void RTT_RunTest(void)
+static void __attribute__((unused)) RTT_RunTest(void) 
 {
     char *pbuffer = "RTT Send Test!\r\n";
     

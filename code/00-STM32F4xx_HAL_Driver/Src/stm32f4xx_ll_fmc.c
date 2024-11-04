@@ -1381,7 +1381,7 @@ HAL_StatusTypeDef FMC_SDRAM_SendCommand(FMC_SDRAM_TypeDef *Device,
   assert_param(IS_FMC_MODE_REGISTER(Command->ModeRegisterDefinition));
 
   /* Set command register */
-  MODIFY_REG(Device->SDCMR, (FMC_SDCMR_MODE | FMC_SDCMR_CTB2 | FMC_SDCMR_CTB1 | FMC_SDCMR_NRFS | FMC_SDCMR_MRD),
+  MODIFY_REG(Device->SDCMR, (FMC_SDCMR_MODE | FMC_SDCMR_CTB2 | FMC_SDCMR_CTB1 | FMC_SDCMR_NRFS | FMC_SDCMR_MRD),   
              ((Command->CommandMode) | (Command->CommandTarget) |
               (((Command->AutoRefreshNumber) - 1U) << FMC_SDCMR_NRFS_Pos) |
               ((Command->ModeRegisterDefinition) << FMC_SDCMR_MRD_Pos)));

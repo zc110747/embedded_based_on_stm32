@@ -214,6 +214,7 @@ static GlobalType_t sdram_send_command(uint8_t bank, uint8_t cmd, uint8_t refres
 //address can be use after the test
 static uint32_t test_sdram[100] __attribute__((section(".ARM.__at_0xC0000000")));
 
+#pragma arm section code=".ARM.__at_0x08001000"
 static void sdram_memory_test(void)
 {
     uint32_t i;
@@ -234,5 +235,5 @@ static void sdram_memory_test(void)
     }
     PRINT_LOG(LOG_INFO, HAL_GetTick(), "sdram test success!");
 }
-
+#pragma arm section
 

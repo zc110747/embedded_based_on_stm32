@@ -129,7 +129,7 @@ GlobalType_t ap3216_driver_init(void)
         return RT_OK;
     }
     
-    res = ap3216_reg_write(AP3216C_SYSTEMCONG, 0x40);   //reset the ap3216
+    res = ap3216_reg_write(AP3216C_SYSTEMCONG, 0x04);   //reset the ap3216
     if (res != RT_OK)  
     {
         return RT_FAIL;

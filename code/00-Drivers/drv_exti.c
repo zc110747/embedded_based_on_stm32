@@ -19,6 +19,7 @@
 //
 /////////////////////////////////////////////////////////////////////////////
 #include "drv_exti.h"
+#include "drv_target.h"
 
 static volatile uint8_t key1_interrupt = 0;
 static uint32_t key1_delay_tick = 0;

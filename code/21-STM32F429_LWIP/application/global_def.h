@@ -36,7 +36,7 @@ typedef enum
 #define DRIVER_ADC_ENABLE           0
 #define DRIVER_SPI_ENABLE           0
 #define DRIVER_I2C_ENABLE           0
-#define DRIVER_I2C_PCF8574_ENABLE   1
+#define DRIVER_PCF8574_ENABLE       1
 #define DRIVER_TIME_ENABLE          0
 #define DRIVER_WDG_ENABLE           0
 #define DRIVER_DMA_ENABLE           0
@@ -70,6 +70,6 @@ typedef enum
 #define I2C_USE_HARDWARE        0
 #define I2C_USE_SOFTWARE        1
 #define I2C_RUN_MODE            I2C_USE_HARDWARE
-#define LOG_DEFAULT_DEVICE      LOG_DEVICE_ETH
+#define LOG_DEFAULT_DEVICE      LOG_DEVICE_USART
 
 #endif

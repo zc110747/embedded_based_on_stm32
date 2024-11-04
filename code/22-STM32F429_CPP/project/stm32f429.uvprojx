@@ -514,11 +514,6 @@
               <FilePath>..\application\stm32f4xx_hal_conf.h</FilePath>
             </File>
             <File>
-              <FileName>global_def.hpp</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\driver\global_def.hpp</FilePath>
-            </File>
-            <File>
               <FileName>gpio.hpp</FileName>
               <FileType>5</FileType>
               <FilePath>..\driver\gpio.hpp</FilePath>

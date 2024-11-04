@@ -29,10 +29,11 @@
 #define DRIVER_DAC_ENABLE       0
 #define DRIVER_ADC_ENABLE       0
 #define DRIVER_SPI_ENABLE       0
-#define DRIVER_I2C_ENABLE       1
-#define DRIVER_DS3213_ENABLE    1
-#define DRIVER_PCF8563_ENABLE   1
-#define DRIVER_PCF8574_ENABLE   1
+#define DRIVER_AP3216_ENABLE    0
+#define DRIVER_DS3213_ENABLE    0
+#define DRIVER_PCF8563_ENABLE   0
+#define DRIVER_PCF8574_ENABLE   0
+#define DRIVER_HX711_ENABLE     1
 
 typedef enum
 {

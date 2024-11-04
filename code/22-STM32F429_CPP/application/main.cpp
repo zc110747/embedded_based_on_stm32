@@ -24,7 +24,8 @@ static I2C_HandleTypeDef hi2c_ap3216;
 
 int main(void)
 {
-    device_gpio led;
+    device_gpio_output led;
+    device_gpio_input key;
     device_ap3216 ap3216_dev;
     AP3216C_INFO *ap3216_info_ptr;
     
@@ -35,6 +36,10 @@ int main(void)
     led.set_dev(GPIOB, GPIO_PIN_0);
     led.set_mode(GPIO_MODE_OUTPUT_PP, GPIO_NOPULL, GPIO_SPEED_FREQ_LOW);
     led.init();
+    
+    key.set_dev(GPIOH, GPIO_PIN_2);
+    key.set_mode(GPIO_MODE_INPUT, GPIO_PULLUP, GPIO_SPEED_FREQ_VERY_HIGH);
+    key.init();
     
     ap3216_dev.set_gpio_scl(GPIOH, GPIO_PIN_4, GPIO_AF4_I2C2);
     ap3216_dev.set_gpio_sda(GPIOH, GPIO_PIN_5, GPIO_AF4_I2C2);
@@ -59,11 +64,14 @@ int main(void)
         
         ap3216_dev.upadte_info();
         
-        PRINT_LOG(LOG_INFO, HAL_GetTick(), "info:%d, %d, %d", 
+        PRINT_LOG(LOG_INFO, HAL_GetTick(), "info:%d, %d, %d, key:%d", 
             ap3216_info_ptr->als,
             ap3216_info_ptr->ir,
-            ap3216_info_ptr->ps);
+            ap3216_info_ptr->ps,
+            key.data());
         
         HAL_Delay(500);
     }
 }
+
+

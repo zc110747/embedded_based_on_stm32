@@ -50,7 +50,8 @@ int main(void)
         if (drv_tick_difference(tick, HAL_GetTick()) > 200)
         {
             tick = HAL_GetTick();
-            
+
+#if DAC_RUN_MODE != RUN_MODE_VOICE            
             //update voltage
             dac_set(voltage);
 
@@ -74,7 +75,8 @@ int main(void)
                     voltage = DAC_PERIOD;
                 }
             }
-        }       
+#endif
+        }      
     }
 }
 

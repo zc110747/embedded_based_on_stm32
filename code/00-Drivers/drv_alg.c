@@ -59,6 +59,8 @@ uint32_t calc_hw_crc32(uint32_t *pbuffer, uint32_t size)
     return value;
 }
 
+
+
 #define CRC8_POLYNOMIAL    0x07
 #define CRC8_INIT          0xFF
 uint8_t calc_crc8(uint8_t *ptr, uint32_t len)

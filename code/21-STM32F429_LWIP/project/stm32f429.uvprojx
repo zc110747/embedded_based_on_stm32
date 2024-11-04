@@ -339,7 +339,7 @@
               <MiscControls></MiscControls>
               <Define></Define>
               <Undefine></Undefine>
-              <IncludePath>..\..\00-STM32F4xx_HAL_Driver\Inc;..\..\00-STM32F4xx_HAL_Driver\Inc\Legacy;..\..\00-Extend_Library\segger_rtt\Config;..\..\00-Extend_Library\segger_rtt\RTT;..\..\00-Usr_Library\logger;..\..\00-Extend_Library\dsp_lib\Include;..\..\00-Drivers;..\application;..\..\00-Extend_Library\FreeRTOS\Source\include;..\..\00-Extend_Library\FreeRTOS\Source\portable\RVDS\ARM_CM4F;..\..\00-Extend_Library\FreeRTOS\Source\CMSIS_RTOS_V2;..\application\App;..\application\Target;..\..\00-Extend_Library\LwIP\src\include;..\..\00-Extend_Library\LwIP\system</IncludePath>
+              <IncludePath>..\..\00-STM32F4xx_HAL_Driver\Inc;..\..\00-STM32F4xx_HAL_Driver\Inc\Legacy;..\..\00-Extend_Library\segger_rtt\Config;..\..\00-Extend_Library\segger_rtt\RTT;..\..\00-Usr_Library\logger;..\..\00-Extend_Library\dsp_lib\Include;..\..\00-Drivers;..\application;..\..\00-Extend_Library\FreeRTOS\Source\include;..\..\00-Extend_Library\FreeRTOS\Source\portable\RVDS\ARM_CM4F;..\..\00-Extend_Library\FreeRTOS\Source\CMSIS_RTOS_V2;..\application\App;..\application\Target;..\..\00-Extend_Library\LwIP\src\include;..\..\00-Extend_Library\LwIP\system;..\..\00-Extend_Library\paho.mqtt\src;..\..\00-Extend_Library\paho.mqtt\src\FreeRTOS</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -370,7 +370,7 @@
             <TextAddressRange>0x08000000</TextAddressRange>
             <DataAddressRange>0x20000000</DataAddressRange>
             <pXoBase></pXoBase>
-            <ScatterFile></ScatterFile>
+            <ScatterFile>.\Objects\stm32f429-start.sct</ScatterFile>
             <IncludeLibs></IncludeLibs>
             <IncludeLibsPath></IncludeLibsPath>
             <Misc></Misc>
@@ -507,6 +507,11 @@
               <FileName>logger_client.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\application\App\logger_client.c</FilePath>
+            </File>
+            <File>
+              <FileName>mqtt_app.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\application\App\mqtt_app.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -1067,6 +1072,127 @@
               <FileName>lan8742.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\application\Target\lan8742.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>extern/mqtt</GroupName>
+          <Files>
+            <File>
+              <FileName>stdoutsub.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\00-Extend_Library\paho.mqtt\stdoutsub.c</FilePath>
+              <FileOption>
+                <CommonProperty>
+                  <UseCPPCompiler>2</UseCPPCompiler>
+                  <RVCTCodeConst>0</RVCTCodeConst>
+                  <RVCTZI>0</RVCTZI>
+                  <RVCTOtherData>0</RVCTOtherData>
+                  <ModuleSelection>0</ModuleSelection>
+                  <IncludeInBuild>0</IncludeInBuild>
+                  <AlwaysBuild>0</AlwaysBuild>
+                  <GenerateAssemblyFile>0</GenerateAssemblyFile>
+                  <AssembleAssemblyFile>0</AssembleAssemblyFile>
+                  <PublicsOnly>2</PublicsOnly>
+                  <StopOnExitCode>11</StopOnExitCode>
+                  <CustomArgument></CustomArgument>
+                  <IncludeLibraryModules></IncludeLibraryModules>
+                  <ComprImg>1</ComprImg>
+                </CommonProperty>
+                <FileArmAds>
+                  <Cads>
+                    <interw>2</interw>
+                    <Optim>0</Optim>
+                    <oTime>2</oTime>
+                    <SplitLS>2</SplitLS>
+                    <OneElfS>2</OneElfS>
+                    <Strict>2</Strict>
+                    <EnumInt>2</EnumInt>
+                    <PlainCh>2</PlainCh>
+                    <Ropi>2</Ropi>
+                    <Rwpi>2</Rwpi>
+                    <wLevel>0</wLevel>
+                    <uThumb>2</uThumb>
+                    <uSurpInc>2</uSurpInc>
+                    <uC99>2</uC99>
+                    <uGnu>2</uGnu>
+                    <useXO>2</useXO>
+                    <v6Lang>0</v6Lang>
+                    <v6LangP>0</v6LangP>
+                    <vShortEn>2</vShortEn>
+                    <vShortWch>2</vShortWch>
+                    <v6Lto>2</v6Lto>
+                    <v6WtE>2</v6WtE>
+                    <v6Rtti>2</v6Rtti>
+                    <VariousControls>
+                      <MiscControls></MiscControls>
+                      <Define></Define>
+                      <Undefine></Undefine>
+                      <IncludePath></IncludePath>
+                    </VariousControls>
+                  </Cads>
+                </FileArmAds>
+              </FileOption>
+            </File>
+            <File>
+              <FileName>MQTTClient.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\00-Extend_Library\paho.mqtt\src\MQTTClient.c</FilePath>
+            </File>
+            <File>
+              <FileName>MQTTConnectClient.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\00-Extend_Library\paho.mqtt\src\MQTTConnectClient.c</FilePath>
+            </File>
+            <File>
+              <FileName>MQTTConnectServer.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\00-Extend_Library\paho.mqtt\src\MQTTConnectServer.c</FilePath>
+            </File>
+            <File>
+              <FileName>MQTTDeserializePublish.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\00-Extend_Library\paho.mqtt\src\MQTTDeserializePublish.c</FilePath>
+            </File>
+            <File>
+              <FileName>MQTTFormat.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\00-Extend_Library\paho.mqtt\src\MQTTFormat.c</FilePath>
+            </File>
+            <File>
+              <FileName>MQTTPacket.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\00-Extend_Library\paho.mqtt\src\MQTTPacket.c</FilePath>
+            </File>
+            <File>
+              <FileName>MQTTSerializePublish.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\00-Extend_Library\paho.mqtt\src\MQTTSerializePublish.c</FilePath>
+            </File>
+            <File>
+              <FileName>MQTTSubscribeClient.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\00-Extend_Library\paho.mqtt\src\MQTTSubscribeClient.c</FilePath>
+            </File>
+            <File>
+              <FileName>MQTTSubscribeServer.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\00-Extend_Library\paho.mqtt\src\MQTTSubscribeServer.c</FilePath>
+            </File>
+            <File>
+              <FileName>MQTTUnsubscribeClient.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\00-Extend_Library\paho.mqtt\src\MQTTUnsubscribeClient.c</FilePath>
+            </File>
+            <File>
+              <FileName>MQTTUnsubscribeServer.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\00-Extend_Library\paho.mqtt\src\MQTTUnsubscribeServer.c</FilePath>
+            </File>
+            <File>
+              <FileName>MQTTFreeRTOS.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\00-Extend_Library\paho.mqtt\src\FreeRTOS\MQTTFreeRTOS.c</FilePath>
             </File>
           </Files>
         </Group>

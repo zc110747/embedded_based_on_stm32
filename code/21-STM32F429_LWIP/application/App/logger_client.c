@@ -46,28 +46,28 @@ static const osThreadAttr_t LoggerTxTask_attributes = {
 
 static NetInfo_t NetInfo = {
 	/* Device Net Info */
-	.ipaddr = {192, 168, 3, 99},
-    .gateway = {192, 168, 3, 1},
+	.ipaddr = {192, 168, 2, 99},
+    .gateway = {192, 168, 2, 1},
     .netmask = {255, 255, 255, 0},
-    .serverip = {192, 168, 3, 153},
+    .serverip = {192, 168, 2, 34},
     .logger_port = 15059, 
 };
     
 extern u8_t netif_link_up(void);
 void tcp_server_task(void *argument)
 {
-	struct sockaddr_in server_addr;
+    struct sockaddr_in server_addr;
 
-	ip_addr_t ipaddr;
-	int bytes_received;
+    ip_addr_t ipaddr;
+    int bytes_received;
 
-	IP4_ADDR(&ipaddr, NetInfo.serverip[0],
-				NetInfo.serverip[1],
-				NetInfo.serverip[2],
-				NetInfo.serverip[3]);
-	server_addr.sin_family = AF_INET;
-	server_addr.sin_port = htons(NetInfo.logger_port);
-	server_addr.sin_addr.s_addr = ipaddr.addr; //0x2801000a
+    IP4_ADDR(&ipaddr, NetInfo.serverip[0],
+                NetInfo.serverip[1],
+                NetInfo.serverip[2],
+                NetInfo.serverip[3]);
+    server_addr.sin_family = AF_INET;
+    server_addr.sin_port = htons(NetInfo.logger_port);
+    server_addr.sin_addr.s_addr = ipaddr.addr; //0x2801000a
 
 	for( ;; )
 	{
@@ -118,8 +118,8 @@ void tcp_server_task(void *argument)
 				}
 				else
 				{
-                    logger_recv_buffer[bytes_received] = '\0';
-                    PRINT_LOG(LOG_WARN, xTaskGetTickCount(), "tcp receive:%s", logger_recv_buffer);
+					logger_recv_buffer[bytes_received] = '\0';
+					PRINT_LOG(LOG_WARN, xTaskGetTickCount(), "tcp receive:%s", logger_recv_buffer);
 				}
 			}
 

@@ -35,8 +35,6 @@ static uint16_t lcd_rd_data(void);
 static void lcd_write_reg(uint16_t regval);
 static void lcd_write_data(uint16_t data);
 static void lcd_write_reg_data(uint16_t reg, uint16_t data);
-static void lcd_write_ram_prepare(void);
-static void lcd_set_cursor(uint16_t Xpos, uint16_t Ypos);
 static void lcd_display_dir(uint8_t dir);
 static uint32_t lcd_pow(uint8_t m,uint8_t n);
 static void lcd_display_dir(uint8_t dir);
@@ -71,6 +69,10 @@ GlobalType_t lcd_driver_init(void)
         PRINT_LOG(LOG_ERROR, HAL_GetTick(), "lcd hardware_init failed!");
     }
     return result;
+}
+LCD_INFO *get_lcd_info(void)
+{
+    return &g_lcd_info;
 }
 
 void lcd_driver_showstring(uint16_t x, uint16_t y, uint16_t width, uint16_t height, uint8_t size, char *p)
@@ -163,6 +165,24 @@ void lcd_driver_clear(uint32_t color)
         LCD->LCD_RAM=color;	
     } 
 }
+
+void lcd_set_cursor(uint16_t Xpos, uint16_t Ypos)
+{	 
+    lcd_write_reg(g_lcd_info.setxcmd);
+    lcd_write_data(Xpos>>8); 		
+    lcd_write_reg(g_lcd_info.setxcmd+1);
+    lcd_write_data(Xpos&0xFF);			 
+    lcd_write_reg(g_lcd_info.setycmd);
+    lcd_write_data(Ypos>>8);  		
+    lcd_write_reg(g_lcd_info.setycmd+1);
+    lcd_write_data(Ypos&0xFF);			
+} 
+
+void lcd_write_ram_prepare(void)
+{
+    LCD->LCD_REG = g_lcd_info.wramcmd;
+    __NOP();
+}	
 
 ///////////////////////////////////////local function////////////////////////////
 static void lcd_delay_us(uint16_t times)
@@ -266,25 +286,7 @@ static void lcd_write_reg_data(uint16_t reg, uint16_t data)
     __NOP(); 
     LCD->LCD_REG = reg;
     LCD->LCD_RAM = data;
-}
-
-static void lcd_set_cursor(uint16_t Xpos, uint16_t Ypos)
-{	 
-    lcd_write_reg(g_lcd_info.setxcmd);
-    lcd_write_data(Xpos>>8); 		
-    lcd_write_reg(g_lcd_info.setxcmd+1);
-    lcd_write_data(Xpos&0xFF);			 
-    lcd_write_reg(g_lcd_info.setycmd);
-    lcd_write_data(Ypos>>8);  		
-    lcd_write_reg(g_lcd_info.setycmd+1);
-    lcd_write_data(Ypos&0xFF);			
 } 
-
-static void lcd_write_ram_prepare(void)
-{
-    LCD->LCD_REG = g_lcd_info.wramcmd;
-    __NOP();
-}	 
 
 static uint32_t lcd_pow(uint8_t m,uint8_t n)
 {
