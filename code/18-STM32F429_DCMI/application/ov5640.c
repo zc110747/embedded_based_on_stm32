@@ -194,6 +194,7 @@ const static uint8_t OV5640_EFFECTS_TBL[7][3]=
     0x40, 0x40, 0x10,
     0x1E, 0x60, 0x60,
 };
+
 //特效设置
 //0:正常    
 //1,冷色

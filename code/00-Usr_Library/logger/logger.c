@@ -25,6 +25,7 @@
 #include "logger.h"
 #include "drv_target.h"
 
+#if LOGGER_MODULE_ON == 1
 //internal variable
 #if defined(RUN_OS_MODE) && RUN_OS_MODE == RUN_WITH_FREERTOS
 #include "FreeRTOS.h"
@@ -81,7 +82,7 @@ char *LogGetMemoryBuffer(uint16_t size)
 	char *textBufferPointer;
 
 	textBufferPointer = nextBufferPointer;
-	if((nextBufferPointer = textBufferPointer + size)  >  MemoryBufferEndPoint)
+	if((nextBufferPointer = textBufferPointer + size) >  MemoryBufferEndPoint)
 	{
 		textBufferPointer = MemoryBuffer;
 		nextBufferPointer = textBufferPointer + size;
@@ -370,3 +371,4 @@ void USART1_IRQHandler(void)
         }
     }
 }
+#endif

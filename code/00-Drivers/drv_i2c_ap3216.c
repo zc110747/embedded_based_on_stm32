@@ -177,7 +177,7 @@ GlobalType_t ap3216_i2c_multi_read(uint8_t reg, uint8_t *rdata, uint8_t size)
 
 GlobalType_t ap3216_reg_read(uint8_t reg, uint8_t data)
 {
-    return ap3216_i2c_multi_write(reg, &data, 1);
+    return ap3216_i2c_multi_read(reg, &data, 1);
 }
 
 GlobalType_t ap3216_reg_write(uint8_t reg, uint8_t data)

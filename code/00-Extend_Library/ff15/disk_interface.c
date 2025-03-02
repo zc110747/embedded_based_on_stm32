@@ -98,7 +98,7 @@ int MMC_disk_ioctl(BYTE cmd, void *buff)
             *(DWORD *)buff = MMC_SECTOR_SIZE;
             break;
         case GET_SECTOR_SIZE:
-            *(DWORD *)buff = MMC_SECTOR_SIZE;
+            *(WORD *)buff = MMC_SECTOR_SIZE;
             break;
         case GET_SECTOR_COUNT:
             *(DWORD *)buff = MMC_SECTOR_COUNT;

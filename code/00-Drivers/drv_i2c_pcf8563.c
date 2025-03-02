@@ -114,7 +114,7 @@ GlobalType_t pcf8563_set_regs(uint8_t reg, uint8_t *pvalue, uint8_t size)
 GlobalType_t pcf8563_read_regs(uint8_t reg, uint8_t *pvalue, uint8_t size)
 {
     uint8_t res;
-    
+                                                                                           
     __disable_irq();
     res = i2c_read_memory(SOFT_I2C4, PCF8563_ADDR<<1, reg, 1, pvalue, size);
     __enable_irq();

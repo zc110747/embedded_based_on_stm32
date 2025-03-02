@@ -16,10 +16,8 @@
 //  Revision History:
 //
 /////////////////////////////////////////////////////////////////////////////
-#include "includes.h"
-#include "SEGGER_RTT.h"
 #include "drv_global.h"
-#include <string.h>
+#include "SEGGER_RTT.h"
 
 static GlobalType_t driver_initialize(void);
 static GlobalType_t system_clock_init(void);

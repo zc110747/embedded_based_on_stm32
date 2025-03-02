@@ -23,7 +23,6 @@ extern "C" {
 #endif
 
 #include "includes.h"
-#include "SEGGER_RTT.h"
 #include "drv_target.h"
 
 #if DRIVER_GPIO_ENABLE == 1

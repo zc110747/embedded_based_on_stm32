@@ -19,7 +19,7 @@
 #define _GLOBAL_DEF_H
 
 //global module defined
-#define LOGGER_MODULE_ON        1
+#define LOGGER_MODULE_ON        0
 
 //global drvier defined
 #define DRIVER_GPIO_ENABLE      1

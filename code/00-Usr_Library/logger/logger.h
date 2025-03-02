@@ -71,13 +71,14 @@ typedef struct
     uint8_t LoggerTxBuffer[LOGGER_BUFFER_SIZE];
 }LOGGER_INFO;
 
-GlobalType_t logger_module_init(void);
-int print_log(LOG_LEVEL level, uint32_t tick, const char* fmt, ...);
 
 #if LOGGER_MODULE_ON == 1
+GlobalType_t logger_module_init(void);
+int print_log(LOG_LEVEL level, uint32_t tick, const char* fmt, ...);
 #define PRINT_LOG(level, ticks, fmt, ...)       print_log((LOG_LEVEL)level, ticks, fmt, ##__VA_ARGS__);
 #else
-#define PRINT_LOG(level, ticks, fmt, ...)          
+#define PRINT_LOG(level, ticks, fmt, ...)
+#define logger_module_init()
 #endif
 
 #ifdef __cplusplus

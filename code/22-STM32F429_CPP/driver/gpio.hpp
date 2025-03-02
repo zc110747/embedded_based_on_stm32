@@ -16,186 +16,157 @@
 //  Revision History:
 //
 /////////////////////////////////////////////////////////////////////////////
-#ifndef _GPIO_H
-#define _GPIO_H
+#pragma once
 
-#include "clock.hpp"
+#include "stm32f4xx_hal.h"
 
-class device_gpio
+namespace stm32f4
 {
-public:
-    device_gpio(){
-    }
-    ~device_gpio(){
-    }
-    
-    void set_dev(GPIO_TypeDef *Port, uint16_t Pin);
-    void set_mode(uint32_t Mode, uint32_t Pull, uint32_t Speed, uint32_t Alternate = 0);
-    int init();
-    
-protected:
-    GPIO_TypeDef *port_;
-    
-    uint16_t pin_;
-
-    uint32_t mode_;
-
-private:
-    uint32_t pull_;
-    
-    uint32_t speed_;
-    
-    uint32_t alternate_;
-
-    clock_dev clk_dev_;
-
-    void clock_init();
-};
-
-void device_gpio::set_dev(GPIO_TypeDef *Port, uint16_t Pin)
-{
-    port_ = Port;  
-    pin_ = Pin;
-}
-
-void device_gpio::set_mode(uint32_t Mode, uint32_t Pull, uint32_t Speed, uint32_t Alternate)
-{
-    mode_ = Mode;
-    pull_ = Pull;
-    speed_ = Speed;
-    alternate_ = Alternate;
-}
-
-int device_gpio::init()
-{
-    GPIO_InitTypeDef GPIO_InitStruct = {0};
+    namespace gpio {
+        enum class GPIO_PORT {
+            PA = 0,
+            PB,
+            PC,
+            PD,
+            PE,
+            PF,
+            PG,
+            PH,
+        };            
         
-    clk_dev_.enable_gpio_clk(port_);
-    
-    GPIO_InitStruct.Mode = mode_;
-    GPIO_InitStruct.Pull = pull_;
-    GPIO_InitStruct.Speed = speed_;
-    GPIO_InitStruct.Pin = pin_;
-    GPIO_InitStruct.Alternate = alternate_;
-    HAL_GPIO_Init(port_, &GPIO_InitStruct);
-    
-    return HAL_OK;
-}
-
-class device_gpio_output: public device_gpio
-{
-public:
-   device_gpio_output() {}
-   ~device_gpio_output() {}
-   
-    void high();
-    void lower();
-    void toggle();   
-};
-
-void device_gpio_output::high()
-{
-    HAL_GPIO_WritePin(port_, pin_, GPIO_PIN_SET);
-}
-
-void device_gpio_output::lower()
-{
-    HAL_GPIO_WritePin(port_, pin_, GPIO_PIN_RESET);
-}
-
-void device_gpio_output::toggle()
-{
-    HAL_GPIO_TogglePin(port_, pin_);
-}
-
-class device_gpio_input: public device_gpio
-{
-public:
-    device_gpio_input() {
-        pre_priority_ = 0;
-        sub_priority_ = 0;
-    }
-    ~device_gpio_input() {}
-
-    uint8_t data()
-    {
-        return (HAL_GPIO_ReadPin(port_, pin_) == GPIO_PIN_SET)?1:0;
-    }
-
-    int get_irqn_by_pin(uint16_t pin)
-    {
-        int irqn = 0x100;
-        
-        switch(pin)
-        {
-            case GPIO_PIN_0:
-                irqn = EXTI0_IRQn;
-                break;
-            case GPIO_PIN_1:
-                irqn = EXTI1_IRQn;
-                break;
-            case GPIO_PIN_2:
-                irqn = EXTI2_IRQn;
-                break;
-            case GPIO_PIN_3:
-                irqn = EXTI3_IRQn;
-                break;
-            case GPIO_PIN_4:
-                irqn = EXTI4_IRQn;
-                break;
-            case GPIO_PIN_5:
-            case GPIO_PIN_6:
-            case GPIO_PIN_7:
-            case GPIO_PIN_8:
-            case GPIO_PIN_9:
-                irqn = EXTI9_5_IRQn;
-            case GPIO_PIN_10:
-            case GPIO_PIN_11:
-            case GPIO_PIN_12:
-            case GPIO_PIN_13:
-            case GPIO_PIN_14:
-            case GPIO_PIN_15:
-                irqn = EXTI15_10_IRQn;                
-                break;
-            default:
-                break;
-        }
-        return irqn;
-    }
-    
-    void set_intterrupt_parity(int pre, int sub)
-    {
-        pre_priority_ = pre;
-        sub_priority_ = sub;
-    }
-   
-    int init()
-    {
-        if (device_gpio::init() != HAL_OK)
-        {
-            return HAL_ERROR;
-        }
-
-        if((mode_&EXTI_IT) != 0)
-        {
-            int irqn;
-            
-            irqn = get_irqn_by_pin(pin_);
-            if(irqn >= 0x100)
-            {
-                 return HAL_ERROR;
+        struct pins_alternate_info {
+            gpio::GPIO_PORT port;
+            uint32_t pin;
+            uint32_t alternate;
+        };
+     
+        template<GPIO_PORT port>
+        constexpr GPIO_TypeDef* GPIO_PORT_TO_ADDR(void) {
+            if constexpr (port == GPIO_PORT::PA) {
+                return GPIOA;
+            } else if constexpr (port == GPIO_PORT::PB) {
+                return GPIOB;
+            } else if constexpr (port == GPIO_PORT::PC) {
+                return GPIOC;
+            } else if constexpr (port == GPIO_PORT::PD) {
+                return GPIOD;
+            } else if constexpr (port == GPIO_PORT::PE) {
+                return GPIOE;
+            } else if constexpr (port == GPIO_PORT::PF) {
+                return GPIOF;
+            } else if constexpr (port == GPIO_PORT::PG) {
+                return GPIOG;
+            } else if constexpr (port == GPIO_PORT::PH) {
+                return GPIOH;
+            } else {
+                return nullptr;
             }
-            HAL_NVIC_SetPriority((IRQn_Type)irqn, pre_priority_, sub_priority_);
-            HAL_NVIC_EnableIRQ((IRQn_Type)irqn); 
         }
-        return HAL_OK;  
+        
+        template<GPIO_PORT port>
+        void clock_enable(void)
+        {
+            if constexpr (port == GPIO_PORT::PA) {
+               __HAL_RCC_GPIOA_CLK_ENABLE();
+            } else if constexpr (port == GPIO_PORT::PB) {
+               __HAL_RCC_GPIOB_CLK_ENABLE();
+            } else if constexpr (port == GPIO_PORT::PC) {
+               __HAL_RCC_GPIOC_CLK_ENABLE();
+            } else if constexpr (port == GPIO_PORT::PD) {
+               __HAL_RCC_GPIOD_CLK_ENABLE();
+            } else if constexpr (port == GPIO_PORT::PE) {
+               __HAL_RCC_GPIOE_CLK_ENABLE();
+            } else if constexpr (port == GPIO_PORT::PF) {
+               __HAL_RCC_GPIOF_CLK_ENABLE();
+            } else if constexpr (port == GPIO_PORT::PG) {
+               __HAL_RCC_GPIOG_CLK_ENABLE();
+            } else if constexpr (port == GPIO_PORT::PH) {
+               __HAL_RCC_GPIOH_CLK_ENABLE();
+            } else {
+                // process nothing
+            }
+        }
+                
+        template <GPIO_PORT port, int pin>
+        class device_gpio {
+            static_assert(pin >= GPIO_PIN_0 && pin <= GPIO_PIN_15, "pin number not support");
+            protected:
+                GPIO_TypeDef* port_{GPIO_PORT_TO_ADDR<port>()};            
+                int pin_num_{pin};
+               
+            public:
+                int config(uint32_t mode, uint32_t pull = GPIO_NOPULL, uint32_t speed = GPIO_SPEED_FREQ_MEDIUM, uint32_t alternate = 0)
+                {
+                    GPIO_InitTypeDef GPIO_InitStruct = {0};
+                    
+                    clock_enable<port>();
+                    
+                    GPIO_InitStruct.Mode = mode;
+                    GPIO_InitStruct.Pull = pull;
+                    GPIO_InitStruct.Speed = speed;
+                    GPIO_InitStruct.Pin = pin_num_;
+                    GPIO_InitStruct.Alternate = alternate;
+                    HAL_GPIO_Init(port_, &GPIO_InitStruct);
+                    
+                    return HAL_OK;
+                }
+        };
+        
+        template <GPIO_PORT port, int pin>
+        class DEV_GPIO_OUTPUT : public device_gpio<port, pin> {
+            public:
+                void high(void) {
+                    HAL_GPIO_WritePin(this->port_, this->pin_num_, GPIO_PIN_SET);
+                }
+                
+                void low(void) {
+                    HAL_GPIO_WritePin(this->port_, this->pin_num_, GPIO_PIN_RESET);
+                }
+                
+                void toggle(void) {
+                    HAL_GPIO_TogglePin(this->port_, this->pin_num_);
+                }
+        };
+
+        template <GPIO_PORT port, int pin>
+        class DEV_GPIO_INPUT : public device_gpio<port, pin> {
+            public:
+                int data(void)
+                {
+                    return HAL_GPIO_ReadPin(this->port_, this->pin_num_) == GPIO_PIN_SET?1:0;
+                }
+        };
+        
+        template<int pin>
+        constexpr int GPIO_PIN_TO_IRQn(void)
+        {
+            if constexpr (pin == GPIO_PIN_0) {
+                return EXTI0_IRQn;
+            } else if constexpr (pin == GPIO_PIN_1) {
+                return EXTI1_IRQn;
+            } else if constexpr (pin == GPIO_PIN_2) {
+                return EXTI2_IRQn;
+            } else if constexpr (pin == GPIO_PIN_3) {
+                return EXTI3_IRQn;
+            } else if constexpr (pin == GPIO_PIN_4) {
+                return EXTI4_IRQn;
+            } else if constexpr (pin >= GPIO_PIN_5 && pin <= GPIO_PIN_9) {
+                return EXTI9_5_IRQn;
+            } else if constexpr (pin >= GPIO_PIN_10 && pin <= GPIO_PIN_15) {
+                return EXTI15_10_IRQn;
+            }      
+        }
+        
+        template <GPIO_PORT port, int pin>
+        class DEV_GPIO_EXIT : public DEV_GPIO_INPUT<port, pin> {
+            public:
+                void config_irq(int pre_priority = 0, int sub_priority = 0)
+                {
+                    IRQn_Type IRQn = GPIO_PIN_TO_IRQn<pin>();
+                    
+                    HAL_NVIC_SetPriority(IRQn, pre_priority, sub_priority);
+                    HAL_NVIC_EnableIRQ(IRQn);
+                }
+        };
     }
-    
-private:
-    uint32_t pre_priority_;
-
-    uint32_t sub_priority_;
-};
-
-#endif
-
+}

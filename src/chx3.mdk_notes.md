@@ -1,17 +1,19 @@
 # mdk_notes
 
-- [MDK常用编译选项](#feature-1)
-- [MDK常用快捷键](#feature-2)
-- [MDK解决软件仿真状态下某个范围不可读的问题](#feature-3)
-- [MDK编译生成bin文件输出](#feature-4)
-- [MDK仿真中保存存储中数据输出](#feature-5)
-- [MDK使用C语言实现内联汇编](#featuer-6)
+- [常用编译选项](#feature-1)
+- [常用快捷键](#feature-2)
+- [解决软件仿真状态下某个范围不可读的问题](#feature-3)
+- [编译生成bin文件输出](#feature-4)
+- [仿真中保存存储中数据输出](#feature-5)
+- [使用C语言实现内联汇编](#featuer-6)
 - [仿真发生HardFault时如何查看错误地址](#feature-7)
 - [使用内联函数方法](#feature-8)
-- [MDK中使用空指令实现时延](#feature-9)
+- [使用空指令实现时延](#feature-9)
 - [MDK中指定结构体或者对象的对齐机制](#feature-10)
+- [使用__attribute__指定变量或者程序存储地址](#feature-11)
+- [MDK指定多线程编程数目，提高编译效率](#feature-12)
 
-### feature-1
+## feature-1
 
 MDK的常用编译选项
 
@@ -20,7 +22,7 @@ MDK的常用编译选项
   - 是否带调试信息， -g
   - 屏蔽某种警告，--diag_suppress=[num]
 
-### feature-2
+## feature-2
 
 常用快捷键。
 
@@ -29,19 +31,19 @@ Ctrl+A: 选择文件所有内容
 Ctrl+F: 当前文件查找内容
 Ctrl+Shift+F: 所有文件查找内容
 
-### feature-3
+## feature-3
 
 解决软件仿真状态某个范围地址不可读，报READ WRITE错误。
 
 ```c
 //可添加ini文件，内部数据如下：
-map 0x40000000,0x47ffffff read  write
+map 0x40000000,0x47ffffff read  write
 FUNC void Setup (void) {
     _WDWORD(0x40000060, 0x2);           // re-map Flash to vecter table
-    SP = _RDWORD(0x10000000);          // Setup Stack Pointer
-    PC = _RDWORD(0x10000004);          // Setup Program Counter
-    //SP = _RDWORD(0x10018000);          // Setup Stack Pointer
-    //PC = _RDWORD(0x10018004);          // Setup Program Counter
+    SP = _RDWORD(0x10000000);           // Setup Stack Pointer
+    PC = _RDWORD(0x10000004);           // Setup Program Counter
+    //SP = _RDWORD(0x10018000);         // Setup Stack Pointer
+    //PC = _RDWORD(0x10018004);         // Setup Program Counter
 }
 
 LOAD %L INCREMENTAL                  // Download
@@ -52,17 +54,17 @@ Setup();                             // Setup for Running
 g, SystemInit
 ```
 
-### feature-4
+## feature-4
 
 命令生成bin文件输出。
 
 在options/User/After Build选项卡中添加命令。
 
 ```shell
-fromelf --bin !L --output randisk.bin
+fromelf --bin !L --output randisk.bin
 ```
 
-### feature-5
+## feature-5
 
 仿真中保存内存或者flash中的数据为指定文件
 
@@ -72,7 +74,7 @@ fromelf --bin !L --output randisk.bin
 SAVE [file] [startAddress],[endAddress]
 ```
 
-### featuer-6
+## featuer-6
 
 C语言实现内联汇编。
 
@@ -85,7 +87,7 @@ PORT    EQU 0x40022000
 }
 ```
 
-### feature-7
+## feature-7
 
 HardFault时如何查看错误地址。
 
@@ -93,11 +95,11 @@ HardFault时如何查看错误地址。
 2.根据SP的值，在Memory窗口下查看压栈的数据
 3.压栈内容顺序为R0~R3, R12, PC，其中偏移0x14内的值即为出错处的执行地址。
 
-### feature-8
+## feature-8
 
 MDK中inline关键字由__inline替代
 
-### feature-9
+## feature-9
 
 MDK中使用空指令实现时延。
 
@@ -105,7 +107,7 @@ MDK中使用空指令实现时延。
 
 __nop();
 
-### feature-10
+## feature-10
 
 MDK中指定结构体或者对象的对齐机制。
 
@@ -156,3 +158,18 @@ static void func_test(void)
 }
 #pragma arm section
 ```
+
+## feature-12
+
+MDK指定多线程编程数目，提高编译效率。
+
+```c
+edit > Configuration > Other > Parallel Build Configuration
+
+修改:
+Number of parallel jobs选项，允许的多线程编译数目
+```
+
+## 下一章节
+
+[返回目录](./../README.md)

@@ -30,7 +30,7 @@ extern "C" {
 #define SDIO_MODE_DMA                   1
 #define SDIO_RUN_MODE                   SDIO_MODE_DMA
 
-#define SDMMC_READ_WRITE_TIMEOUT        10000
+#define SDMMC_READ_WRITE_TIMEOUT        1000
 #define SDMMC_BLOCK_SIZE                512
 #define SDMMC_CLOCK_DIV                 2
 

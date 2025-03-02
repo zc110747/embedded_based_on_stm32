@@ -15,6 +15,9 @@
 *.iex
 *.log
 *._ia
+*.bin
+*.elf
+*.hex
 
 stm32f429.uvguix.*
 

@@ -449,7 +449,7 @@ HAL_StatusTypeDef HAL_SD_InitCard(SD_HandleTypeDef *hsd)
     hsd->State = HAL_SD_STATE_READY;
     hsd->ErrorCode |= errorstate;
     return HAL_ERROR;
-  }
+  } 
 
   /* Set Block Size for Card */
   errorstate = SDMMC_CmdBlockLength(hsd->Instance, BLOCKSIZE);
@@ -475,6 +475,7 @@ HAL_StatusTypeDef HAL_SD_DeInit(SD_HandleTypeDef *hsd)
   /* Check the SD handle allocation */
   if(hsd == NULL)
   {
+      
     return HAL_ERROR;
   }
 

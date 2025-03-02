@@ -1,0 +1,7 @@
+{
+    "files.associations": {
+        "*.cmd": "shellscript",
+        "drv_global.h": "c"
+    },
+    "marscode.chatLanguage": "cn"
+}

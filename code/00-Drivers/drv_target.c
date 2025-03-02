@@ -25,7 +25,11 @@
 #include "task.h"
 #endif
 
-#pragma import(__use_no_semihosting)                            
+#if defined(__CC_ARM)
+#pragma import(__use_no_semihosting)
+#else
+__asm(".global __use_no_semihosting");
+#endif                         
 struct __FILE 
 { 
 	int handle; 

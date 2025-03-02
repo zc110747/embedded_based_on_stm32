@@ -120,7 +120,7 @@ static GlobalType_t driver_initialize(void)
     if (xReturn == RT_OK)
     {
         PRINT_LOG(LOG_INFO, HAL_GetTick(), "device driver init success!");
-    }
+    }                                                                                                                             
 
     return xReturn;
 }

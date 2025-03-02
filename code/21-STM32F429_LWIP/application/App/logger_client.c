@@ -15,9 +15,10 @@
 //  Revision History:
 //
 /////////////////////////////////////////////////////////////////////////////
+#include <stdbool.h>
 #include "logger_client.h"
 #include "lwip/sockets.h"
-#include <stdbool.h>
+#include "SEGGER_RTT.h"
 
 #define LOGGER_TX_QUEUE_LEN  					64
 #define LOGGER_RECV_BUFFER_SIZE		            256
@@ -54,7 +55,7 @@ static NetInfo_t NetInfo = {
 };
     
 extern u8_t netif_link_up(void);
-void tcp_server_task(void *argument)
+void logger_client_task(void *argument)
 {
     struct sockaddr_in server_addr;
 
@@ -183,7 +184,7 @@ GlobalType_t logger_client_init(void)
 {
     LoggerSystem.xTxQueue = xQueueCreate(LOGGER_TX_QUEUE_LEN, sizeof(LOGGER_MESSAGE));
     
-    TcpTaskHandle = osThreadNew(tcp_server_task, NULL, &TcpTask_attributes);
+    TcpTaskHandle = osThreadNew(logger_client_task, NULL, &TcpTask_attributes);
     if(TcpTaskHandle == NULL)
     {
         return RT_FAIL;
