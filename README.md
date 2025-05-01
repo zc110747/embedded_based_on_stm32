@@ -124,6 +124,11 @@
 - [ch23.低功耗应用](./src/ch23.lower_power_app.md)
 - [ch24.启动流程和IAP](./src/ch24.startup_iap.md)
 - [ch25.micropython应用](./src/ch25.micropython.md)
-- [ch26.modbus协议](./src/ch26.modbus.md)
-- [ch27.canFestival协议](./src/ch27.canFestival.md)
-- [ch28.综合应用开发](./src/ch28.embed_app.md)
+- [ch26.modbus协议](./src/ch26.modbus_protocol.md)
+
+## 附录目录
+
+- [ch-x1.其它嵌入式知识总结](./src/chx1.other_summy.md)
+- [ch-x2.MDK相关编译方法说明](./src/chx2.distributed_loading.md)
+- [ch-x3.其它嵌入式知识总结](./src/chx3.mdk_notes.md)
+- [ch-x4.基于vscode的arm-none-gcc开发和调试](./src/chx4.vscode_gcc_openocd.md)

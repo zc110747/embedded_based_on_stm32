@@ -113,37 +113,46 @@ RTU«Î«Û:  | 01 | 0F | 00 00 | 00 04 | 01 | 0x0F | 7f 5e | => | ¥”…Ë±∏µÿ÷∑ | π¶ƒ‹
 ∂‘”¶”≤º˛: LED, mosπ‹µ»
 */
 #define REG_COIL_START           0x0001
-#define REG_COIL_NREGS           10
-#define REG_COIL_END             (REG_COIL_START + REG_COIL_NREGS*8)
-static UCHAR   usRegCoilBuf[REG_COIL_NREGS] = {0x10, 0x01, 0x01, 0x00, 0x01, 0x01, 0x00, 0x01};
+#define REG_COIL_NREGS           48
+static UCHAR   usRegCoilBuf[REG_COIL_NREGS/8] = {0x10, 0xf2, 0x35, 0x00, 0x00, 0x00};
 eMBErrorCode eMBRegCoilsCB( UCHAR * pucRegBuffer, USHORT usAddress, USHORT usNCoils, eMBRegisterMode eMode )
 {
-    int i;
+    UCHAR *pucStartRegBuffer = pucRegBuffer;
 
     /* check if we away of table size */
-    if (usAddress < REG_COIL_START 
-    || usAddress + usNCoils > REG_COIL_END) {
+    if (usAddress < REG_COIL_START
+    || usAddress + usNCoils > REG_COIL_START+REG_COIL_NREGS) {
         return MB_ENOREG;
     } 
     
     //covert to register list
     usAddress -= REG_COIL_START;
-    
-    switch (eMode) {
+
+    switch (eMode)
+    {
         case MB_REG_WRITE:
-            for (i = 0; i < usNCoils; i++) {
-                UCHAR wbit = xMBUtilGetBits(pucRegBuffer, i, 1 );
-                xMBUtilSetBits( usRegCoilBuf, usAddress+i, 1, wbit );
+            while( usNCoils > 0 ) {
+                xMBUtilSetBits( usRegCoilBuf, usAddress, (uint8_t)( usNCoils > 8 ? 8 : usNCoils ), *pucStartRegBuffer++ );
+                if (usNCoils > 8) {
+                    usNCoils -= 8;
+                    usAddress += 8;
+                } else {
+                    break;
+                }
             }
             break;
         case MB_REG_READ:
-            for (i = 0; i < usNCoils; i++) {
-                UCHAR rbit = xMBUtilGetBits( usRegCoilBuf, usAddress+i, 1 );
-                xMBUtilSetBits( pucRegBuffer, i, 1, rbit );
+            while( usNCoils > 0 ) {
+                *pucStartRegBuffer++ = xMBUtilGetBits(usRegCoilBuf, usAddress, ( uint8_t )( usNCoils > 8 ? 8 : usNCoils ) );
+                if (usNCoils > 8) {
+                    usNCoils -= 8;
+                    usAddress += 8;
+                } else {
+                    break;
+                }
             }
             break;
     }
-
     return MB_ENOERR;
 }
 
@@ -197,37 +206,36 @@ RTU«Î«Û:  | 01 | 06 | 00 00 | 01 0A | 08 5d| => | ¥”…Ë±∏µÿ÷∑ | π¶ƒ‹¬Î | ±£≥÷ºƒ¥Ê
 */
 #define REG_HOLDING_START           0x0001
 #define REG_HOLDING_NREGS           10
-#define REG_HOLDING_END             (REG_HOLDING_START+REG_HOLDING_NREGS)
 static USHORT   usRegHoldingBuf[REG_HOLDING_NREGS] = {0x1000, 0x1001, 0x1002, 0x1003};
 eMBErrorCode eMBRegHoldingCB( UCHAR * pucRegBuffer, USHORT usAddress, USHORT usNRegs, eMBRegisterMode eMode )
 {
     eMBErrorCode    eStatus = MB_ENOERR;
     int             iRegIndex;
 
-    if ((usAddress >= REG_HOLDING_START) 
-    && ((usAddress+usNRegs) <= REG_HOLDING_END)) {
-        iRegIndex = (int)(usAddress - REG_HOLDING_START);
-        switch (eMode) {                                       
-            case MB_REG_READ://∂¡ MB_REG_READ = 0
-                while (usNRegs > 0) {
-                    *pucRegBuffer++ = (usRegHoldingBuf[iRegIndex] >> 8);            
-                    *pucRegBuffer++ = (usRegHoldingBuf[iRegIndex] & 0xFF); 
-                    iRegIndex++;
-                    usNRegs--;					
-                }                            
-                break;
-            case MB_REG_WRITE://–¥ MB_REG_WRITE = 0
-                while (usNRegs > 0) {         
-                    usRegHoldingBuf[iRegIndex] = *pucRegBuffer++ << 8;
-                    usRegHoldingBuf[iRegIndex] |= *pucRegBuffer++;
-                    iRegIndex++;
-                    usNRegs--;
-                }
-                break;
-        }
-    } else {
-        eStatus = MB_ENOREG;
-    }	
+    if (usAddress <  REG_HOLDING_START
+    || usAddress + usNRegs > REG_HOLDING_START + REG_HOLDING_NREGS) {
+        return MB_ENOREG;
+    }
+    
+    iRegIndex = usAddress - REG_HOLDING_START;
+    switch (eMode) {                                       
+        case MB_REG_READ:
+            while (usNRegs > 0) {
+                *pucRegBuffer++ = (usRegHoldingBuf[iRegIndex] >> 8);            
+                *pucRegBuffer++ = (usRegHoldingBuf[iRegIndex] & 0xFF); 
+                iRegIndex++;
+                usNRegs--;
+            }                            
+            break;
+        case MB_REG_WRITE:
+            while (usNRegs > 0) {         
+                usRegHoldingBuf[iRegIndex] = *pucRegBuffer++ << 8;
+                usRegHoldingBuf[iRegIndex] |= *pucRegBuffer++;
+                iRegIndex++;
+                usNRegs--;
+            }
+            break;
+    }
 
     return eStatus;
 }
@@ -243,24 +251,23 @@ RTU«Î«Û:  | 01 | 04 | 00 00 | 00 02 | 25 3a | => | ¥”…Ë±∏µÿ÷∑ | π¶ƒ‹¬Î |  ‰»Îºƒ¥
 */
 #define REG_INPUT_START           0x0001
 #define REG_INPUT_NREGS           10
-#define REG_INPUT_END             (REG_INPUT_START+REG_INPUT_NREGS)
 static USHORT   usRegInputBuf[REG_INPUT_NREGS] = {0x1000, 0x1001, 0x1002, 0x1003};
 eMBErrorCode eMBRegInputCB(UCHAR * pucRegBuffer, USHORT usAddress, USHORT usNRegs)
 {
     eMBErrorCode    eStatus = MB_ENOERR;
     int             iRegIndex;
-
-    if ((usAddress >= REG_INPUT_START ) 
-    && ((usAddress + usNRegs) <= REG_INPUT_END ) ){
-        iRegIndex = ( int )( usAddress - REG_INPUT_START );
-        while (usNRegs>0)  {
-            *pucRegBuffer++ = ( unsigned char )( usRegInputBuf[iRegIndex] >> 8 );
-            *pucRegBuffer++ = ( unsigned char )( usRegInputBuf[iRegIndex] & 0xFF );
-            iRegIndex++;
-            usNRegs--;
-        }
-    } else {
-        eStatus = MB_ENOREG;
+    
+    if (usAddress <  REG_INPUT_START
+    || usAddress + usNRegs > REG_INPUT_START + REG_INPUT_NREGS) {
+        return MB_ENOREG;
+    }
+    
+    iRegIndex = usAddress - REG_INPUT_START;
+    while (usNRegs>0)  {
+        *pucRegBuffer++ = ( unsigned char )( usRegInputBuf[iRegIndex] >> 8 );
+        *pucRegBuffer++ = ( unsigned char )( usRegInputBuf[iRegIndex] & 0xFF );
+        iRegIndex++;
+        usNRegs--;
     }
 
     return eStatus;

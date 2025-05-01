@@ -15,8 +15,10 @@
 //  Revision History:
 //
 /////////////////////////////////////////////////////////////////////////////
-#include "drv_global.h"
 #include <stdio.h>
+#include "drv_global.h"
+#include "cmsis_os.h"
+#include "can_control_task.h"
 
 #define DEBUG_JTAG          0
 #define DEBUG_STLINK        1
@@ -25,15 +27,18 @@
 static GlobalType_t driver_initialize(void);
 static GlobalType_t system_clock_init(void);
 
-static uint8_t can_buffer[] = {0x01, 0x02, 0x03, 0x04, 0x05, 0x06};
+osThreadId_t defaultTaskHandle;
+const osThreadAttr_t defaultTask_attributes = {
+  .name = "defaultTask",
+  .stack_size = 128 * 4,
+  .priority = (osPriority_t) osPriorityNormal,
+};
+
+void StartDefaultTask(void *argument);
 
 //main entery function
 int main(void)
 {  
-    uint32_t tick;
-    int size;
-    uint8_t data[9];
-    
     HAL_Init();
     
     //system clock tick init.
@@ -41,33 +46,37 @@ int main(void)
     
     //logger module init
     logger_module_init();
-	
+    
+    osKernelInitialize();
+    
+    defaultTaskHandle = osThreadNew(StartDefaultTask, NULL, &defaultTask_attributes);
+    
+    /* Start scheduler */
+    osKernelStart();
+  
+    while (1)
+    {
+
+    }
+}
+
+void StartDefaultTask(void *argument)
+{
+    uint8_t buffer[30] = {0x01, 0x02, 0x03};
+    set_os_on();
+    
     //driver initialize.
     driver_initialize();
     
-    tick  = HAL_GetTick();
+    can_control_task_init();
     
-    while (1)
+    for(;;)
     {
-        if(drv_tick_difference(tick, HAL_GetTick()) > 1000)
-        {
-            tick = HAL_GetTick();
-            
-            can_driver_send(can_buffer, sizeof(can_buffer));
-            
-            LED_TOGGLE;
-        }
-
-        size = can_driver_receive(data, 8);
-        if(size > 0)
-        {
-            int index;
-            
-            for(index=0; index<size; index++)
-            {
-                PRINT_LOG(LOG_INFO, HAL_GetTick(), "0x%x", data[index]);
-            }
-        }
+        LED_TOGGLE;
+        
+        can_write_buffer(buffer, sizeof(buffer));
+        
+        vTaskDelay(1000);
     }
 }
 
@@ -80,7 +89,7 @@ static GlobalType_t driver_initialize(void)
     xReturn |= can_driver_init();
     
     if (xReturn == RT_OK)
-    {
+    {   
         PRINT_LOG(LOG_INFO, HAL_GetTick(), "device driver init success!");
     }
 
@@ -141,4 +150,36 @@ static GlobalType_t system_clock_init(void)
         return RT_FAIL;
     }
     return RT_OK;    
+}
+
+/**
+  * @brief  Period elapsed callback in non blocking mode
+  * @note   This function is called  when TIM1 interrupt took place, inside
+  * HAL_TIM_IRQHandler(). It makes a direct call to HAL_IncTick() to increment
+  * a global variable "uwTick" used as application time base.
+  * @param  htim : TIM handle
+  * @retval None
+  */
+void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
+{
+  /* USER CODE BEGIN Callback 0 */
+
+  /* USER CODE END Callback 0 */
+  if (htim->Instance == TIM1) {
+    HAL_IncTick();
+  }
+  /* USER CODE BEGIN Callback 1 */
+
+  /* USER CODE END Callback 1 */
+}
+
+void Error_Handler(void)
+{
+  /* USER CODE BEGIN Error_Handler_Debug */
+  /* User can add his own implementation to report the HAL error return state */
+  __disable_irq();
+  while (1)
+  {
+  }
+  /* USER CODE END Error_Handler_Debug */
 }

@@ -22,21 +22,22 @@
 #define LOGGER_MODULE_ON        1
 
 //global drvier defined
-#define DRIVER_GPIO_ENABLE      1
-#define DRIVER_EXTI_ENABLE      0
-#define DRIVER_USART_ENABLE     0
-#define DRIVER_RTC_ENABLE       0
-#define DRIVER_DAC_ENABLE       0
-#define DRIVER_ADC_ENABLE       0
-#define DRIVER_SPI_ENABLE       0
-#define DRIVER_I2C_ENABLE       0
-#define DRIVER_TIME_ENABLE      0
-#define DRIVER_WDG_ENABLE       0
-#define DRIVER_DMA_ENABLE       0
-#define DRIVER_SDIO_ENABLE      0
-#define DRIVER_SDRAM_ENABLE     0
-#define DRIVER_LCD_ENABLE       0
-#define DRIVER_CAN_ENABLE       1
+#define DRIVER_GPIO_ENABLE          1
+#define DRIVER_EXTI_ENABLE          0
+#define DRIVER_USART_ENABLE         0
+#define DRIVER_RTC_ENABLE           0
+#define DRIVER_DAC_ENABLE           0
+#define DRIVER_ADC_ENABLE           0
+#define DRIVER_SPI_ENABLE           0
+#define DRIVER_I2C_ENABLE           0
+#define DRIVER_I2C_PCF8574_ENABLE   1
+#define DRIVER_TIME_ENABLE          0
+#define DRIVER_WDG_ENABLE           0
+#define DRIVER_DMA_ENABLE           0
+#define DRIVER_SDIO_ENABLE          0
+#define DRIVER_SDRAM_ENABLE         0
+#define DRIVER_LCD_ENABLE           0
+#define DRIVER_CAN_ENABLE           1
 
 #if DRIVER_LCD_ENABLE == 1
 #define SUPPORT_ASCII_1206      1
@@ -60,10 +61,10 @@ typedef enum
 #define RUN_MODE_INTERRUPT      2
 #define RUN_MODE_SOFT           3
 
+//run os mode
 #define RUN_WITH_RTOS_NULL      0
 #define RUN_WITH_FREERTOS       1
 #define RUN_WITH_RTTHREAD       2
-
-#define RUN_OS_MODE             RUN_WITH_RTOS_NULL
+#define RUN_OS_MODE             RUN_WITH_FREERTOS
 
 #endif

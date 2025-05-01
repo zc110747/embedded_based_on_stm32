@@ -1,4 +1,4 @@
-# mdk_notes
+# MDK相关编译方法说明
 
 - [常用编译选项](#feature-1)
 - [常用快捷键](#feature-2)
@@ -170,6 +170,8 @@ edit > Configuration > Other > Parallel Build Configuration
 Number of parallel jobs选项，允许的多线程编译数目
 ```
 
-## 下一章节
+## next_chapter
 
 [返回目录](./../README.md)
+
+直接开始下一小节: [基于vscode的arm-none-gcc开发和调试](./chx4.vscode_gcc_openocd.md)

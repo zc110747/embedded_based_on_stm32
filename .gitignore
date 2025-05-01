@@ -20,4 +20,5 @@
 *.hex
 
 stm32f429.uvguix.*
+code/*/build/*
 

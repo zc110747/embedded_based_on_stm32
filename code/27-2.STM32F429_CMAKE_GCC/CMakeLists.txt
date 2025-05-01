@@ -1,0 +1,59 @@
+# 设置 CMake 最低版本要求
+cmake_minimum_required(VERSION 3.16)
+
+# 设置项目名称
+project(cmake_example)
+
+# 设置交叉编译环境
+set(CMAKE_SYSTEM_NAME Linux)
+set(CMAKE_SYSTEM_PROCESSOR arm)
+set(CMAKE_C_COMPILER arm-none-eabi-gcc)
+set(CMAKE_CXX_COMPILER arm-none-eabi-g++)
+
+add_executable(cmake_example)
+
+# 导入文件到编译工具中
+# 增加本地文件
+file(GLOB LOCAL_FILE 
+        "application/*.c"
+        "*.s")
+
+# 增加驱动文件
+file(GLOB USER_DRIVERS 
+    "../00-Drivers/drv_gpio.c"
+    "../00-Drivers/drv_exti.c"
+    "../00-Drivers/drv_target.c")
+
+# 增加 HAL 库文件
+file(GLOB HAL_LIB_SOURCES 
+    "../00-STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_rcc.c"
+    "../00-STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_gpio.c"
+    "../00-STM32F4xx_HAL_Driver/Src/stm32f4xx_hal.c"
+    "../00-STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_rcc_ex.c"
+    "../00-STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_pwr.c"
+    "../00-STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_pwr_ex.c"
+    "../00-STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_cortex.c"
+    "../00-Extend_Library/system_stm32f4xx.c"
+    "../00-Extend_Library/syscalls.c")
+
+target_sources(cmake_example PRIVATE 
+    "${LOCAL_FILE}"
+    "${HAL_LIB_SOURCES}"
+    "${USER_DRIVERS}")
+
+# 添加头文件目录
+target_include_directories(cmake_example PRIVATE
+    "${CMAKE_CURRENT_SOURCE_DIR}/application"
+    "../00-Extend_Library/dsp_lib/Include"
+    "../00-Drivers"
+    "../00-STM32F4xx_HAL_Driver/Inc")
+
+# 设置编译选项
+set(CMAKE_CXX_STANDARD 11)
+set(CMAKE_CXX_STANDARD_REQUIRED True)
+
+set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -mcpu=cortex-m4 -mthumb -mfpu=fpv4-sp-d16 -mfloat-abi=hard")
+set(CMAKE_LD_FLAGS "${CMAKE_LD_FLAGS} -mcpu=cortex-m4 -mthumb -T${CMAKE_CURRENT_SOURCE_DIR}/stm32f429_gcc.ld -Wl,--gc-sections -specs=nano.specs")
+
+# 设置编译定义
+target_compile_definitions("${PROJECT_NAME}" PRIVATE USE_HAL_DRIVER STM32F429xx)

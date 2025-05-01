@@ -35,7 +35,7 @@ PR_BEGIN_EXTERN_C
 #endif
 
 #include "mb.h"
-#include "mb_m.h"
+//#include "mb_m.h"
 
 eMBErrorCode eMBRTUInit( UCHAR slaveAddress, UCHAR ucPort, ULONG ulBaudRate,
                              eMBParity eParity );

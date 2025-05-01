@@ -158,7 +158,7 @@ LDFLAGS = $(MCU) -specs=nano.specs -T$(LDSCRIPT) $(LIBDIR) $(LIBS) -Wl,-Map=$(BU
 # 参考<https://www.cnblogs.com/milton/p/16756523.html>
 # 禁用segments警告
 # readelf -lW build/stm32f429_gcc.elf
-LDFLAGS += -Wl,--no-warn-rwx-segments
+# LDFLAGS += -Wl,--no-warn-rwx-segments
 
 # default action: build all
 all: $(BUILD_DIR)/$(TARGET).elf $(BUILD_DIR)/$(TARGET).hex $(BUILD_DIR)/$(TARGET).bin
