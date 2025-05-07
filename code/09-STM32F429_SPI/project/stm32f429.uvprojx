@@ -494,6 +494,11 @@
           <GroupName>includes</GroupName>
           <Files>
             <File>
+              <FileName>drv_spi_ad7791.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\00-Drivers\drv_spi_ad7791.h</FilePath>
+            </File>
+            <File>
               <FileName>includes.h</FileName>
               <FileType>5</FileType>
               <FilePath>..\application\includes.h</FilePath>
@@ -567,6 +572,11 @@
               <FileName>drv_spi_wq.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\00-Drivers\drv_spi_wq.c</FilePath>
+            </File>
+            <File>
+              <FileName>drv_spi_ad7791.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\00-Drivers\drv_spi_ad7791.c</FilePath>
             </File>
           </Files>
         </Group>

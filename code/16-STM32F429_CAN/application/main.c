@@ -19,6 +19,7 @@
 #include "drv_global.h"
 #include "cmsis_os.h"
 #include "can_control_task.h"
+#include "can_protocol.h"
 
 #define DEBUG_JTAG          0
 #define DEBUG_STLINK        1
@@ -62,7 +63,10 @@ int main(void)
 
 void StartDefaultTask(void *argument)
 {
-    uint8_t buffer[30] = {0x01, 0x02, 0x03};
+    uint8_t buffer[30] = {0};
+    uint8_t data = 0;
+    uint16_t size;
+
     set_os_on();
     
     //driver initialize.
@@ -74,7 +78,9 @@ void StartDefaultTask(void *argument)
     {
         LED_TOGGLE;
         
-        can_write_buffer(buffer, sizeof(buffer));
+        data++;
+        size = create_can_tx_buffer(CAN_REQUEST_SHOW_INFO, &data, 1, buffer);
+        can_message_send(buffer, size);
         
         vTaskDelay(1000);
     }

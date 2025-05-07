@@ -498,6 +498,11 @@
               <FileType>1</FileType>
               <FilePath>..\application\can_control_task.c</FilePath>
             </File>
+            <File>
+              <FileName>can_protocol.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\application\can_protocol.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
