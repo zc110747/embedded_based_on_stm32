@@ -108,6 +108,8 @@ static GlobalType_t driver_initialize(void)
     
     xReturn = gpio_driver_init(); 
     
+    xReturn |= drv_i2c_init();
+    
     xReturn |= pcf8574_driver_init();
     
     if (xReturn == RT_OK)

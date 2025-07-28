@@ -19,8 +19,6 @@
 /////////////////////////////////////////////////////////////////////////////
 #include "drv_can.h"
 
-
-
 //static internal variable
 static CAN_FilterTypeDef  hcan1_filter;
 
@@ -48,14 +46,15 @@ GlobalType_t can_driver_init(void)
     /* CAN Module Init */
     hcan1.Instance = CAN1;
     hcan1.Init.Prescaler = 6;
-    hcan1.Init.Mode = CAN_MODE_LOOPBACK;                     //环回模式, 测试CAN接口
+    //hcan1.Init.Mode = CAN_MODE_LOOPBACK;                 //环回模式, 测试CAN接口
+    hcan1.Init.Mode = CAN_MODE_NORMAL;                     //normal mode
     hcan1.Init.SyncJumpWidth = CAN_SJW_1TQ;
     hcan1.Init.TimeSeg1 = CAN_BS1_8TQ;
     hcan1.Init.TimeSeg2 = CAN_BS2_6TQ;
     hcan1.Init.TimeTriggeredMode = DISABLE;
     hcan1.Init.AutoBusOff = ENABLE;                         //自动的总线关闭管理，一旦监测到128次连续11个隐性位，即通过硬件自动退出总线关闭状态
     hcan1.Init.AutoWakeUp = DISABLE;
-    hcan1.Init.AutoRetransmission = ENABLE;
+    hcan1.Init.AutoRetransmission = DISABLE;
     hcan1.Init.ReceiveFifoLocked = DISABLE;
     hcan1.Init.TransmitFifoPriority = DISABLE;
     if (HAL_CAN_Init(&hcan1) != HAL_OK)

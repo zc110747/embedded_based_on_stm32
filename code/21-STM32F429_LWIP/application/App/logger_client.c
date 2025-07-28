@@ -47,10 +47,10 @@ static const osThreadAttr_t LoggerTxTask_attributes = {
 
 static NetInfo_t NetInfo = {
 	/* Device Net Info */
-	.ipaddr = {192, 168, 2, 99},
-    .gateway = {192, 168, 2, 1},
+	.ipaddr = {192, 168, 10, 99},
+    .gateway = {192, 168, 10, 1},
     .netmask = {255, 255, 255, 0},
-    .serverip = {192, 168, 2, 34},
+    .serverip = {192, 168, 10, 156},
     .logger_port = 15059, 
 };
     
@@ -113,8 +113,11 @@ void logger_client_task(void *argument)
 				if(bytes_received <= 0)
 				{
 					vTaskDelay(10);
-					if(is_logger_connected == -1)
+                    
+                    // timeout bytes received is -1, no connnected bytes received is 0
+					if(is_logger_connected == -1 || bytes_received == 0) {
 						break;
+                    }
 					PRINT_LOG(LOG_WARN, xTaskGetTickCount(), "no cycle send every 6 second for logger!!!");
 				}
 				else

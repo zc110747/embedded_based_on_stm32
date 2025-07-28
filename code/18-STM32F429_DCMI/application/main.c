@@ -60,6 +60,8 @@ static GlobalType_t driver_initialize(void)
     
     xReturn |= sdram_driver_init();
     
+    xReturn |= drv_i2c_init();
+    
     xReturn |= lcd_driver_init();
     
     xReturn |= ov5640_driver_init();

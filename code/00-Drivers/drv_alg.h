@@ -26,11 +26,12 @@ extern "C" {
 #include "includes.h"
 
 GlobalType_t alg_driver_init(void);
-uint32_t rng_get_value(void);
+HAL_StatusTypeDef rng_get_value(uint32_t *val);
+int rng_sf_get_value(void);
 uint32_t calc_hw_crc32(uint32_t *pbuffer, uint32_t size);
 uint8_t calc_crc8(uint8_t *ptr, uint32_t len);
 uint16_t calc_crc16(uint8_t *ptr, uint32_t len);
-uint32_t calc_crc32(uint32_t *data, size_t length);
+uint32_t calc_crc32(uint8_t *data, size_t length);
 
 #ifdef __cplusplus
 }

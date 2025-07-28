@@ -44,22 +44,10 @@ static GlobalType_t pcf8563_read_regs(uint8_t reg, uint8_t *pvalue, uint8_t size
 GlobalType_t pcf8563_driver_init(void)
 {
     GPIO_InitTypeDef GPIO_InitStruct = {0};
-    SOFT_I2C_INFO I2C_Info = {0};
     RTC_TimerInfo rtc_info;
     
     //clock need enable before software i2c Init
-    __HAL_RCC_GPIOB_CLK_ENABLE(); 
     __HAL_RCC_GPIOC_CLK_ENABLE(); 
-    
-    I2C_Info.scl_pin = GPIO_PIN_4;
-    I2C_Info.scl_port = GPIOB;
-    I2C_Info.sda_pin = GPIO_PIN_3;
-    I2C_Info.sda_port = GPIOB;
-    
-    if(i2c_soft_init(SOFT_I2C4, &I2C_Info) != I2C_OK)
-    {
-        return RT_FAIL;
-    }
     
     /*Configure GPIO pin : PC6 */
     GPIO_InitStruct.Pin = GPIO_PIN_6;

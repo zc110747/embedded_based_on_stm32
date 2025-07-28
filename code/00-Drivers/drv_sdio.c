@@ -62,6 +62,7 @@ GlobalType_t sdcard_driver_init(void)
     
     //module init
     hsdcard1.Instance = SDIO;
+    hsdcard1.State = HAL_SD_STATE_RESET;
     hsdcard1.Init.ClockEdge = SDIO_CLOCK_EDGE_RISING;
     hsdcard1.Init.ClockBypass = SDIO_CLOCK_BYPASS_DISABLE;
     hsdcard1.Init.ClockPowerSave = SDIO_CLOCK_POWER_SAVE_DISABLE;
@@ -147,7 +148,7 @@ HAL_StatusTypeDef sdcard_read_disk(uint8_t *buf, uint32_t startBlocks, uint32_t 
     status = HAL_SD_ReadBlocks_DMA(&hsdcard1, (uint8_t*)buf, startBlocks, NumberOfBlocks);
     if (status == HAL_ERROR)
     {
-       return HAL_ERROR; 
+        goto __err_flag;
     }
     
     //wait rx finished                                                                                          
@@ -159,7 +160,7 @@ HAL_StatusTypeDef sdcard_read_disk(uint8_t *buf, uint32_t startBlocks, uint32_t 
     }
     if(tick >= SDMMC_READ_WRITE_TIMEOUT)
     {
-        return HAL_TIMEOUT;
+        goto __err_flag;
     }
     
     //wait card ok.
@@ -172,9 +173,13 @@ HAL_StatusTypeDef sdcard_read_disk(uint8_t *buf, uint32_t startBlocks, uint32_t 
     }
     if(tick >= SDMMC_READ_WRITE_TIMEOUT)
     {
-        return HAL_TIMEOUT;
+        goto __err_flag;
     }
-    return status;
+    return HAL_OK;
+ 
+__err_flag:  
+    HAL_DMA_Abort(&hdma_sdio_rx);
+    return HAL_TIMEOUT;
 }
 
 HAL_StatusTypeDef sdcard_write_disk(const uint8_t *buf, uint32_t startBlocks, uint32_t NumberOfBlocks)
@@ -185,7 +190,7 @@ HAL_StatusTypeDef sdcard_write_disk(const uint8_t *buf, uint32_t startBlocks, ui
     status = HAL_SD_WriteBlocks_DMA(&hsdcard1, (uint8_t*)buf, startBlocks, NumberOfBlocks);
     if (status == HAL_ERROR)
     {
-       return HAL_ERROR; 
+        goto __err_flag;
     }
     
     //wait tx finished
@@ -197,7 +202,7 @@ HAL_StatusTypeDef sdcard_write_disk(const uint8_t *buf, uint32_t startBlocks, ui
     }
     if(tick >= SDMMC_READ_WRITE_TIMEOUT)
     {
-        return HAL_TIMEOUT;
+        goto __err_flag;
     }
     
     //wait card ok.
@@ -210,10 +215,14 @@ HAL_StatusTypeDef sdcard_write_disk(const uint8_t *buf, uint32_t startBlocks, ui
     }
     if(tick >= SDMMC_READ_WRITE_TIMEOUT)
     {
-        return HAL_TIMEOUT;
+        goto __err_flag;
     }
 
-    return status;
+    return HAL_OK;
+
+__err_flag:  
+    HAL_DMA_Abort(&hdma_sdio_tx);     //读取失败后，清除sd卡dma操作
+    return HAL_TIMEOUT;
 }
 #else
 HAL_StatusTypeDef sdcard_read_disk(uint8_t *buf, uint32_t startBlocks, uint32_t NumberOfBlocks)

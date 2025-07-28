@@ -2,15 +2,17 @@
 cmake_minimum_required(VERSION 3.16)
 
 # 设置项目名称
-project(cmake_example)
+project(stm32_gcc)
 
 # 设置交叉编译环境
 set(CMAKE_SYSTEM_NAME Linux)
 set(CMAKE_SYSTEM_PROCESSOR arm)
 set(CMAKE_C_COMPILER arm-none-eabi-gcc)
 set(CMAKE_CXX_COMPILER arm-none-eabi-g++)
+set(CMAKE_OBJCOPY arm-none-eabi-objcopy)
+set(CMAKE_SIZE arm-none-eabi-size)
 
-add_executable(cmake_example)
+add_executable(${PROJECT_NAME}.elf)
 
 # 导入文件到编译工具中
 # 增加本地文件
@@ -36,13 +38,13 @@ file(GLOB HAL_LIB_SOURCES
     "../00-Extend_Library/system_stm32f4xx.c"
     "../00-Extend_Library/syscalls.c")
 
-target_sources(cmake_example PRIVATE 
+target_sources(${PROJECT_NAME}.elf PRIVATE 
     "${LOCAL_FILE}"
     "${HAL_LIB_SOURCES}"
     "${USER_DRIVERS}")
 
 # 添加头文件目录
-target_include_directories(cmake_example PRIVATE
+target_include_directories(${PROJECT_NAME}.elf PRIVATE
     "${CMAKE_CURRENT_SOURCE_DIR}/application"
     "../00-Extend_Library/dsp_lib/Include"
     "../00-Drivers"
@@ -56,4 +58,11 @@ set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -mcpu=cortex-m4 -mthumb -mfpu=fpv4-sp-d16 -m
 set(CMAKE_LD_FLAGS "${CMAKE_LD_FLAGS} -mcpu=cortex-m4 -mthumb -T${CMAKE_CURRENT_SOURCE_DIR}/stm32f429_gcc.ld -Wl,--gc-sections -specs=nano.specs")
 
 # 设置编译定义
-target_compile_definitions("${PROJECT_NAME}" PRIVATE USE_HAL_DRIVER STM32F429xx)
+target_compile_definitions(${PROJECT_NAME}.elf PRIVATE USE_HAL_DRIVER STM32F429xx)
+
+# 定义编译后选项
+add_custom_command(TARGET ${PROJECT_NAME}.elf POST_BUILD
+    COMMAND ${CMAKE_OBJCOPY} -Oihex $<TARGET_FILE:${PROJECT_NAME}.elf> ${PROJECT_NAME}.hex
+    COMMAND ${CMAKE_OBJCOPY} -Obinary $<TARGET_FILE:${PROJECT_NAME}.elf> ${PROJECT_NAME}.bin
+    COMMAND ${CMAKE_SIZE} ${PROJECT_NAME}.elf
+)

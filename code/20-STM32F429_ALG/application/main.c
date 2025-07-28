@@ -32,6 +32,7 @@ static GlobalType_t dsp_app(void);
 int main(void)
 {  
     uint32_t tick;
+    uint32_t value;
     
     HAL_Init();
     
@@ -56,25 +57,46 @@ int main(void)
             
             LED_TOGGLE;
             
-            PRINT_LOG(LOG_INFO, HAL_GetTick(), "random:0x%x", rng_get_value());
+            if (rng_get_value(&value) == HAL_OK)
+            {
+                PRINT_LOG(LOG_INFO, HAL_GetTick(), "random:0x%x", value);
+            }
+            else
+            {
+                PRINT_LOG(LOG_INFO, HAL_GetTick(), "random get failed!");
+            }
             
+            PRINT_LOG(LOG_INFO, HAL_GetTick(), "soft random:0x%x", rng_sf_get_value());
             alg_app_run();
         }
     }
 }
 
+#define CRC_NUMS    16
 static void alg_app_run(void)
 {
-    uint32_t buffer[4];
+    uint32_t buffer[CRC_NUMS/4];
+    uint8_t buffer_u8[CRC_NUMS];
+    uint32_t buffer_u32[CRC_NUMS];
+    uint8_t i;
     uint32_t crc_hw, crc_soft;
     
-    buffer[0] = rng_get_value();
-    buffer[1] = rng_get_value();
-    buffer[2] = rng_get_value();
-    buffer[3] = rng_get_value();
+    rng_get_value(&buffer[0]);
+    rng_get_value(&buffer[1]);
+    rng_get_value(&buffer[2]);
+    rng_get_value(&buffer[3]);
     
-    crc_hw = calc_hw_crc32(buffer, 4);
-    crc_soft = calc_crc32(buffer, 4);
+    for (i=0; i<CRC_NUMS; i++)
+    {
+        uint8_t index = i/4;
+        uint32_t data = buffer[index];
+        
+        buffer_u8[i] = (data>>(8*(index%4)))&0xff;
+        buffer_u32[i] = buffer_u8[i];
+    }
+    
+    crc_hw = calc_hw_crc32(buffer_u32, CRC_NUMS);
+    crc_soft = calc_crc32(buffer_u8, CRC_NUMS);
     if(crc_hw == crc_soft)
     {
         PRINT_LOG(LOG_INFO, HAL_GetTick(), "CRC Equal, 0x%x", crc_hw);

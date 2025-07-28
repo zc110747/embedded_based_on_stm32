@@ -24,7 +24,7 @@
 #include "semphr.h"
 #include "cmsis_os.h"
 
-#define CAN_WRITE_STD               0
+#define CAN_WRITE_STD               1
 
 #define MAX_CAN_DLC                 8
 #define MAX_FRAME_BUFFER            548         //允许的最大包格式

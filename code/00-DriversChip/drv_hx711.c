@@ -50,16 +50,24 @@ GlobalType_t hx711_driver_init(void)
 
 uint32_t HX711_Read(void)
 {
-	unsigned long count; 
-	unsigned char i;
-  
+    unsigned long count; 
+    unsigned char i;
+    uint32_t index = 0;
+
     delay_us(10);
     HX711_SCK_LOW; 
-  	count=0;
-  	while(HX711_SDA_READ);
-   
-  	for(i=0; i<24; i++)
-	{ 
+    count=0;
+    do
+    {
+        index++;
+    }while(HX711_SDA_READ && index < 100000);
+    
+    if (index >= 100000) {
+        return 0;
+    }
+
+    for(i=0; i<24; i++)
+    { 
         HX711_SCK_HIGH; 
         count = count<<1; 
         delay_us(10);
@@ -68,11 +76,11 @@ uint32_t HX711_Read(void)
         count |= 0x1;
 
         delay_us(10);
-	}
-   
- 	HX711_SCK_HIGH; 
+    }
+
+    HX711_SCK_HIGH; 
     count=count^0x800000;
-	delay_us(10);
-	HX711_SCK_LOW;  
-	return(count);
+    delay_us(10);
+    HX711_SCK_LOW;  
+    return(count);
 }

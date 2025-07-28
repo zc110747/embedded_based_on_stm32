@@ -89,6 +89,9 @@ static GlobalType_t driver_initialize(void)
     
     xReturn = gpio_driver_init();
 
+#if DRIVER_I2C_ENABLE == 1
+    xReturn |= drv_i2c_init();
+    
 #if DRIVER_AP3216_ENABLE == 1    
     xReturn |= ap3216_driver_init();
 #endif
@@ -96,6 +99,7 @@ static GlobalType_t driver_initialize(void)
 #if DRIVER_PCF8563_ENABLE == 1    
     xReturn |= pcf8563_driver_init();
 #endif
+#endif  
     
     xReturn |= hx711_driver_init();
     

@@ -35,7 +35,7 @@ typedef enum
 #define DRIVER_DAC_ENABLE           0
 #define DRIVER_ADC_ENABLE           0
 #define DRIVER_SPI_ENABLE           0
-#define DRIVER_I2C_ENABLE           0
+#define DRIVER_I2C_ENABLE           1
 #define DRIVER_PCF8574_ENABLE       1
 #define DRIVER_TIME_ENABLE          0
 #define DRIVER_WDG_ENABLE           0

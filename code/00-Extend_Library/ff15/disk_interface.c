@@ -11,6 +11,10 @@
 #include "drv_global.h"
 #include <string.h>
 
+#define SD_RUN_ERROR_TIMES  4
+
+static uint8_t is_fdisk_error = 0;
+
 //RAM disk
 int RAM_disk_status(void)
 {
@@ -61,7 +65,11 @@ int RAM_disk_ioctl(BYTE cmd, void *buff)
 //MMC disk
 int MMC_disk_status(void)
 {
-    return 0;
+    if(is_fdisk_error == 1) {
+        return RES_ERROR;
+    }
+    
+    return RES_OK;
 }
 
 int MMC_disk_initialize(void)
@@ -72,26 +80,70 @@ int MMC_disk_initialize(void)
 
 int MMC_disk_read(BYTE *buff, LBA_t sector, UINT count)
 {
-    if(sdcard_read_disk(buff, sector, count) != HAL_OK)
-    {
-        sdcard_driver_init();
-        return -1;
+    uint8_t res = 0;
+    uint8_t index = 0;
+    
+    // 检测到异常, 不在读取，直接报错
+    if (is_fdisk_error == 1) {
+        return RES_ERROR;
     }
-    return 0;
+    
+    // 循环读取，避免误检测
+    do
+    {
+        res = sdcard_read_disk(buff, sector, count);
+        if (res != HAL_OK) {
+            index++;
+            sdcard_driver_init();
+        }
+        
+        if (index == SD_RUN_ERROR_TIMES)
+        {
+            is_fdisk_error = 1;
+        }
+    }while(res != HAL_OK && index < SD_RUN_ERROR_TIMES);
+    
+    if (res != HAL_OK) {
+        return RES_ERROR;
+    }
+    return RES_OK;
 }
 
 int MMC_disk_write(const BYTE *buff, LBA_t sector, UINT count)
 {
-    if(sdcard_write_disk(buff, sector, count) != HAL_OK)
-    {
-        sdcard_driver_init();
-        return -1;
+    uint8_t res = 0;
+    uint8_t index = 0;
+    
+    // 检测到异常, 不在写入，直接报错
+    if (is_fdisk_error == 1) {
+        return RES_ERROR;
     }
-    return 0;
+    
+    // 循环写入，避免误检测
+    do
+    {
+        res = sdcard_write_disk(buff, sector, count);
+        if (res != HAL_OK)
+        {
+            index++;
+            sdcard_driver_init();
+        }
+        
+        if (index == SD_RUN_ERROR_TIMES)
+        {
+            is_fdisk_error = 1;
+        }
+    }while(res != HAL_OK && index < SD_RUN_ERROR_TIMES);
+
+    if (res != HAL_OK) {
+        return RES_ERROR;
+    }
+    return RES_OK;
 }
 
 int MMC_disk_ioctl(BYTE cmd, void *buff)
 {
+    DRESULT res = RES_OK;
     switch(cmd)
     {
         case GET_BLOCK_SIZE:
@@ -105,8 +157,11 @@ int MMC_disk_ioctl(BYTE cmd, void *buff)
             break;
         case CTRL_SYNC:
             break;
+        default:
+            res = RES_PARERR;
+            break;
     }
-    return 0;
+    return res;
 }
 
 //USB disk

@@ -57,21 +57,8 @@ void get_rtc_ds3213_info(RTC_DS3213_Info *rtc_info)
 GlobalType_t ds3213_driver_init(void)
 {
     GPIO_InitTypeDef GPIO_InitStruct = {0};
-    SOFT_I2C_INFO I2C_Info = {0};
     
-    //clock need enable before software i2c Init
-    __HAL_RCC_GPIOB_CLK_ENABLE(); 
     __HAL_RCC_GPIOC_CLK_ENABLE(); 
-
-    I2C_Info.scl_pin = GPIO_PIN_4;
-    I2C_Info.scl_port = GPIOB;
-    I2C_Info.sda_pin = GPIO_PIN_3;
-    I2C_Info.sda_port = GPIOB;
-    
-    if(i2c_soft_init(SOFT_I2C4, &I2C_Info) != I2C_OK)
-    {
-        return RT_FAIL;
-    }
     
     /*Configure GPIO pin : PC6 */
     GPIO_InitStruct.Pin = GPIO_PIN_6;
@@ -81,8 +68,7 @@ GlobalType_t ds3213_driver_init(void)
     
     HAL_NVIC_SetPriority(EXTI9_5_IRQn, 0, 0);
     HAL_NVIC_EnableIRQ(EXTI9_5_IRQn); 
-
-    
+ 
     ds3213_set_timer(&ds3213_rtc_info_);
     ds3213_read_timer(&ds3213_rtc_info_);
     
