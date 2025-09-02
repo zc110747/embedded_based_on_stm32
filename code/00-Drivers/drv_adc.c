@@ -31,39 +31,39 @@
 static ADC_HandleTypeDef hadc1;
 static DMA_HandleTypeDef hdma_adc1;
 static uint32_t vref_val = 3300;
-static uint16_t ADC_Buffer[ADC_BUFFER_SIZE];
 
 //internal function
 static GlobalType_t adc_calibration(void);
 
 #if ADC_RUN_MODE == RUN_MODE_NORMAL
-GlobalType_t adc_driver_init(void)
+GlobalType_t driver_adc_init(void)
 {
     GPIO_InitTypeDef GPIO_InitStruct = {0};
     
-    //enable the clock
+    // 使能引脚和ADC模块时钟
     __HAL_RCC_ADC1_CLK_ENABLE();
     __HAL_RCC_GPIOA_CLK_ENABLE();
 
-    //PA6 - ADC1 CHANNEL6
+    // 配置引脚为模拟输入模式，无上拉
     GPIO_InitStruct.Pin = ADC_PIN;
     GPIO_InitStruct.Mode = GPIO_MODE_ANALOG;
     GPIO_InitStruct.Pull = GPIO_NOPULL;
     HAL_GPIO_Init(ADC_PORT, &GPIO_InitStruct);
     
+    // 初始化ADC模块
     hadc1.Instance = ADC1;
-    hadc1.Init.ClockPrescaler = ADC_CLOCK_SYNC_PCLK_DIV6;   
-    hadc1.Init.Resolution = ADC_RESOLUTION_12B;          
-    hadc1.Init.DataAlign = ADC_DATAALIGN_RIGHT;           
-    hadc1.Init.ScanConvMode = DISABLE;                      
-    hadc1.Init.EOCSelection = DISABLE;                     
-    hadc1.Init.ContinuousConvMode = DISABLE;              
-    hadc1.Init.NbrOfConversion = 1;                        
-    hadc1.Init.DiscontinuousConvMode = DISABLE;             
-    hadc1.Init.NbrOfDiscConversion = 0;                    
-    hadc1.Init.ExternalTrigConv = ADC_SOFTWARE_START;     
-    hadc1.Init.ExternalTrigConvEdge = ADC_EXTERNALTRIGCONVEDGE_NONE;
-    hadc1.Init.DMAContinuousRequests = DISABLE;             
+    hadc1.Init.ClockPrescaler = ADC_CLOCK_SYNC_PCLK_DIV6;   // ADC工作时钟，需要满足时钟要求
+    hadc1.Init.Resolution = ADC_RESOLUTION_12B;             // ADC 12bit数据
+    hadc1.Init.DataAlign = ADC_DATAALIGN_RIGHT;             // ADC采样数据右对齐
+    hadc1.Init.ScanConvMode = DISABLE;                      // 是否工作在扫描模式(扫描模式下会每读取一次切换通道) 
+    hadc1.Init.EOCSelection = ADC_EOC_SINGLE_CONV;          // 在每个常规转换序列结束时将EOC位置1。溢出检测仅在DMA=1时使能
+    hadc1.Init.ContinuousConvMode = DISABLE;                // 单次转换，转换完结束
+    hadc1.Init.NbrOfConversion = 1;                         // 设置转换的规则通道数目  
+    hadc1.Init.DiscontinuousConvMode = DISABLE;             // 关闭不连续转换(根据指定数目每次转换特定通道)
+    hadc1.Init.NbrOfDiscConversion = 0;                     // 设置不连续转换单次中转换的数目
+    hadc1.Init.ExternalTrigConv = ADC_SOFTWARE_START;       // 触发方式，软件触发
+    hadc1.Init.ExternalTrigConvEdge = ADC_EXTERNALTRIGCONVEDGE_NONE;   // 外部中断触发检测方式(仅外部中断触发有效)
+    hadc1.Init.DMAContinuousRequests = DISABLE;             // 只要发生数据转换且DMA = 1，便会发出DAM请求
 
     if (HAL_ADC_Init(&hadc1) != HAL_OK)
         return RT_FAIL;
@@ -72,62 +72,74 @@ GlobalType_t adc_driver_init(void)
     return RT_OK;  
 }
 
-static uint16_t adv_value_read(uint32_t channel)
+static uint16_t driver_adc_read(uint32_t channel)
 {
     ADC_ChannelConfTypeDef sConfig = {0};
     
-    sConfig.Channel = channel;
-    sConfig.Rank = 1;
-    sConfig.SamplingTime = ADC_SAMPLETIME_56CYCLES;
+    // 设置ADC通道
+    sConfig.Channel = channel;                          // ADC硬件通道
+    sConfig.Rank = 1;                                   // ADC规则通道(1 ~ 16)
+    sConfig.SamplingTime = ADC_SAMPLETIME_56CYCLES;     // ADC采样时间
     sConfig.Offset = 0;
     HAL_ADC_ConfigChannel(&hadc1, &sConfig);
     
-    //start the adc run
+    // 启动ADC转换
     HAL_ADC_Start(&hadc1);                              
-    HAL_ADC_PollForConversion(&hadc1, 10);     
+    
+    // 等待ADC转换完成
+    if (HAL_ADC_PollForConversion(&hadc1, 10) != HAL_OK) {
+        return 0;
+    }        
     
     return HAL_ADC_GetValue(&hadc1);    
 }
 
-uint16_t adc_avg_value_read(uint32_t channel)
+uint16_t driver_adc_avg_read(uint32_t channel)
 {
     uint32_t temp = 0;
     uint8_t index;
     
     for (index=0; index<ADC_AVG_TIMES; index++)
     {
-        temp += adv_value_read(channel);
+        temp += driver_adc_read(channel);
     }
     
     return temp/ADC_AVG_TIMES;
 }
 #else
-GlobalType_t adc_driver_init(void)
+static uint16_t ADC_Buffer[ADC_BUFFER_SIZE];
+
+GlobalType_t driver_adc_init(void)
 {
     ADC_ChannelConfTypeDef sConfig = {0};
     GPIO_InitTypeDef GPIO_InitStruct = {0};
 
+    // 模块时钟初始化
     __HAL_RCC_ADC1_CLK_ENABLE();
     __HAL_RCC_GPIOA_CLK_ENABLE();
     __HAL_RCC_DMA2_CLK_ENABLE();
 
+    // ADC引脚初始化
     GPIO_InitStruct.Pin = ADC_PIN;
     GPIO_InitStruct.Mode = GPIO_MODE_ANALOG;
     GPIO_InitStruct.Pull = GPIO_NOPULL;
     HAL_GPIO_Init(ADC_PORT, &GPIO_InitStruct);
 
+    // ADC模块初始化
     hadc1.Instance = ADC1;
-    hadc1.Init.ClockPrescaler = ADC_CLOCK_SYNC_PCLK_DIV6;
-    hadc1.Init.Resolution = ADC_RESOLUTION_12B;
-    hadc1.Init.ScanConvMode = ENABLE;
-    hadc1.Init.ContinuousConvMode = ENABLE;
-    hadc1.Init.DiscontinuousConvMode = DISABLE;
-    hadc1.Init.ExternalTrigConvEdge = ADC_EXTERNALTRIGCONVEDGE_NONE;
-    hadc1.Init.ExternalTrigConv = ADC_SOFTWARE_START;
-    hadc1.Init.DataAlign = ADC_DATAALIGN_RIGHT;
-    hadc1.Init.NbrOfConversion = 2;
-    hadc1.Init.DMAContinuousRequests = ENABLE;
-    hadc1.Init.EOCSelection = ADC_EOC_SINGLE_CONV;
+    hadc1.Init.ClockPrescaler = ADC_CLOCK_SYNC_PCLK_DIV6;   // ADC工作时钟，需要满足时钟要求
+    hadc1.Init.Resolution = ADC_RESOLUTION_12B;             // ADC 12bit数据
+    hadc1.Init.DataAlign = ADC_DATAALIGN_RIGHT;             // ADC采样数据右对齐
+    hadc1.Init.ScanConvMode = ENABLE;                       // 扫描模式，规则通道扫描
+    hadc1.Init.EOCSelection = ADC_EOC_SEQ_CONV;             // ADC EOC触发条件, 序列完成触发中断
+    hadc1.Init.ContinuousConvMode = ENABLE;                 // 持续模式，循环扫描通道
+    hadc1.Init.NbrOfConversion = 2;                         // 循环扫描的通道数目，和涉及到读取通道一致
+    hadc1.Init.DiscontinuousConvMode = DISABLE;             // 关闭不连续转换(根据指定数目每次转换特定通道)
+    hadc1.Init.NbrOfDiscConversion = 0;                     // 设置不连续转换单次中转换的数目
+    hadc1.Init.ExternalTrigConv = ADC_SOFTWARE_START;       // 触发方式，软件触发
+    hadc1.Init.ExternalTrigConvEdge = ADC_EXTERNALTRIGCONVEDGE_NONE; // 外部中断触发检测方式(仅外部中断触发有效) 
+    hadc1.Init.DMAContinuousRequests = ENABLE;              // 使能DMA请求
+
     if (HAL_ADC_Init(&hadc1) != HAL_OK)
     {
         return RT_FAIL;
@@ -154,17 +166,17 @@ GlobalType_t adc_driver_init(void)
     
     //enable the adc dma
     SET_BIT(hadc1.Instance->CR2, ADC_CR2_DMA);
-  
-    hdma_adc1.Instance = DMA2_Stream0;
-    hdma_adc1.Init.Channel = DMA_CHANNEL_0;
-    hdma_adc1.Init.Direction = DMA_PERIPH_TO_MEMORY;
-    hdma_adc1.Init.PeriphInc = DMA_PINC_DISABLE;
-    hdma_adc1.Init.MemInc = DMA_MINC_ENABLE;
-    hdma_adc1.Init.PeriphDataAlignment = DMA_PDATAALIGN_HALFWORD;
-    hdma_adc1.Init.MemDataAlignment = DMA_MDATAALIGN_HALFWORD;
-    hdma_adc1.Init.Mode = DMA_CIRCULAR;
-    hdma_adc1.Init.Priority = DMA_PRIORITY_HIGH;
-    hdma_adc1.Init.FIFOMode = DMA_FIFOMODE_DISABLE;
+    
+    hdma_adc1.Instance = DMA2_Stream0;                              // 配置DMA模块DMA2_stream0
+    hdma_adc1.Init.Channel = DMA_CHANNEL_0;                         // 配置DMA通道
+    hdma_adc1.Init.Direction = DMA_PERIPH_TO_MEMORY;                // 外设到内存
+    hdma_adc1.Init.PeriphInc = DMA_PINC_DISABLE;                    // 外设地址不增加
+    hdma_adc1.Init.MemInc = DMA_MINC_ENABLE;                        // 内存地址增加
+    hdma_adc1.Init.PeriphDataAlignment = DMA_PDATAALIGN_HALFWORD;   // 外设数据长度半字，和ADC寄存器位宽一致
+    hdma_adc1.Init.MemDataAlignment = DMA_MDATAALIGN_HALFWORD;      // 内存数据长度半字
+    hdma_adc1.Init.Mode = DMA_CIRCULAR;                             // 循环模式
+    hdma_adc1.Init.Priority = DMA_PRIORITY_HIGH;                    // DMA优先级高
+    hdma_adc1.Init.FIFOMode = DMA_FIFOMODE_DISABLE;                 // 不需要队列
     if (HAL_DMA_Init(&hdma_adc1) != HAL_OK)
     {
         return RT_FAIL;
@@ -190,7 +202,7 @@ void DMA2_Stream0_IRQHandler(void)
     }
 }
 
-uint16_t adc_avg_value_read(uint32_t channel)
+uint16_t driver_adc_avg_read(uint32_t channel)
 {
     uint32_t temp = 0;
     uint8_t index;

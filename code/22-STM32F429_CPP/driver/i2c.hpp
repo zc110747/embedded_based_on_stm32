@@ -130,7 +130,6 @@ namespace stm32f4
                     i2c_clock_enable<i2c_mode>();
                
                     //init i2c modules
-                    i2c_port_ = convert_to_i2c<i2c_mode>();
                     i2c_struct_.Instance = i2c_port_;
                     i2c_struct_.Init.ClockSpeed = clock_speed;
                     i2c_struct_.Init.DutyCycle = dutycycle;
@@ -192,8 +191,10 @@ namespace stm32f4
                 }
             private:
                 bool is_init{false};
-                I2C_TypeDef *i2c_port_;
-                I2C_HandleTypeDef i2c_struct_ = {0};
+                
+                I2C_TypeDef *i2c_port_{convert_to_i2c<i2c_mode>()};
+                
+                I2C_HandleTypeDef i2c_struct_{0};
         };
     }
 }

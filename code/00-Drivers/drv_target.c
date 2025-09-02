@@ -29,7 +29,8 @@
 #pragma import(__use_no_semihosting)
 #else
 __asm(".global __use_no_semihosting");
-#endif                         
+#endif
+
 struct __FILE 
 { 
 	int handle; 

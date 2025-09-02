@@ -50,11 +50,11 @@ int main(void)
         {
             tick = HAL_GetTick();
             
-            adc_value = adc_avg_value_read(ADC_CHANNEL_TEMPSENSOR);
+            adc_value = driver_adc_avg_read(ADC_CHANNEL_TEMPSENSOR);
             temperature = (float)adc_value*(3.3/4096);	
             temperature = (temperature-0.76)/0.0025 + 25;
             
-            adc_value = adc_avg_value_read(ADC_CHANNEL_6);
+            adc_value = driver_adc_avg_read(ADC_CHANNEL_6);
             voltage = (float)adc_value*(3.3/4096);
             
             PRINT_LOG(LOG_INFO, HAL_GetTick(), "tempature:%f, voltage:%f!", temperature, voltage);
@@ -68,7 +68,7 @@ static GlobalType_t driver_initialize(void)
     
     xReturn = gpio_driver_init();
     
-    xReturn |= adc_driver_init();
+    xReturn |= driver_adc_init();
 
     if (xReturn == RT_OK)
     {

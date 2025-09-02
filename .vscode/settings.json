@@ -14,5 +14,5 @@
     },
     "marscode.enableInlineCommand": true,
     "marscode.chatLanguage": "cn",
-    "cmake.sourceDirectory": "D:/user_project/coding_git/embedded_based_on_stm32/code/27-2.STM32F429_CMAKE_GCC"
+    "cmake.sourceDirectory": "D:/github/embedded_based_on_stm32/code/27-2.STM32F429_CMAKE_GCC"
 }
