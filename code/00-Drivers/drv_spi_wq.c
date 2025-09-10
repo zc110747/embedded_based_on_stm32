@@ -42,7 +42,19 @@ static GlobalType_t wq_write_sector(uint32_t start_addr, uint8_t* pbuffer, uint1
 GlobalType_t wq_driver_init(void)
 {
     GlobalType_t xReturn;
+    GPIO_InitTypeDef GPIO_InitStruct = {0};
 
+    __HAL_RCC_GPIOF_CLK_ENABLE();
+    
+    HAL_GPIO_WritePin(GPIOF, GPIO_PIN_6, GPIO_PIN_SET);
+    
+    /*Configure GPIO pin : PF6 */
+    GPIO_InitStruct.Pin = GPIO_PIN_6;
+    GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
+    GPIO_InitStruct.Pull = GPIO_PULLUP;
+    GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_HIGH;
+    HAL_GPIO_Init(GPIOF, &GPIO_InitStruct);
+    
     xReturn = spi_driver_init();
     if(xReturn == RT_OK)
     {

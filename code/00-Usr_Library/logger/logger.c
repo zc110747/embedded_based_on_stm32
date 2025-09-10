@@ -130,7 +130,7 @@ int print_log(LOG_LEVEL level, uint32_t tick, const char* fmt, ...)
         bufferlen = len - 1;
         pbuf = buf;
         
-        len = snprintf(pbuf, bufferlen, "level:%d times:%d info:", level, tick);
+        len = snprintf(pbuf, bufferlen, "level:%d times:%ld info:", level, tick);
         if ((len<=0) || (len>=bufferlen))
         {
             LOGGER_PROTECT_EXTI();

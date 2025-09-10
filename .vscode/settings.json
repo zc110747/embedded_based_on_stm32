@@ -7,12 +7,17 @@
         "drv_global.h": "c",
         "logger.h": "c",
         "global_def.h": "c",
-        "drv_target.h": "c"
+        "drv_target.h": "c",
+        "drv_spi_adxl345.h": "c",
+        "chrono": "c",
+        "format": "c",
+        "thread": "c",
+        "vector": "c"
     },
     "marscode.codeCompletionPro": {
         "enableCodeCompletionPro": true
     },
     "marscode.enableInlineCommand": true,
     "marscode.chatLanguage": "cn",
-    "cmake.sourceDirectory": "D:/github/embedded_based_on_stm32/code/27-2.STM32F429_CMAKE_GCC"
+    "cmake.sourceDirectory": "D:/user_project/coding_git/embedded_based_on_stm32/code/27-2.STM32F429_CMAKE_GCC"
 }

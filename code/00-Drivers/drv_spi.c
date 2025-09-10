@@ -25,7 +25,7 @@
 #define SPI_RW_TIMEOUT  100
 
 //internal variable
-static SPI_HandleTypeDef hspi5;
+SPI_HandleTypeDef hspi5;
 
 #if SPI_RUN_MODE == RUN_MODE_NORMAL
 GlobalType_t spi_driver_init(void)
@@ -34,21 +34,12 @@ GlobalType_t spi_driver_init(void)
 
     __HAL_RCC_GPIOF_CLK_ENABLE();
     __HAL_RCC_SPI5_CLK_ENABLE();
-    
-    HAL_GPIO_WritePin(GPIOF, GPIO_PIN_6, GPIO_PIN_SET);
 
-    GPIO_InitStruct.Pin = GPIO_PIN_7|GPIO_PIN_8|GPIO_PIN_9;
+    GPIO_InitStruct.Pin = GPIO_PIN_7 | GPIO_PIN_8 | GPIO_PIN_9;
     GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
     GPIO_InitStruct.Pull = GPIO_PULLUP;
     GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_VERY_HIGH;
     GPIO_InitStruct.Alternate = GPIO_AF5_SPI5;
-    HAL_GPIO_Init(GPIOF, &GPIO_InitStruct);
-    
-    /*Configure GPIO pin : PF6 */
-    GPIO_InitStruct.Pin = GPIO_PIN_6;
-    GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
-    GPIO_InitStruct.Pull = GPIO_PULLUP;
-    GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_HIGH;
     HAL_GPIO_Init(GPIOF, &GPIO_InitStruct);
 
     hspi5.Instance = SPI5;

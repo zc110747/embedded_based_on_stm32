@@ -27,7 +27,7 @@ extern "C" {
 
 #define RUN_MODE_VOICE              4
 
-#define DAC_RUN_MODE                RUN_MODE_VOICE
+#define DAC_RUN_MODE                RUN_MODE_DMA
 
 //reference voltage, uint:mv
 #define DAC_REFERENCE_VOL           3300
