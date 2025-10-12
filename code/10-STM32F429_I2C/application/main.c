@@ -87,7 +87,7 @@ static GlobalType_t driver_initialize(void)
 {
     GlobalType_t xReturn;
     
-    xReturn = gpio_driver_init();
+    xReturn = drv_gpio_init();
 
 #if DRIVER_I2C_ENABLE == 1
     xReturn |= drv_i2c_init();

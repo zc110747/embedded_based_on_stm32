@@ -55,7 +55,7 @@ static GlobalType_t timer3_driver_init(void);
 static GlobalType_t timer5_driver_init(void);
 
 //------ global function ------
-GlobalType_t timer_driver_init(void)
+GlobalType_t drv_timer_init(void)
 {
     GlobalType_t result;
     

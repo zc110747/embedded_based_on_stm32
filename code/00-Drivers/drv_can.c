@@ -28,7 +28,7 @@ CAN_HandleTypeDef hcan1;
 //static internal function
 
 //global function
-GlobalType_t can_driver_init(void)
+GlobalType_t drv_can_init(void)
 {
     GPIO_InitTypeDef GPIO_InitStruct = {0};
     

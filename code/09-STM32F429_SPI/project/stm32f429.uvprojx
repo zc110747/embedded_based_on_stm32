@@ -339,7 +339,7 @@
               <MiscControls></MiscControls>
               <Define></Define>
               <Undefine></Undefine>
-              <IncludePath>..\..\00-Extend_Library\dsp_lib\Include;..\..\00-STM32F4xx_HAL_Driver\Inc;..\application;..\..\00-Extend_Library\segger_rtt\Config;..\..\00-Extend_Library\segger_rtt\RTT;..\..\00-Drivers;..\..\00-Usr_Library\logger</IncludePath>
+              <IncludePath>..\..\00-Extend_Library\dsp_lib\Include;..\..\00-STM32F4xx_HAL_Driver\Inc;..\application;..\..\00-Extend_Library\segger_rtt\Config;..\..\00-Extend_Library\segger_rtt\RTT;..\..\00-Drivers;..\..\00-Usr_Library\logger;..\..\00-DriversChip;..\..\00-DriversChip\oled</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -563,16 +563,6 @@
               <FileType>1</FileType>
               <FilePath>..\..\00-Drivers\drv_soft_spi.c</FilePath>
             </File>
-            <File>
-              <FileName>drv_spi_wq.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\00-Drivers\drv_spi_wq.c</FilePath>
-            </File>
-            <File>
-              <FileName>drv_spi_adxl345.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\00-Drivers\drv_spi_adxl345.c</FilePath>
-            </File>
           </Files>
         </Group>
         <Group>
@@ -582,6 +572,26 @@
               <FileName>logger.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\00-Usr_Library\logger\logger.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>driver_chip</GroupName>
+          <Files>
+            <File>
+              <FileName>oled.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\00-DriversChip\oled\oled.c</FilePath>
+            </File>
+            <File>
+              <FileName>drv_spi_adxl345.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\00-DriversChip\drv_spi_adxl345.c</FilePath>
+            </File>
+            <File>
+              <FileName>drv_spi_wq.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\00-DriversChip\drv_spi_wq.c</FilePath>
             </File>
           </Files>
         </Group>

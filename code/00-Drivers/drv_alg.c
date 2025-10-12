@@ -30,7 +30,7 @@ static GlobalType_t rng_sf_init(int seed);
 static GlobalType_t crc_init(void);
 
 //------ global function ------
-GlobalType_t alg_driver_init(void)
+GlobalType_t drv_alg_init(void)
 {
     GlobalType_t result;
     

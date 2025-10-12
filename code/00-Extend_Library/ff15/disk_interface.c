@@ -94,7 +94,7 @@ int MMC_disk_read(BYTE *buff, LBA_t sector, UINT count)
         res = sdcard_read_disk(buff, sector, count);
         if (res != HAL_OK) {
             index++;
-            sdcard_driver_init();
+            drv_sdcard_init();
         }
         
         if (index == SD_RUN_ERROR_TIMES)
@@ -126,7 +126,7 @@ int MMC_disk_write(const BYTE *buff, LBA_t sector, UINT count)
         if (res != HAL_OK)
         {
             index++;
-            sdcard_driver_init();
+            drv_sdcard_init();
         }
         
         if (index == SD_RUN_ERROR_TIMES)

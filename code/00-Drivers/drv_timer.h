@@ -26,7 +26,7 @@ extern "C" {
 
 #include "includes.h"
 
-GlobalType_t timer_driver_init(void);
+GlobalType_t drv_timer_init(void);
 uint32_t ger_timer_tick(void);
 uint8_t tpad_scan_key(void);
 void pwm_set_percent(float percent);

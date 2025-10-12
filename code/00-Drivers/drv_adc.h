@@ -28,7 +28,7 @@ extern "C" {
 
 #define ADC_RUN_MODE            RUN_MODE_DMA
 
-GlobalType_t driver_adc_init(void);
+GlobalType_t drv_adc_init(void);
 uint32_t get_vref_val(void);
 uint16_t driver_adc_avg_read(uint32_t channel);
 

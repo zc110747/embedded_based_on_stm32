@@ -25,7 +25,7 @@ extern "C" {
 
 #include "includes.h"
 
-GlobalType_t alg_driver_init(void);
+GlobalType_t drv_alg_init(void);
 HAL_StatusTypeDef rng_get_value(uint32_t *val);
 int rng_sf_get_value(void);
 uint32_t calc_hw_crc32(uint32_t *pbuffer, uint32_t size);

@@ -31,7 +31,7 @@ static DMA_HandleTypeDef hdma_memtomem;
 #define DMA_MEM_STREAM  DMA2_Stream1
 #define DMA_MEM_FLAG    DMA_FLAG_TCIF1_5
 
-GlobalType_t dma_driver_init(void)
+GlobalType_t drv_dma_init(void)
 {
     /* DMA controller clock enable */
     __HAL_RCC_DMA2_CLK_ENABLE();

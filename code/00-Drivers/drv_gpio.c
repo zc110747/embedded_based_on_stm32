@@ -33,7 +33,7 @@ static GlobalType_t key0_driver_init(void);
 static uint8_t key0_anti_shake_tick = 0;
 
 //------ global function ------
-GlobalType_t gpio_driver_init(void)
+GlobalType_t drv_gpio_init(void)
 {
     GlobalType_t type;
     

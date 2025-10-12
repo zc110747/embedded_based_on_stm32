@@ -36,7 +36,7 @@ extern "C" {
 #define DAC_MAX_VALUE               4095
 
 void dac_set(uint16_t mv);   
-GlobalType_t dac_driver_init(void);
+GlobalType_t drv_dac_init(void);
 
 #ifdef __cplusplus
 }

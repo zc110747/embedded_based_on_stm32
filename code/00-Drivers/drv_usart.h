@@ -29,7 +29,7 @@ extern "C" {
 
 #define USART_RUN_MODE  RUN_MODE_NULL
 
-GlobalType_t usart_driver_init(void);
+GlobalType_t drv_usart_init(void);
 void usart_loop_run(void);
 
 #ifdef __cplusplus

@@ -36,7 +36,7 @@ static uint32_t vref_val = 3300;
 static GlobalType_t adc_calibration(void);
 
 #if ADC_RUN_MODE == RUN_MODE_NORMAL
-GlobalType_t driver_adc_init(void)
+GlobalType_t drv_adc_init(void)
 {
     GPIO_InitTypeDef GPIO_InitStruct = {0};
     
@@ -109,7 +109,7 @@ uint16_t driver_adc_avg_read(uint32_t channel)
 #else
 static uint16_t ADC_Buffer[ADC_BUFFER_SIZE];
 
-GlobalType_t driver_adc_init(void)
+GlobalType_t drv_adc_init(void)
 {
     ADC_ChannelConfTypeDef sConfig = {0};
     GPIO_InitTypeDef GPIO_InitStruct = {0};

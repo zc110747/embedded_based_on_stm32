@@ -37,7 +37,7 @@ extern "C" {
 #define SDRAM_MODEREG_WRITEBURST_MODE_PROGRAMMED ((uint16_t)0x0000)
 #define SDRAM_MODEREG_WRITEBURST_MODE_SINGLE     ((uint16_t)0x0200)
 
-GlobalType_t sdram_driver_init(void);
+GlobalType_t drv_sdram_init(void);
     
 #ifdef __cplusplus
 }

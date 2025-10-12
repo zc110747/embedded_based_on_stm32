@@ -49,7 +49,7 @@ static uint16_t vol_convert_cycle[DAC_CYCLE_SIZE];
 #endif
 
 #if DAC_RUN_MODE == RUN_MODE_NORMAL
-GlobalType_t dac_driver_init(void)
+GlobalType_t drv_dac_init(void)
 {
     DAC_ChannelConfTypeDef sConfig = {0};
     GPIO_InitTypeDef GPIO_InitStruct = {0};
@@ -95,7 +95,7 @@ void dac_set(uint16_t mv)
 }
 #elif DAC_RUN_MODE == RUN_MODE_VOICE
 extern uint16_t tonePCM_8KHz16bit[2321];
-GlobalType_t dac_driver_init(void)
+GlobalType_t drv_dac_init(void)
 {
     DAC_ChannelConfTypeDef sConfig = {0};
     GPIO_InitTypeDef GPIO_InitStruct = {0};
@@ -173,7 +173,7 @@ GlobalType_t dac_driver_init(void)
 }
 
 #else
-GlobalType_t dac_driver_init(void)
+GlobalType_t drv_dac_init(void)
 {
     DAC_ChannelConfTypeDef sConfig = {0};
     GPIO_InitTypeDef GPIO_InitStruct = {0};

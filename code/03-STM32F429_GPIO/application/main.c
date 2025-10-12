@@ -85,7 +85,7 @@ static GlobalType_t driver_initialize(void)
 {
     GlobalType_t xReturn;
     
-    xReturn = gpio_driver_init();
+    xReturn = drv_gpio_init();
     
     return xReturn;
 }

@@ -26,7 +26,7 @@ static WWDG_HandleTypeDef hwwdg;
 static GlobalType_t iwdg_init(void);
 static GlobalType_t wwdg_init(void);
 
-GlobalType_t wdg_driver_init(void)
+GlobalType_t drv_wdg_init(void)
 {
     GlobalType_t  result;
     

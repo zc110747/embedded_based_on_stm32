@@ -27,7 +27,7 @@ extern "C" {
 #include "includes.h"
 
 void iwdg_reload(void);
-GlobalType_t wdg_driver_init(void);
+GlobalType_t drv_wdg_init(void);
 
 #ifdef __cplusplus
 }

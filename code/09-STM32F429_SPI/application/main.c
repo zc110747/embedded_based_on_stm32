@@ -16,7 +16,7 @@
 //
 /////////////////////////////////////////////////////////////////////////////
 #include "drv_global.h"
-#include <stdio.h>
+#include "oled.h"
 
 #define DEBUG_JTAG          0
 #define DEBUG_STLINK        1
@@ -60,9 +60,11 @@ static GlobalType_t driver_initialize(void)
 {
     GlobalType_t xReturn;
     
-    xReturn = gpio_driver_init();
+    xReturn = drv_gpio_init();
     
     xReturn |= wq_driver_init();
+    
+    xReturn |= drv_spi_oled_init();
 
     if (xReturn == RT_OK)
     {

@@ -63,7 +63,7 @@ void usart_loop_run(void)
     }
 }
 
-GlobalType_t usart_driver_init(void)
+GlobalType_t drv_usart_init(void)
 {
     GPIO_InitTypeDef GPIO_InitStruct = {0};
 
@@ -134,7 +134,7 @@ static USART_DMA_INFO g_usart_dma_info = {0};
 static void usart_receive(char *ptr, uint16_t size);
 static void usart_translate(char *ptr, uint16_t size);
 
-GlobalType_t usart_driver_init(void)
+GlobalType_t drv_usart_init(void)
 {
     GPIO_InitTypeDef GPIO_InitStruct = {0};
 

@@ -43,7 +43,7 @@ I2C_HandleTypeDef *get_i2c3_handle(void)
 GlobalType_t drv_i2c_init(void)
 {
 #if I2C_RUN_MODE == I2C_USE_HARDWARE
-    if (i2c2_driver_init(0) != RT_OK) {
+    if (drv_i2c2_init(0) != RT_OK) {
         return RT_FAIL;
     }
 #else
@@ -101,7 +101,7 @@ GlobalType_t i2c2_soft_driver_init(void)
     return RT_OK;
 }
 
-GlobalType_t i2c2_driver_init(int must_init)
+GlobalType_t drv_i2c2_init(int must_init)
 {
     GPIO_InitTypeDef GPIO_InitStruct = {0};
 

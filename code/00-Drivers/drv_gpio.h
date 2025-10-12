@@ -47,7 +47,7 @@ extern "C" {
 
 #define KEY0_READ_PIN()     (HAL_GPIO_ReadPin(KEY0_PORT, KEY0_PIN)==GPIO_PIN_SET?1:0)
 
-GlobalType_t gpio_driver_init(void);
+GlobalType_t drv_gpio_init(void);
 
 uint8_t *get_key0_ansh_tick(void);
 uint8_t io_anti_shake(uint8_t *tick_ptr, uint8_t nowIoStatus, uint8_t readIoStatus);

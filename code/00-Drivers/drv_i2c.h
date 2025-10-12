@@ -40,7 +40,7 @@ I2C_HandleTypeDef *get_i2c3_handle(void);
 GlobalType_t drv_i2c_init(void);
 GlobalType_t i2c4_soft_driver_init(void);
 GlobalType_t i2c2_soft_driver_init(void);
-GlobalType_t i2c2_driver_init(int must_init);   
+GlobalType_t drv_i2c2_init(int must_init);   
 #ifdef __cplusplus
 }
 #endif

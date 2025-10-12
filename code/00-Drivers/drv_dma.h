@@ -26,7 +26,7 @@ extern "C" {
 
 #include "includes.h"
 
-GlobalType_t dma_driver_init(void);
+GlobalType_t drv_dma_init(void);
 GlobalType_t dma_memory_run(void);
 
 #ifdef __cplusplus

@@ -35,7 +35,7 @@ static GlobalType_t sdram_hardware_init(void);
 static GlobalType_t sdram_initialize_sequence(void);
 static GlobalType_t sdram_send_command(uint8_t bank, uint8_t cmd, uint8_t refresh, uint16_t regval);
 
-GlobalType_t sdram_driver_init(void)
+GlobalType_t drv_sdram_init(void)
 {
     GlobalType_t result;
     

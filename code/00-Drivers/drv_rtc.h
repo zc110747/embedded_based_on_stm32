@@ -48,7 +48,7 @@ void rtc_get_info(RTC_INFO *pGetInfo);
 void rtc_alarm_register(uint8_t day, uint8_t hour, uint8_t min, uint8_t sec);
 uint8_t get_rtc_alarm(void);
 void clear_rtc_alarm(void);
-GlobalType_t rtc_driver_init(void);
+GlobalType_t drv_rtc_init(void);
 
 #ifdef __cplusplus
 }

@@ -528,26 +528,6 @@
               <FileType>5</FileType>
               <FilePath>..\..\00-Drivers\drv_i2c.h</FilePath>
             </File>
-            <File>
-              <FileName>drv_i2c_ap3216.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\..\00-Drivers\drv_i2c_ap3216.h</FilePath>
-            </File>
-            <File>
-              <FileName>drv_i2c_ds3213.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\..\00-Drivers\drv_i2c_ds3213.h</FilePath>
-            </File>
-            <File>
-              <FileName>drv_i2c_pcf8563.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\..\00-Drivers\drv_i2c_pcf8563.h</FilePath>
-            </File>
-            <File>
-              <FileName>drv_i2c_pcf8574.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\..\00-Drivers\drv_i2c_pcf8574.h</FilePath>
-            </File>
           </Files>
         </Group>
         <Group>
@@ -584,31 +564,6 @@
               <FilePath>..\..\00-Drivers\drv_soft_i2c.c</FilePath>
             </File>
             <File>
-              <FileName>drv_i2c_ap3216.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\00-Drivers\drv_i2c_ap3216.c</FilePath>
-            </File>
-            <File>
-              <FileName>drv_i2c_pcf8574.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\00-Drivers\drv_i2c_pcf8574.c</FilePath>
-            </File>
-            <File>
-              <FileName>drv_i2c_pcf8563.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\00-Drivers\drv_i2c_pcf8563.c</FilePath>
-            </File>
-            <File>
-              <FileName>drv_i2c_ds3213.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\00-Drivers\drv_i2c_ds3213.c</FilePath>
-            </File>
-            <File>
-              <FileName>drv_hx711.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\00-DriversChip\drv_hx711.c</FilePath>
-            </File>
-            <File>
               <FileName>drv_i2c.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\00-Drivers\drv_i2c.c</FilePath>
@@ -622,6 +577,36 @@
               <FileName>logger.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\00-Usr_Library\logger\logger.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>driver_chip</GroupName>
+          <Files>
+            <File>
+              <FileName>drv_i2c_ap3216.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\00-DriversChip\drv_i2c_ap3216.c</FilePath>
+            </File>
+            <File>
+              <FileName>drv_i2c_ds3213.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\00-DriversChip\drv_i2c_ds3213.c</FilePath>
+            </File>
+            <File>
+              <FileName>drv_i2c_pcf8563.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\00-DriversChip\drv_i2c_pcf8563.c</FilePath>
+            </File>
+            <File>
+              <FileName>drv_i2c_pcf8574.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\00-DriversChip\drv_i2c_pcf8574.c</FilePath>
+            </File>
+            <File>
+              <FileName>drv_hx711.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\00-DriversChip\drv_hx711.c</FilePath>
             </File>
           </Files>
         </Group>

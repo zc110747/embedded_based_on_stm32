@@ -59,5 +59,5 @@ typedef enum
 
 #define I2C_USE_HARDWARE        0
 #define I2C_USE_SOFTWARE        1
-#define I2C_RUN_MODE            I2C_USE_SOFTWARE
+#define I2C_RUN_MODE            I2C_USE_HARDWARE
 #endif

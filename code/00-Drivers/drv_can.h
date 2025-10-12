@@ -26,7 +26,7 @@ extern "C" {
 
 #include "includes.h"
 
-GlobalType_t can_driver_init(void);
+GlobalType_t drv_can_init(void);
 GlobalType_t can_write_std(uint8_t* data, uint8_t len);
 int can_driver_receive(uint8_t *data, uint8_t len);
 

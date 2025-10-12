@@ -49,10 +49,10 @@ static GlobalType_t driver_initialize(void)
     GlobalType_t xReturn;
     
     //gpio driver init
-    xReturn = gpio_driver_init();
+    xReturn = drv_gpio_init();
     
     //usart driver init
-    xReturn |= usart_driver_init();
+    xReturn |= drv_usart_init();
     
     if (xReturn == RT_OK)
     {

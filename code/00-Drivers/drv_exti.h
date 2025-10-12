@@ -34,7 +34,7 @@ extern "C" {
 #define KEY1_IRQn           EXTI2_IRQn
 #define KEY1_READ_PIN()     (HAL_GPIO_ReadPin(KEY1_PORT, KEY1_PIN)==GPIO_PIN_SET?1:0)
 
-GlobalType_t exti_driver_init(void);
+GlobalType_t drv_exti_init(void);
 uint8_t get_key1_press(void);
 #ifdef __cplusplus
 }

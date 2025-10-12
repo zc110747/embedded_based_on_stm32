@@ -1,4 +1,4 @@
-# 单片机总结系列(x3) MDK相关编译方法说明
+# 单片机技术总结说明(x3) MDK相关编译方法说明
 
 - [常用编译选项](#feature-1)
 - [常用快捷键](#feature-2)
@@ -174,4 +174,4 @@ Number of parallel jobs选项，允许的多线程编译数目
 
 [返回目录](./../README.md)
 
-直接开始下一小节: [使用Makefile进行项目管理](./chx4.makefile.md)
+直接开始下一小节: [基于vscode的arm-none-eabi-gcc开发和调试](./chx4.vscode_gcc_openocd.md)

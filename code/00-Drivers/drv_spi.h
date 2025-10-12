@@ -29,7 +29,7 @@ extern "C" {
 #define SPI_RUN_MODE        RUN_MODE_NORMAL
 
 
-GlobalType_t spi_driver_init(void);
+GlobalType_t drv_spi_init(void);
 
 //dma interface
 uint16_t wq_read_chipid(void);

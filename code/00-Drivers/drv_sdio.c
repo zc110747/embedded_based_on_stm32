@@ -24,7 +24,7 @@ static SD_HandleTypeDef hsdcard1;
 static DMA_HandleTypeDef hdma_sdio_rx;
 static DMA_HandleTypeDef hdma_sdio_tx;
 
-GlobalType_t sdcard_driver_init(void)
+GlobalType_t drv_sdcard_init(void)
 {
     GPIO_InitTypeDef GPIO_InitStruct = {0};
 
@@ -146,8 +146,7 @@ HAL_StatusTypeDef sdcard_read_disk(uint8_t *buf, uint32_t startBlocks, uint32_t 
     uint16_t tick = 0;
     
     status = HAL_SD_ReadBlocks_DMA(&hsdcard1, (uint8_t*)buf, startBlocks, NumberOfBlocks);
-    if (status == HAL_ERROR)
-    {
+    if (status != HAL_ERROR) {
         goto __err_flag;
     }
     
@@ -188,7 +187,7 @@ HAL_StatusTypeDef sdcard_write_disk(const uint8_t *buf, uint32_t startBlocks, ui
     uint16_t tick = 0;
 
     status = HAL_SD_WriteBlocks_DMA(&hsdcard1, (uint8_t*)buf, startBlocks, NumberOfBlocks);
-    if (status == HAL_ERROR)
+    if (status != HAL_OK)
     {
         goto __err_flag;
     }
@@ -231,6 +230,9 @@ HAL_StatusTypeDef sdcard_read_disk(uint8_t *buf, uint32_t startBlocks, uint32_t 
     uint16_t tick = 0;
     
     status = HAL_SD_ReadBlocks(&hsdcard1, (uint8_t*)buf, startBlocks, NumberOfBlocks, SDMMC_READ_WRITE_TIMEOUT);
+    if (status != HAL_OK) {
+        return status;
+    }
     
     //wait card ok.
     while((HAL_SD_GetCardState(&hsdcard1) != HAL_SD_CARD_TRANSFER)
@@ -252,6 +254,9 @@ HAL_StatusTypeDef sdcard_write_disk(const uint8_t *buf, uint32_t startBlocks, ui
     uint16_t tick = 0;
 
     status = HAL_SD_WriteBlocks(&hsdcard1, (uint8_t*)buf, startBlocks, NumberOfBlocks, SDMMC_READ_WRITE_TIMEOUT);
+    if (status != HAL_OK) {
+        return status;
+    }
     
     //wait card ok.
     while((HAL_SD_GetCardState(&hsdcard1) != HAL_SD_CARD_TRANSFER)

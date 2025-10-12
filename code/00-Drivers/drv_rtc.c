@@ -44,7 +44,7 @@ static GlobalType_t rtc_hardware_init(void);
 static void rtc_set_alarm(uint8_t week, uint8_t hour, uint8_t min, uint8_t sec);
 
 //global function
-GlobalType_t rtc_driver_init(void)
+GlobalType_t drv_rtc_init(void)
 {
     GlobalType_t result;
     

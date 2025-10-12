@@ -28,7 +28,7 @@
 SPI_HandleTypeDef hspi5;
 
 #if SPI_RUN_MODE == RUN_MODE_NORMAL
-GlobalType_t spi_driver_init(void)
+GlobalType_t drv_spi_init(void)
 {
     GPIO_InitTypeDef GPIO_InitStruct = {0};
 
@@ -86,7 +86,7 @@ uint8_t spi_rw_byte_nocheck(uint8_t data)
 static DMA_HandleTypeDef hdma_spi5_rx;
 static DMA_HandleTypeDef hdma_spi5_tx;
 
-GlobalType_t spi_driver_init(void)
+GlobalType_t drv_spi_init(void)
 {
     GPIO_InitTypeDef GPIO_InitStruct = {0};
 
@@ -256,7 +256,7 @@ uint8_t spi_read_check_ok(void)
     return HAL_ERROR;
 }
 #elif  SPI_RUN_MODE == RUN_MODE_SOFT
-GlobalType_t spi_driver_init(void)
+GlobalType_t drv_spi_init(void)
 {
     SOFT_SPI_INFO spi_info = {0};
     GPIO_InitTypeDef GPIO_InitStruct = {0};
