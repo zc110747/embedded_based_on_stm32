@@ -1,0 +1,27 @@
+//////////////////////////////////////////////////////////////////////////////
+//  (c) copyright 2023-by Persional Inc.  
+//  All Rights Reserved
+//
+//  Name:
+//      main.c
+//
+//  Purpose:
+//
+//  Author:
+//      @zc
+//
+//  Assumptions:
+//	
+//
+//  Revision History:
+//
+/////////////////////////////////////////////////////////////////////////////
+#include "drv_global.h"
+
+int main(void)
+{
+    while(1)
+    {
+        
+    }
+}

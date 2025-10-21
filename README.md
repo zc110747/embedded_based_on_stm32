@@ -2,6 +2,8 @@
 
 ## 本系列章节目录
 
+### 单片机模块功能目录
+
 - [综述和内核说明](./src/ch01.overview_and_kernel.md)
 - [RCC系统时钟模块](./src/ch02.rcc_system_clock.md)
 - [GPIO输入输出模块](./src/ch03.gpio_input_output.md)
@@ -35,12 +37,16 @@
 - [使用rust进行单片机开发](./src/ch31.build_with_rust.md)
 - [micropython应用](./src/ch32.micropython.md)
 
-## 附录目录
+### 附录目录
 
 - [其它嵌入式知识总结](./src/chx1.other_summy.md)
 - [分散加载机制](./src/chx2.distributed_loading.md)
 - [MDK相关编译方法说明](./src/chx3.mdk_notes.md)
 - [基于vscode的arm-none-gcc开发和调试](./src/chx4.vscode_gcc_openocd.md)
+
+### 单片机应用目录
+
+- [日志库应用实现](./app/00-logger_tools.md)
 
 ## 开源说明
 

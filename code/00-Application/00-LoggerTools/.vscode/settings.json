@@ -1,0 +1,10 @@
+{
+    "files.associations": {
+        "*.cmd": "shellscript",
+        "logger_interface.h": "c",
+        "logger.h": "c",
+        "global_def.h": "c",
+        "drv_target.h": "c",
+        "drv_logger_uart.h": "c"
+    }
+}

@@ -12,7 +12,10 @@
         "chrono": "c",
         "format": "c",
         "thread": "c",
-        "vector": "c"
+        "vector": "c",
+        "drv_logger_uart.h": "c",
+        "drv_logger_sdcard.h": "c",
+        "logger_interface.h": "c"
     },
     "marscode.codeCompletionPro": {
         "enableCodeCompletionPro": true
