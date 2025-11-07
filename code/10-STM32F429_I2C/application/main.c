@@ -93,7 +93,7 @@ static GlobalType_t driver_initialize(void)
     xReturn |= drv_i2c_init();
     
 #if DRIVER_AP3216_ENABLE == 1    
-    xReturn |= ap3216_driver_init();
+    xReturn |= drv_i2c_ap3216c_init();
 #endif
 
 #if DRIVER_PCF8563_ENABLE == 1    

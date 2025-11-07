@@ -46,10 +46,10 @@ typedef struct
     uint16_t ir;
     uint16_t als;
     uint16_t ps;
-}AP3216C_INFO;
+}ap3216c_info_t;
 
 void ap3216_loop_run_test(void);
-GlobalType_t ap3216_driver_init(void);
+GlobalType_t drv_i2c_ap3216c_init(void);
 GlobalType_t ap3216_reg_read(uint8_t reg, uint8_t data);
 GlobalType_t ap3216_i2c_multi_read(uint8_t reg, uint8_t *rdata, uint8_t size);    
 GlobalType_t ap3216_reg_write(uint8_t reg, uint8_t data);

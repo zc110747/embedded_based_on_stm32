@@ -101,7 +101,7 @@ static GlobalType_t system_clock_init(void)
     
 
     RCC_OscInitStruct.OscillatorType = RCC_OSCILLATORTYPE_LSI|RCC_OSCILLATORTYPE_HSE
-                                    |RCC_OSCILLATORTYPE_LSE;
+                                    ;
     
     //RCC_HSE_BYPASS: OSC with source, one line out clock
     //RCC_HSE_ON: OSC without source, two line by microchip

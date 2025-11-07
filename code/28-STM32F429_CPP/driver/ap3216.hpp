@@ -40,13 +40,13 @@ typedef struct
     uint16_t ir;
     uint16_t als;
     uint16_t ps;
-}AP3216C_INFO;
+}ap3216c_info_t;
 
 template<stm32f4::i2c::I2C_MODE mode>
 class device_ap3216: public stm32f4::i2c::device_i2c<mode, stm32f4::i2c::I2C_METHOD::MASTER>
 {
 public:
-    AP3216C_INFO *get_info() {return &info_;}
+    ap3216c_info_t *get_info() {return &info_;}
     
     int config_deivce(void)
     {
@@ -112,5 +112,5 @@ private:
     }
 
 private:
-    AP3216C_INFO info_; 
+    ap3216c_info_t info_; 
 };

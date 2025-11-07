@@ -3,7 +3,7 @@ import os
 import shutil
 import glob
 
-deletedirs=[ "project\\DebugConfig", "project\\Listings", "project\\Objects"]
+deletedirs=[ "project\\DebugConfig", "project\\Listings", "project\\Objects", "project\\RTE"]
 deletefiledir="project"
 
 def list_directorise(path):

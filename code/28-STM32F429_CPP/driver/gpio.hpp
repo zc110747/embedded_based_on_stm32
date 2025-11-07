@@ -16,7 +16,8 @@
 //  Revision History:
 //
 /////////////////////////////////////////////////////////////////////////////
-#pragma once
+#ifndef __GPIO_HPP__
+#define __GPIO_HPP__
 
 #include "stm32f4xx_hal.h"
 
@@ -170,3 +171,5 @@ namespace stm32f4
         };
     }
 }
+
+#endif

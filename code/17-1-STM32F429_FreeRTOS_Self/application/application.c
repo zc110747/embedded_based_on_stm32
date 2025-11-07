@@ -106,7 +106,6 @@ void reader_task(void *argument)
     if (info_.semaphore_1 != NULL) {
         if (xSemaphoreTake(info_.semaphore_1, portMAX_DELAY) == pdTRUE ) {
             PRINT_LOG(LOG_INFO, HAL_GetTick(), "reader_task: semaphore_1 take success");
-            xSemaphoreGive(info_.semaphore_1);
         }
     }
    
@@ -169,6 +168,8 @@ void writer_task(void *argument)
 {
     int index = 0;
    
+    xSemaphoreGive(info_.semaphore_1);
+
     // 等待直到收到通知
     ulTaskNotifyTake( pdTRUE, portMAX_DELAY );  
 

@@ -29,7 +29,7 @@
 #include "drv_sdram.h"
 
 SDRAM_HandleTypeDef hsdram1;
- 
+
 static void sdram_memory_test(void);
 static GlobalType_t sdram_hardware_init(void);
 static GlobalType_t sdram_initialize_sequence(void);

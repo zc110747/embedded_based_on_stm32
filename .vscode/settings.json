@@ -15,7 +15,16 @@
         "vector": "c",
         "drv_logger_uart.h": "c",
         "drv_logger_sdcard.h": "c",
-        "logger_interface.h": "c"
+        "logger_interface.h": "c",
+        "freertos.h": "c",
+        "application.h": "c",
+        "drv_i2c_ap3216.h": "c",
+        "drv_exti.h": "c",
+        "drv_key.h": "c",
+        "drv_led.h": "c",
+        "monitor_task.h": "c",
+        "task.h": "c",
+        "workflow_task.h": "c"
     },
     "marscode.codeCompletionPro": {
         "enableCodeCompletionPro": true

@@ -44,7 +44,7 @@ int main(void)
     key_dev.config(GPIO_MODE_INPUT);   
     ap3216_dev.config(100000, I2C_DUTYCYCLE_2);
     ap3216_dev.config_deivce();
-    AP3216C_INFO *ap3216_info_ptr = ap3216_dev.get_info();
+    ap3216c_info_t *ap3216_info_ptr = ap3216_dev.get_info();
     dac_dev.config();
     
     logger_module_init();
