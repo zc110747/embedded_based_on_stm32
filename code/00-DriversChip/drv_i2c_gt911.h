@@ -9,7 +9,7 @@
 //      touchscreen chip gt911 use i2c
 //
 // Author:
-//      @zc
+//      @公众号：<嵌入式技术总结>
 //
 //  Assumptions:
 //

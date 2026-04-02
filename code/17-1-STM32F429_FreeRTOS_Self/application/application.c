@@ -8,7 +8,7 @@
 //  Purpose:
 //
 //  Author:
-//      @zc
+//      @公众号：<嵌入式技术总结>
 //
 //  Assumptions:
 //	
@@ -25,6 +25,9 @@
 #include "message_buffer.h"
 #include "event_groups.h"
 #include <string.h>
+
+#include "app_notify.h"
+#include "app_queue.h"
 
 #define BIT_0	( 1 << 0 )
 #define BIT_4	( 1 << 4 )
@@ -43,9 +46,6 @@ typedef struct
 
     // semaphore count
     SemaphoreHandle_t semaphore_2;
-    
-    // queue
-    QueueHandle_t queue_0;
 
     // stream
     StreamBufferHandle_t stream_0;
@@ -118,15 +118,6 @@ void reader_task(void *argument)
         }
     }
 
-    // queue wait
-    if (info_.queue_0 != NULL) {
-        for (index = 0; index < 10; index++) {
-            if (xQueueReceive(info_.queue_0, &info_.data[index], portMAX_DELAY) == pdTRUE) {
-                PRINT_LOG(LOG_INFO, HAL_GetTick(), "reader_task: queue_0 receive %d", info_.data[index]);
-            }
-        }
-    }
-
     // stream wait
     // 如果是单个线程读取，不需要加锁，多线程读取时需要加锁
     if (info_.stream_0 != NULL) {
@@ -176,15 +167,6 @@ void writer_task(void *argument)
     // semaphore count give
     if (info_.semaphore_2 != NULL) {
         xSemaphoreGive(info_.semaphore_2);
-    }
-    vTaskDelay(100);
-
-    /// queue send
-    if (info_.queue_0 != NULL) {
-        for (index = 0; index < 10; index++) {
-            xQueueSend(info_.queue_0, &info_.data[index], portMAX_DELAY);
-            vTaskDelay(10);
-        }
     }
     vTaskDelay(100);
 
@@ -250,7 +232,6 @@ GlobalType_t application_init(void)
     info_.semaphore_0 = xSemaphoreCreateMutex();
     info_.semaphore_1 = xSemaphoreCreateBinary();
     info_.semaphore_2 = xSemaphoreCreateCounting(10, 0);
-    info_.queue_0 = xQueueCreate(10, sizeof(int));
     info_.stream_0 = xStreamBufferCreate(256, sizeof(int));
     info_.message_buffer_0 = xMessageBufferCreate(256);
     info_.event_group_0 = xEventGroupCreate();
@@ -284,7 +265,6 @@ GlobalType_t application_init(void)
 
     if (xReturned == pdPASS
     && info_.semaphore_0 != NULL && info_.semaphore_1 != NULL && info_.semaphore_2 != NULL
-    && info_.queue_0 != NULL
     && info_.stream_0 != NULL
     && info_.message_buffer_0 != NULL
     && info_.timer_0 != NULL
@@ -292,6 +272,10 @@ GlobalType_t application_init(void)
     ) {
         return RT_OK;
     }
+    
+    app_notify_init();
+    
+    app_queue_init();
     
     return RT_FAIL;
 }

@@ -25,7 +25,6 @@
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 /* USER CODE END Includes */
-extern ETH_HandleTypeDef heth;
 extern TIM_HandleTypeDef htim11;
 
 /* Private typedef -----------------------------------------------------------*/

@@ -10,7 +10,7 @@
 //      HW: CS-PF6, SPI5-PF7(clk), PF8(rx), PF9(tx)
 //
 //  Author:
-//      @zc
+//      @公众号：<嵌入式技术总结>
 //
 //  Assumptions:
 //	

@@ -8,7 +8,7 @@
 //  Purpose:
 //
 //  Author:
-//      @zc
+//      @公众号：<嵌入式技术总结>
 //
 //  Assumptions:
 //	
@@ -108,6 +108,10 @@ extern "C" {
 
 #if DRIVER_ALG_ENABLE == 1
 #include "drv_alg.h"
+#endif
+
+#if DRIVER_FLASH_ENABLE == 1
+#include "drv_flash.h"
 #endif
 
 #ifdef __cplusplus

@@ -9,16 +9,17 @@
 //      i2c interface process.
 //
 // Author:
-//      @zc
+//      @公众号：<嵌入式技术总结>
 //
 //  Assumptions:
 //
 //  Revision History:
 //
 /////////////////////////////////////////////////////////////////////////////
-#pragma once
+#ifndef __I2C_HPP
+#define __I2C_HPP
 
-#include "stm32f4xx_hal.h"
+#include "cxx_common.hpp"
 #include "gpio.hpp"
 
 namespace stm32f4
@@ -115,16 +116,16 @@ namespace stm32f4
         template<I2C_MODE i2c_mode, I2C_METHOD method = I2C_METHOD::MASTER>
         class device_i2c {
             public:
-                int config(uint32_t clock_speed, uint32_t dutycycle = I2C_DUTYCYCLE_2)
+                RT_CXX_TYPE init(uint32_t clock_speed, uint32_t dutycycle = I2C_DUTYCYCLE_2)
                 {
                     constexpr auto info = convert_to_i2c_info<i2c_mode>();
 
                     //init i2c gpio
                     gpio::device_gpio<info.scl_gpio_.port, info.scl_gpio_.pin> scl_gpio_dev;
-                    scl_gpio_dev.config(GPIO_MODE_AF_OD, GPIO_NOPULL, GPIO_SPEED_FREQ_VERY_HIGH, info.scl_gpio_.alternate);
+                    scl_gpio_dev.init(GPIO_MODE_AF_OD, GPIO_NOPULL, GPIO_SPEED_FREQ_VERY_HIGH, info.scl_gpio_.alternate);
 
                     gpio::device_gpio<info.sda_gpio_.port, info.sda_gpio_.pin> sda_gpio_dev;
-                    sda_gpio_dev.config(GPIO_MODE_AF_OD, GPIO_NOPULL, GPIO_SPEED_FREQ_VERY_HIGH, info.sda_gpio_.alternate);
+                    sda_gpio_dev.init(GPIO_MODE_AF_OD, GPIO_NOPULL, GPIO_SPEED_FREQ_VERY_HIGH, info.sda_gpio_.alternate);
                     
                     //init i2c clock
                     i2c_clock_enable<i2c_mode>();
@@ -142,52 +143,72 @@ namespace stm32f4
                     }
                     
                     if (HAL_I2C_Init(&i2c_struct_) != HAL_OK) {
-                        return HAL_ERROR;
+                        return RT_CXX_TYPE::RT_FAIL;
                     }
        
                     if (HAL_I2CEx_ConfigAnalogFilter(&i2c_struct_, I2C_ANALOGFILTER_ENABLE) != HAL_OK) {
-                        return HAL_ERROR;
+                        return RT_CXX_TYPE::RT_FAIL;
                     }
                     
                     if (HAL_I2CEx_ConfigDigitalFilter(&i2c_struct_, 0) != HAL_OK) {
-                        return HAL_ERROR;
+                        return RT_CXX_TYPE::RT_FAIL;
                     }
 
                     is_init = true;
 
-                    return HAL_OK;
+                    return RT_CXX_TYPE::RT_OK;
                 }
                 
-                int multi_write(uint16_t DevAddress, uint16_t MemAddress, uint16_t MemAddSize, uint8_t *pData, uint16_t Size, uint32_t Timeout)
+                RT_CXX_TYPE mem_write(uint16_t DevAddress, uint16_t MemAddress, uint16_t MemAddSize, uint8_t *pData, uint16_t Size, uint32_t Timeout)
                 {
-                   if (!is_init)
-                        return HAL_ERROR;
+                   if (!is_init) {
+                       return RT_CXX_TYPE::RT_NOINIT;
+                   }
                    
-                    return HAL_I2C_Mem_Write(&i2c_struct_, DevAddress, MemAddress, MemAddSize, pData, Size, Timeout);
+                   if (HAL_I2C_Mem_Write(&i2c_struct_, DevAddress, MemAddress, MemAddSize, pData, Size, Timeout) != HAL_OK) {
+                       return RT_CXX_TYPE::RT_FAIL;
+                   }
+                   
+                   return RT_CXX_TYPE::RT_OK;
                 }
                 
-                int multi_read(uint16_t DevAddress, uint16_t MemAddress, uint16_t MemAddSize, uint8_t *pData, uint16_t Size, uint32_t Timeout)
+                RT_CXX_TYPE mem_read(uint16_t DevAddress, uint16_t MemAddress, uint16_t MemAddSize, uint8_t *pData, uint16_t Size, uint32_t Timeout)
                 {
-                    if (!is_init)
-                        return HAL_ERROR;
+                    if (!is_init) {
+                        return RT_CXX_TYPE::RT_NOINIT;
+                    }
                     
-                    return HAL_I2C_Mem_Read(&i2c_struct_, DevAddress, MemAddress, MemAddSize, pData, Size, Timeout); 
+                    if (HAL_I2C_Mem_Read(&i2c_struct_, DevAddress, MemAddress, MemAddSize, pData, Size, Timeout) != HAL_OK) {
+                        return RT_CXX_TYPE::RT_FAIL;
+                    }
+                    
+                    return RT_CXX_TYPE::RT_OK;
                 }
                 
-                int signal_write(uint16_t DevAddress, uint8_t *pData, uint16_t Size, uint32_t Timeout)
+                RT_CXX_TYPE device_write(uint16_t DevAddress, uint8_t *pData, uint16_t Size, uint32_t Timeout)
                 {
-                    if (!is_init)
-                        return HAL_ERROR;
+                    if (!is_init) {
+                        return RT_CXX_TYPE::RT_NOINIT;
+                    }
 
-                    return HAL_I2C_Master_Transmit(&i2c_struct_, DevAddress, pData, Size, Timeout);
+                    if (HAL_I2C_Master_Transmit(&i2c_struct_, DevAddress, pData, Size, Timeout) != HAL_OK) {
+                        return RT_CXX_TYPE::RT_FAIL;
+                    }
+                    
+                    return RT_CXX_TYPE::RT_OK;
                 }
                 
-                int signal_read(uint16_t DevAddress, uint8_t *pData, uint16_t Size, uint32_t Timeout)
+                RT_CXX_TYPE device_read(uint16_t DevAddress, uint8_t *pData, uint16_t Size, uint32_t Timeout)
                 {
-                    if (!is_init)
-                        return HAL_ERROR;
+                    if (!is_init) {
+                        return RT_CXX_TYPE::RT_NOINIT;
+                    }
+                     
+                    if (HAL_I2C_Master_Receive(&i2c_struct_, DevAddress, pData, Size, Timeout) != HAL_OK) {
+                        return RT_CXX_TYPE::RT_FAIL;
+                    }
                     
-                    return HAL_I2C_Master_Receive(&i2c_struct_, DevAddress, pData, Size, Timeout);
+                    return RT_CXX_TYPE::RT_OK;
                 }
             private:
                 bool is_init{false};
@@ -198,3 +219,4 @@ namespace stm32f4
         };
     }
 }
+#endif

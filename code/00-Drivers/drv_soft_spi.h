@@ -9,7 +9,7 @@
 //      spi driver for flash.
 //
 // Author:
-//      @zc
+//      @公众号：<嵌入式技术总结>
 //
 //  Assumptions:
 //

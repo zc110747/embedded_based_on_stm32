@@ -19,6 +19,7 @@
 *.elf
 *.hex
 
+target/
 stm32f429.uvguix.*
 code/*/build/*
 

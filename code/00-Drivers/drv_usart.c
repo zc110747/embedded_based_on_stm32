@@ -14,7 +14,7 @@
 //          interrupt, see usr_library/logger.c
 //
 //  Author:
-//      @zc
+//      @公众号：<嵌入式技术总结>
 //
 //  Assumptions:
 //	
@@ -209,8 +209,8 @@ GlobalType_t drv_usart_init(void)
     
     //enable dma tc interrupt
     __HAL_DMA_ENABLE_IT(&hdma_usart2_tx, DMA_IT_TC);
-    HAL_NVIC_EnableIRQ(DMA2_Stream7_IRQn);			
-    HAL_NVIC_SetPriority(DMA2_Stream7_IRQn, 0, 1);	 
+    HAL_NVIC_EnableIRQ(DMA1_Stream6_IRQn);			
+    HAL_NVIC_SetPriority(DMA1_Stream6_IRQn, 0, 1);	 
     
     //enable dma rx
     usart_translate(TEST_USART, strlen(TEST_USART));

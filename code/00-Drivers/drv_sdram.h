@@ -9,7 +9,7 @@
 //      sdram driver by fsmc.
 //
 // Author:
-//      @zc
+//      @公众号：<嵌入式技术总结>
 //
 //  Assumptions:
 //

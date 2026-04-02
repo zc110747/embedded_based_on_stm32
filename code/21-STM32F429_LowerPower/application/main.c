@@ -9,7 +9,7 @@
 //      ch02.rcc_system_clock    
 //
 //  Author:
-//      @zc
+//      @公众号：<嵌入式技术总结>
 //
 //  Assumptions:
 //	

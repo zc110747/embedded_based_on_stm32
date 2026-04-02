@@ -8,7 +8,7 @@
 //  Purpose:
 //
 //  Author:
-//      @zc
+//      @公众号：<嵌入式技术总结>
 //
 //  Assumptions:
 //	
@@ -40,11 +40,14 @@
 #define DRIVER_CAN_ENABLE           0
 
 #if DRIVER_LCD_ENABLE == 1
-#define SUPPORT_ASCII_1206      1
-#define SUPPORT_ASCII_1608      1
-#define SUPPORT_ASCII_2412      1
-#define SUPPORT_ASCII_3216      1
+#define SUPPORT_ASCII_1206          1
+#define SUPPORT_ASCII_1608          1
+#define SUPPORT_ASCII_2412          1
+#define SUPPORT_ASCII_3216          1
 #endif
+
+#define TASK_NOTIFY_ON              0
+#define TASK_QUEUE_ON               1
 
 typedef enum
 {
@@ -56,15 +59,15 @@ typedef enum
 #define UINT_MAX    0xFFFFFFFF
 #endif
 
-#define RUN_MODE_NORMAL         0
-#define RUN_MODE_DMA            1
-#define RUN_MODE_INTERRUPT      2
-#define RUN_MODE_SOFT           3
+#define RUN_MODE_NORMAL             0
+#define RUN_MODE_DMA                1
+#define RUN_MODE_INTERRUPT          2
+#define RUN_MODE_SOFT               3
 
 //run os mode
-#define RUN_WITH_RTOS_NULL      0
-#define RUN_WITH_FREERTOS       1
-#define RUN_WITH_RTTHREAD       2
-#define RUN_OS_MODE             RUN_WITH_FREERTOS
+#define RUN_WITH_RTOS_NULL          0
+#define RUN_WITH_FREERTOS           1
+#define RUN_WITH_RTTHREAD           2
+#define RUN_OS_MODE                 RUN_WITH_FREERTOS
 
 #endif

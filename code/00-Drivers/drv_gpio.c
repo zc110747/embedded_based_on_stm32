@@ -15,7 +15,7 @@
 //      step3: use HAL_GPIO_WritePin to config gpio.
 //
 //  Author:
-//      @zc
+//      @公众号：<嵌入式技术总结>
 //
 //  Assumptions:
 //	

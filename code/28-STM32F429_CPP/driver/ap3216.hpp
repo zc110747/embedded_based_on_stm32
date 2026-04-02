@@ -9,7 +9,7 @@
 ////      usart driver interface process.
 ////
 //// Author:
-////      @zc
+////      @公众号：<嵌入式技术总结>
 ////
 ////  Assumptions:
 ////
@@ -45,24 +45,27 @@ typedef struct
 template<stm32f4::i2c::I2C_MODE mode>
 class device_ap3216: public stm32f4::i2c::device_i2c<mode, stm32f4::i2c::I2C_METHOD::MASTER>
 {
+    using device_i2c_info_t = stm32f4::i2c::device_i2c<mode, stm32f4::i2c::I2C_METHOD::MASTER>;
 public:
     ap3216c_info_t *get_info() {return &info_;}
     
-    int config_deivce(void)
+    RT_CXX_TYPE init(uint32_t clock_speed, uint32_t dutycycle, uint8_t mod)
     {
-        if(write_reg(AP3216C_SYSTEMCONG, 0x40) != HAL_OK) {
-            return HAL_ERROR;
+        device_i2c_info_t::init(clock_speed, dutycycle);
+        
+        if(write_reg(AP3216C_SYSTEMCONG, 0x40) != RT_CXX_TYPE::RT_OK) {
+            return RT_CXX_TYPE::RT_FAIL;
         }
         
         HAL_Delay(10);
         
-        if(write_reg(AP3216C_SYSTEMCONG, 0x03) != HAL_OK) {
-            return HAL_ERROR;
+        if(write_reg(AP3216C_SYSTEMCONG, mod) != RT_CXX_TYPE::RT_OK) {
+            return RT_CXX_TYPE::RT_FAIL;
         }
-        return HAL_OK;
+        return RT_CXX_TYPE::RT_OK;
     }
     
-    void update_info()
+    RT_CXX_TYPE read_block()
     {
         uint8_t buf[6];
         uint8_t index;
@@ -70,16 +73,14 @@ public:
 
         is_read_ok = 1;
 
-        for(index=0; index<6; index++)
-        {
-            if(read_reg(AP3216C_IRDATALOW+index, &buf[index]) != HAL_OK)
-            {
+        for(index=0; index<6; index++) {
+            if(read_reg(AP3216C_IRDATALOW+index, &buf[index]) != RT_CXX_TYPE::RT_FAIL) {
                 is_read_ok = 0;
-                break;
+                return RT_CXX_TYPE::RT_FAIL;
             }
         }
-        if(is_read_ok == 1)
-        {
+        
+        if(is_read_ok == 1) {
             if(buf[0]&(1<<7)) 	
                 info_.ir = 0;					
             else 			
@@ -91,23 +92,24 @@ public:
                 info_.ps = 0;    													
             else 				
                 info_.ps = ((uint16_t)(buf[5]&0X3F)<<4)|(buf[4]&0X0F);
-        }        
+        }
+        return RT_CXX_TYPE::RT_OK;        
     }
     
 private:
-    int read(uint8_t reg, uint8_t *data, uint8_t size) {
-        return this->multi_read(AP3216C_ADDR<<1, reg, 1, data, size, AP3216C_TIMEOUT);
+    RT_CXX_TYPE read(uint8_t reg, uint8_t *data, uint8_t size) {
+        return this->mem_read(AP3216C_ADDR<<1, reg, 1, data, size, AP3216C_TIMEOUT);
     }
 
-    int write(uint8_t reg, uint8_t *data, uint8_t size) {
-        return this->multi_write(AP3216C_ADDR<<1, reg, 1, data, size, AP3216C_TIMEOUT);
+    RT_CXX_TYPE write(uint8_t reg, uint8_t *data, uint8_t size) {
+        return this->mem_write(AP3216C_ADDR<<1, reg, 1, data, size, AP3216C_TIMEOUT);
     }
 
-    int read_reg(uint8_t reg, uint8_t *data) {
+    RT_CXX_TYPE read_reg(uint8_t reg, uint8_t *data) {
         return read(reg, data, 1);
     }
 
-    int write_reg(uint8_t reg, uint8_t data) {
+    RT_CXX_TYPE write_reg(uint8_t reg, uint8_t data) {
         return write(reg, &data, 1);
     }
 

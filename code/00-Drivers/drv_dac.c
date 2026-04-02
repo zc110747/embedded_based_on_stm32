@@ -12,7 +12,7 @@
 //      2. dma mode output sine shaped.
 //
 //  Author:
-//      @zc
+//      @公众号：<嵌入式技术总结>
 //
 //  Assumptions:
 //	

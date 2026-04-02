@@ -13,7 +13,7 @@
 //          SPI5_MOSI - PF9
 //
 //  Author:
-//      @zc
+//      @公众号：<嵌入式技术总结>
 //
 //  Assumptions:
 //	

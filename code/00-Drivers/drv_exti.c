@@ -10,7 +10,7 @@
 //      KEY1  -   PH2  -  PIN_EXTI
 //
 //  Author:
-//      @zc
+//      @公众号：<嵌入式技术总结>
 //
 //  Assumptions:
 //	

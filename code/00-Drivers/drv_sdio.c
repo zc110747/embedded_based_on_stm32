@@ -9,7 +9,7 @@
 //      driver for sdio module.
 //
 //  Author:
-//      @zc
+//      @????<???????>
 //
 //  Assumptions:
 //	

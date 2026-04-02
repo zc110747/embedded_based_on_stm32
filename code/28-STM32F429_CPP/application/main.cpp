@@ -9,7 +9,7 @@
 //      usart driver interface process.
 //
 // Author:
-//      @zc
+//      @公众号：<嵌入式技术总结>
 //
 //  Assumptions:
 //
@@ -28,10 +28,36 @@ using namespace stm32f4::dac;
 
 #define DAC_PERIOD          100
 
-static DEV_GPIO_OUTPUT<GPIO_PORT::PB, GPIO_PIN_0> led_dev;
-static DEV_GPIO_INPUT<GPIO_PORT::PH, GPIO_PIN_3> key_dev;
-static device_ap3216<I2C_MODE::I2C2_PH4_PH5> ap3216_dev;
-static dac_deivce<DAC_CHANNEL_1> dac_dev;
+static DEV_GPIO_OUTPUT<GPIO_PORT::PB, GPIO_PIN_0> led;
+static DEV_GPIO_INPUT<GPIO_PORT::PH, GPIO_PIN_3> key;
+static device_ap3216<I2C_MODE::I2C2_PH4_PH5> ap3216c;
+static dac_deivce<DAC_CHANNEL_1> dac1;
+
+RT_CXX_TYPE driver_init(void)
+{
+    RT_CXX_TYPE type;
+    
+    type = led.init(GPIO_MODE_OUTPUT_PP);
+    if (type != RT_CXX_TYPE::RT_OK) {
+        return type;
+    }
+    
+    type = key.init(GPIO_MODE_INPUT);
+    if (type != RT_CXX_TYPE::RT_OK) {
+        return type;
+    }
+    
+    type = ap3216c.init(100000, I2C_DUTYCYCLE_2, 0x03);
+    if (type != RT_CXX_TYPE::RT_OK) {
+        return type;
+    }
+
+    type = dac1.init();
+    if (type != RT_CXX_TYPE::RT_OK) {
+        return type;
+    }
+    return type;
+}
 
 int main(void)
 {   
@@ -40,38 +66,32 @@ int main(void)
     
     HAL_Init();
    
-    led_dev.config(GPIO_MODE_OUTPUT_PP);
-    key_dev.config(GPIO_MODE_INPUT);   
-    ap3216_dev.config(100000, I2C_DUTYCYCLE_2);
-    ap3216_dev.config_deivce();
-    ap3216c_info_t *ap3216_info_ptr = ap3216_dev.get_info();
-    dac_dev.config();
-    
     logger_module_init();
     
+    driver_init();
+    
+    auto ap3216_info_ptr = ap3216c.get_info();
+
     while(1)
-    {
-        led_dev.toggle();
-        
-        ap3216_dev.update_info();
-        
-        PRINT_LOG(LOG_INFO, HAL_GetTick(), "info:%d, %d, %d, key:%d", 
-            ap3216_info_ptr->als,
-            ap3216_info_ptr->ir,
-            ap3216_info_ptr->ps,
-            key_dev.data());
-        
-        if(increase == 1)
-        {
+    {   
+        if (ap3216c.read_block() == RT_CXX_TYPE::RT_OK) {     
+            PRINT_LOG(LOG_INFO, HAL_GetTick(), "info:%d, %d, %d, key:%d", 
+                ap3216_info_ptr->als,
+                ap3216_info_ptr->ir,
+                ap3216_info_ptr->ps,
+                key.data());
+        } else {
+            PRINT_LOG(LOG_INFO, HAL_GetTick(), "i2c read failed!");
+        }
+   
+        if(increase == 1) {
             voltage += DAC_PERIOD;
             if (voltage > DAC_REFERENCE_VOL)
             {
                 increase = 0;
                 voltage = DAC_REFERENCE_VOL;
             }
-        }
-        else
-        {
+        } else {
             voltage -= DAC_PERIOD;
             if(voltage <= DAC_PERIOD)
             {
@@ -79,8 +99,9 @@ int main(void)
                 voltage = DAC_PERIOD;
             }
         }
-        dac_dev.update_dac_value(voltage);
+        dac1.set_value(voltage);
         
+        led.toggle();
         HAL_Delay(500);
     }
 }

@@ -18,7 +18,7 @@
 //              uint16_t *psd_byte16 = (uint16_t *)sdram_address;
 //         
 // Author:
-//      @zc
+//      @公众号：<嵌入式技术总结>
 //
 //  Assumptions:
 //

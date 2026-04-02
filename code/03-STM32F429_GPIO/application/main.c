@@ -9,7 +9,7 @@
 //			State: press key0, LED ON, not press, LED OFF.
 //
 //  Author:
-//      @zc
+//      @公众号：<嵌入式技术总结>
 //
 //  Assumptions:
 //	

@@ -11,7 +11,7 @@
 //      KEY0    -   PH3 - PIN_INPUT
 //
 //  Author:
-//      @zc
+//      @公众号：<嵌入式技术总结>
 //
 //  Assumptions:
 //	

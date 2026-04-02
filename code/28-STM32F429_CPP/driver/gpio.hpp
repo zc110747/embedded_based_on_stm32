@@ -9,7 +9,7 @@
 //      usart driver interface process.
 //
 // Author:
-//      @zc
+//      @公众号：<嵌入式技术总结>
 //
 //  Assumptions:
 //
@@ -19,7 +19,7 @@
 #ifndef __GPIO_HPP__
 #define __GPIO_HPP__
 
-#include "stm32f4xx_hal.h"
+#include "cxx_common.hpp"
 
 namespace stm32f4
 {
@@ -96,7 +96,7 @@ namespace stm32f4
                 int pin_num_{pin};
                
             public:
-                int config(uint32_t mode, uint32_t pull = GPIO_NOPULL, uint32_t speed = GPIO_SPEED_FREQ_MEDIUM, uint32_t alternate = 0)
+                RT_CXX_TYPE init(uint32_t mode, uint32_t pull = GPIO_NOPULL, uint32_t speed = GPIO_SPEED_FREQ_MEDIUM, uint32_t alternate = 0)
                 {
                     GPIO_InitTypeDef GPIO_InitStruct = {0};
                     
@@ -109,7 +109,7 @@ namespace stm32f4
                     GPIO_InitStruct.Alternate = alternate;
                     HAL_GPIO_Init(port_, &GPIO_InitStruct);
                     
-                    return HAL_OK;
+                    return RT_CXX_TYPE::RT_OK;
                 }
         };
         

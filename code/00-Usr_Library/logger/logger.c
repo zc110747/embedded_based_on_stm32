@@ -12,7 +12,7 @@
 //          software => tx cache buffer => interrupt usart_tx
 //
 //  Author:
-//      @zc
+//      @公众号：<嵌入式技术总结>
 //
 //  Assumptions:
 //	
@@ -271,11 +271,16 @@ static GlobalType_t logger_put_tx_buffer(uint8_t *ptr, uint8_t size)
     //device not use as logger interface
     if (g_logger_info.ready != 1 )
         return RT_FAIL;
-
+    
     if (size == 1)
-    {
-       //if size is 1, not check for efficiency because the macro support check
-       CircularBufferPut(&g_logger_info.LoggerTxBufferInfo, ptr[0]);
+    {          
+        //if size is 1, not check for efficiency because the macro support check
+        __HAL_UART_DISABLE_IT(&huart1, UART_IT_TXE);
+        CircularBufferPut(&g_logger_info.LoggerTxBufferInfo, ptr[0]);
+        
+        if(CircularBufferHasData(&g_logger_info.LoggerTxBufferInfo)) {
+            __HAL_UART_ENABLE_IT(&huart1, UART_IT_TXE);
+        }
     }
     else
     {
@@ -285,11 +290,13 @@ static GlobalType_t logger_put_tx_buffer(uint8_t *ptr, uint8_t size)
             return RT_FAIL;
         }
         
+        // Disable IT
+        __HAL_UART_DISABLE_IT(&huart1, UART_IT_TXE);
         for (index=0; index<size; index++)
         {
             CircularBufferPut(&g_logger_info.LoggerTxBufferInfo, ptr[index]);
         }
-				__HAL_UART_ENABLE_IT(&huart1, UART_IT_TXE);
+		__HAL_UART_ENABLE_IT(&huart1, UART_IT_TXE);
     }
     return RT_OK;   
 }

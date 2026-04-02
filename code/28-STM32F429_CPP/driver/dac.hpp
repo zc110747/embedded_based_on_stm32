@@ -9,7 +9,7 @@
 //      dac interface process.
 //
 // Author:
-//      @zc
+//      @公众号：<嵌入式技术总结>
 //
 //  Assumptions:
 //
@@ -18,8 +18,8 @@
 /////////////////////////////////////////////////////////////////////////////
 #pragma once
 
-#include "stm32f4xx_hal.h"
 #include "gpio.hpp"
+
 namespace stm32f4
 {   
     namespace dac {
@@ -48,14 +48,14 @@ namespace stm32f4
         class dac_deivce {
             static_assert(ch == DAC_CHANNEL_1 || ch == DAC_CHANNEL_2, "dac channel error!");
             public:
-                int config(uint32_t trigger=DAC_TRIGGER_NONE, uint32_t output_buffer=DAC_OUTPUTBUFFER_ENABLE) {
+                RT_CXX_TYPE init(uint32_t trigger=DAC_TRIGGER_NONE, uint32_t output_buffer=DAC_OUTPUTBUFFER_ENABLE) {
                     
                     DAC_ChannelConfTypeDef sConfig = {0};
                     constexpr auto info = ch_to_dac_info<ch>();
                     
                     // int dac gpio
                     gpio::device_gpio<info.port_, info.pin_> gpio_dev;
-                    gpio_dev.config(GPIO_MODE_ANALOG);
+                    gpio_dev.init(GPIO_MODE_ANALOG);
                     
                     //init dac clock
                     __HAL_RCC_DAC_CLK_ENABLE();
@@ -63,19 +63,19 @@ namespace stm32f4
                     //config dac
                     hdac_.Instance = DAC;
                     if (HAL_DAC_Init(&hdac_) != HAL_OK) {
-                        return HAL_ERROR;                
+                        return RT_CXX_TYPE::RT_FAIL;                
                     }
 
                     sConfig.DAC_Trigger = trigger;
                     sConfig.DAC_OutputBuffer = output_buffer;
                     if (HAL_DAC_ConfigChannel(&hdac_, &sConfig, ch) != HAL_OK) {
-                       return HAL_ERROR; 
+                        return RT_CXX_TYPE::RT_FAIL; 
                     }
 
-                    return HAL_OK;
+                    return RT_CXX_TYPE::RT_FAIL;
                 }
 
-                void update_dac_value(uint32_t value, uint32_t mode = DAC_ALIGN_12B_R) {
+                void set_value(uint32_t value, uint32_t mode = DAC_ALIGN_12B_R) {
                     float adc_value;
     
                     if (value > DAC_REFERENCE_VOL)

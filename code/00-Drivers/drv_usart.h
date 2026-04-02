@@ -10,7 +10,7 @@
 //      usart hw: PA2, PA3 USART2
 //
 //  Author:
-//      @zc
+//      @公众号：<嵌入式技术总结>
 //
 //  Assumptions:
 //	

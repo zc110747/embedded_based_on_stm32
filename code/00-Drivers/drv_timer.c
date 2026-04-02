@@ -11,7 +11,7 @@
 //      TIM2 - capture, PA5
 //      TIM3 - pwm, PB1
 //  Author:
-//      @zc
+//      @公众号：<嵌入式技术总结>
 //
 //  Assumptions:
 //	
