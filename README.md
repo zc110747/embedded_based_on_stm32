@@ -2,60 +2,62 @@
 
 ## 开源说明
 
-本系列文章同步开源于如下地址：
-
-https://github.com/zc110747/embedded_based_on_stm32
+本系列文章同步开源于如下地址：<https://github.com/zc110747/embedded_based_on_stm32>
 
 另外可关注本人的微信公众号：<嵌入式技术总结>，获取更多技术分享和项目经验。
 
 ## 本系课程内容
 
-### 单片机模块功能目录
+### 单片机基础功能模块
 
-- [综述和内核说明](./src/ch01.overview_and_kernel.md)
-- [RCC系统时钟模块](./src/ch02.rcc_system_clock.md)
-- [GPIO输入输出模块](./src/ch03.gpio_input_output.md)
-- [EXTI外部中断模块](./src/ch04.exti_interrupt.md)
-- [串口通讯模块](./src/ch05.usart_com.md)
-- [RTC时钟模块](./src/ch06.rtc_clock.md)
-- [DAC输出模块](./src/ch07.dac_output.md)
-- [ADC输入模块](./src/ch08.adc_input.md)
-- [SPI通讯模块](./src/ch09.spi_com.md)
-- [I2C通讯模块](./src/ch10.i2c_com.md)
-- [Timer定时模块](./src/ch11.timer_clock.md)
-- [看门狗监控模块](./src/ch12.watchdog_monitor.md)
-- [DMA模块](./src/ch13.dma.md)
-- [SDIO接口和Fatfs应用](./src/ch14.sdio_interface.md)
-- [CAN接口模块](./src/ch15.can_interface.md)
-- [内部算法应用模块](./src/ch16.algorithm.md)
-- [FreeRTOS移植和应用说明](./src/ch17.rtos_freertos.md)
-- [ETH接口和LWIP应用](./src/ch18.eth_lwip.md)
-- [FMC接口和SDRAM应用](./src/ch19.fmc_sdram.md)
-- [FLASH功能说明](./src/ch20.flash_manage.md)
-- [低功耗应用](./src/ch21.lower_power.md)
-- [RT-Thread移植和应用说明](./src/ch22.rtos_rtthread.md)
-- [Modbus协议和应用](./src/ch23.modbus.md)
-- [Mqtt协议和应用](./src/ch24.mqtt.md)
-- [使用Makefile进行单片机项目管理](./src/ch25.makefile.md)
-- [使用cmake进行项目管理](./src/ch26.cmake.md)
-- [使用C++进行单片机开发](./src/ch27.build_with_c++.md)
-- [基于vscode的arm-none-gcc开发和调试](./src/ch28.vscode_gcc_openocd.md)
-- [基于FMC接口的LCD显示](./src/ch29.FMC_LCD.md)
-- [基于emWin的UI界面开发](./src/ch30.EMWin_UI.md)
-- [基于LVGL的UI界面开发](./src/ch31.LVGL_UI.md)
-- [micropython移植和应用](./src/ch32.micropython.md)
-- [DCMI接口和摄像头应用](./src/ch33.dcmi_interface.md)
-- [USB协议和Slave从机应用](./src/ch34.usb_slave.md)
-- [USB Host主机应用](./src/ch35.usb_host.md)
-- [TinyUSB协议移植和应用](./src/ch36.tiny_usb.md)
-- [ARM平台的分散加载机制](./src/ch37.distributed_loading.md)
-- [MDK编译方法说明](./src/ch38.mdk_notes.md)
-- [使用rust进行单片机开发](./src/ch39.build_with_rust.md)
-- [其它嵌入式知识总结](./src/ch40.other_summy.md)
+- [综述和内核说明](./modules/ch01-00.overview_and_kernel.md)
+- [RCC系统时钟模块](./modules/ch01-01.rcc_system_clock.md)
+- [GPIO输入输出模块](./modules/ch01-02.gpio_input_output.md)
+- [EXTI外部中断模块](./modules/ch01-03.exti_nvic.md)
+- [串口通讯模块](./modules/ch01-04.usart_com.md)
+- [RTC时钟模块](./modules/ch01-05.rtc_clock.md)
+- [DAC输出模块](./modules/ch01-06.dac_output.md)
+- [ADC输入模块](./modules/ch01-07.adc_input.md)
+- [SPI通讯模块](./modules/ch01-08.spi_com.md)
+- [I2C通讯模块](./modules/ch01-09.i2c_com.md)
+- [Timer定时模块](./modules/ch01-10.timer_clock.md)
+- [看门狗监控模块](./modules/ch01-11.watchdog_monitor.md)
+- [DMA模块](./modules/ch01-12.dma.md)
+- [内部算法应用模块](./modules/ch01-13.algorithm.md)
+- [FLASH功能说明](./modules/ch01-14.flash_manage.md)
+- [电源管理和低功耗应用](./modules/ch01-15.pwr_lower_power.md)
 
-### 单片机应用目录
+### 单片机复杂功能模块
 
-- [日志库应用实现](./app/00-logger_tools.md)
+- [SDIO接口和Fatfs应用](./modules/ch02-01.sdio_interface.md)
+- [CAN接口模块](./modules/ch02-02.can_interface.md)
+- [FMC接口和SDRAM应用](./modules/ch02-03.fmc_sdram.md)
+- [基于FMC接口的LCD显示](./modules/ch02-04.fmc_lcd_tsc.md)
+- [DCMI接口和摄像头应用](./modules/ch02-05.dcmi_interface.md)
+- [SAI音频接口模块](./modules/ch02-06.sai.md)
+- [USB协议和Slave从机应用](./modules/ch02-07.usb_slave.md)
+- [USB Host主机应用](./modules/ch02-08.usb_host.md)
+- [TinyUSB协议移植和应用](./modules/ch02-09.tiny_usb.md)
+- [ETH接口和LWIP应用](./modules/ch02-10.eth_lwip.md)
+
+### 单片机应用模块
+
+- [FreeRTOS移植和应用说明](./modules/ch03-01.rtos_freertos.md)
+- [RT-Thread移植和应用说明](./modules/ch03-02.rtos_rtthread.md)
+- [Modbus协议和应用](./modules/ch03-03.modbus_protocol.md)
+- [Mqtt协议和应用](./modules/ch03-04.mqtt_protocol.md)
+- [基于emWin的UI界面开发](./modules/ch03-05.emwin_ui.md)
+- [基于LVGL的UI界面开发](./modules/ch03-06.lvgl_ui.md)
+- [基于TouchGFX的UI界面开发](./modules/ch03-07.touchgfx_ui.md)
+- [使用C++进行单片机开发](./modules/ch03-08.build_with_c++.md)
+- [使用rust进行单片机开发](./modules/ch03-09.build_with_rust.md)
+- [micropython移植和应用](./modules/ch03-10.micropython.md)
+- [使用Makefile进行单片机项目管理](./modules/ch03-x1.makefile.md)
+- [使用cmake进行项目管理](./modules/ch03-x2.cmake.md)
+- [MDK编译方法说明](./modules/ch03-x3.mdk_notes.md)
+- [基于vscode的arm-none-gcc开发和调试](./modules/ch03-x4.vscode_gcc_openocd.md)
+- [ARM平台的分散加载机制](./modules/ch03-x5.distributed_loading.md)
+- [其它嵌入式知识总结](./modules/ch03-x6.other_summy.md)
 
 ## 单片机技术总结
 
@@ -154,7 +156,7 @@ https://github.com/zc110747/embedded_based_on_stm32
 
 本系列主要基于正点原子的STM32F429IGT6平台，以模块和综合项目的形式展示单片机相关的技术，目录说明如下。
 
-- src/ 分章节说明STM32F4的模块功能。
+- modules/ 分章节说明STM32F4的模块功能。
 - code/ 按章节提供可验证的代码，项目见code/xx-STM32F429_xx
 
 ## 学习方法总结

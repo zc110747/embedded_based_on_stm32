@@ -3,7 +3,7 @@
 //  All Rights Reserved
 //
 //  Name:
-//      lcd.cpp
+//      drv_lcd.c
 //
 //  Purpose:
 //      lcd driver use fmc.
@@ -18,30 +18,20 @@
 /////////////////////////////////////////////////////////////////////////////
 #include <string.h>
 #include "drv_lcd.h"
-#include "font.h"
-
-#define POINT_COLOR     0xFF000000	
-#define BACK_COLOR      0xFFFFFFFF
 
 //local parameter
 static SRAM_HandleTypeDef hsram1;
-static LCD_INFO g_lcd_info = {0};
+LCD_INFO g_lcd_info = {0};
 
 //local function
 static void lcd_config_init(void);
 static GlobalType_t lcd_hardware_init(void);
-static void lcd_test(void);
 static uint16_t lcd_rd_data(void);
 static void lcd_write_reg(uint16_t regval);
 static void lcd_write_data(uint16_t data);
 static void lcd_write_reg_data(uint16_t reg, uint16_t data);
 static void lcd_display_dir(uint8_t dir);
-static uint32_t lcd_pow(uint8_t m,uint8_t n);
-static void lcd_display_dir(uint8_t dir);
 static void lcd_scan_dir(uint8_t dir);
-static void lcd_display_dir(uint8_t dir);
-static void lcd_fast_drawpoint(uint16_t x, uint16_t y, uint32_t color);
-static void lcd_showchar(uint16_t x, uint16_t y, uint8_t num, uint8_t size, uint8_t mode);
 
 GlobalType_t lcd_driver_init(void)
 {
@@ -60,9 +50,7 @@ GlobalType_t lcd_driver_init(void)
     {
         HAL_Delay(20);
 
-        lcd_config_init(); 
-        
-        lcd_test();     
+        lcd_config_init();
     }
     else
     {
@@ -70,87 +58,11 @@ GlobalType_t lcd_driver_init(void)
     }
     return result;
 }
+
 LCD_INFO *get_lcd_info(void)
 {
     return &g_lcd_info;
 }
-
-void lcd_driver_showstring(uint16_t x, uint16_t y, uint16_t width, uint16_t height, uint8_t size, char *p)
-{
-    uint8_t x0 = x;
-    width += x;
-    height += y;
-    while((*p<='~')&&(*p>=' '))
-    {       
-        if(x>=width)
-        {
-            x=x0;
-            y+=size;
-        }
-        if(y >= height)
-            break;
-
-        lcd_showchar(x, y, *p, size, 0);
-        x+=size/2;
-        p++;
-    }
-}
-
-void lcd_driver_show_num(uint16_t x, uint16_t y, uint32_t num, uint8_t len, uint8_t size, uint8_t mode)
-{  
-    uint8_t t,temp;
-    uint8_t enshow=0;
-    for(t=0;t<len;t++)
-    {
-        temp=(num/lcd_pow(10,len-t-1))%10;
-        if(enshow==0&&t<(len-1))
-        {
-            if(temp==0)
-            {
-                if(mode&0x80)
-                {
-                    lcd_showchar(x+(size/2)*t,y,'0',size,mode&0x01);
-                }
-                else 
-                {
-                    lcd_showchar(x+(size/2)*t,y,' ',size,mode&0x01);  
-                }
-                continue;
-            }
-            else 
-                enshow=1;
-        }
-        lcd_showchar(x+(size/2)*t,y,temp+'0',size,mode&0x01); 
-    }
-} 
-
-void lcd_driver_show_extra_num(uint16_t x,uint16_t y, uint32_t num, uint8_t len, uint8_t size, uint8_t mode)
-{  
-    uint8_t t,temp;
-    uint8_t enshow = 0;
-    for(t=0;t<len;t++)
-    {
-        temp=(num/lcd_pow(10,len-t-1))%10;
-        if(enshow==0&&t<(len-1))
-        {
-            if(temp==0)
-            {
-                if(mode&0x80)
-                {
-                    lcd_showchar(x+(size/2)*t,y,'0',size,mode&0x01);
-                }                    
-                else 
-                {
-                    lcd_showchar(x+(size/2)*t,y,' ',size,mode&0x01);
-                }
-                continue;
-            }
-            else 
-                enshow=1;
-        }
-        lcd_showchar(x+(size/2)*t,y,temp+'0',size,mode&0x01); 
-    }
-} 
 
 void lcd_driver_clear(uint32_t color)
 {
@@ -182,6 +94,32 @@ void lcd_write_ram_prepare(void)
 {
     LCD->LCD_REG = g_lcd_info.wramcmd;
     __NOP();
+}	
+
+
+void lcd_fast_drawpoint(uint16_t x, uint16_t y, uint32_t color)
+{	   
+    lcd_write_reg(g_lcd_info.setxcmd); 
+    lcd_write_data(x>>8);  
+    lcd_write_reg(g_lcd_info.setxcmd+1); 
+    lcd_write_data(x&0xFF);	  
+    lcd_write_reg(g_lcd_info.setycmd); 
+    lcd_write_data(y>>8);  
+    lcd_write_reg(g_lcd_info.setycmd+1); 
+    lcd_write_data(y&0xFF); 
+
+    LCD->LCD_REG = g_lcd_info.wramcmd; 
+    LCD->LCD_RAM = color; 
+}	
+
+uint32_t lcd_pow(uint8_t m,uint8_t n)
+{
+    uint32_t result=1;
+    while(n--)
+    {
+        result*=m;
+    }
+    return result;
 }	
 
 ///////////////////////////////////////local function////////////////////////////
@@ -286,17 +224,7 @@ static void lcd_write_reg_data(uint16_t reg, uint16_t data)
     __NOP(); 
     LCD->LCD_REG = reg;
     LCD->LCD_RAM = data;
-} 
-
-static uint32_t lcd_pow(uint8_t m,uint8_t n)
-{
-    uint32_t result=1;
-    while(n--)
-    {
-        result*=m;
-    }
-    return result;
-}	
+}
 
 static void lcd_config_init(void)
 {
@@ -817,118 +745,10 @@ static void lcd_scan_dir(uint8_t dir)
     lcd_write_data((g_lcd_info.lcd_width-1)&0xFF); 
     lcd_write_reg(g_lcd_info.setycmd);
     lcd_write_data(0); 
-    lcd_write_reg(g_lcd_info.setycmd+1);
+    lcd_write_reg(g_lcd_info.setycmd + 1);
     lcd_write_data(0); 
-    lcd_write_reg(g_lcd_info.setycmd+2);
-    lcd_write_data((g_lcd_info.lcd_height-1)>>8); 
-    lcd_write_reg(g_lcd_info.setycmd+3);
-    lcd_write_data((g_lcd_info.lcd_height-1)&0xFF);
+    lcd_write_reg(g_lcd_info.setycmd + 2);
+    lcd_write_data((g_lcd_info.lcd_height - 1)>>8); 
+    lcd_write_reg(g_lcd_info.setycmd + 3);
+    lcd_write_data((g_lcd_info.lcd_height - 1)&0xFF);
 }  
-
-static void lcd_fast_drawpoint(uint16_t x, uint16_t y, uint32_t color)
-{	   
-    lcd_write_reg(g_lcd_info.setxcmd); 
-    lcd_write_data(x>>8);  
-    lcd_write_reg(g_lcd_info.setxcmd+1); 
-    lcd_write_data(x&0xFF);	  
-    lcd_write_reg(g_lcd_info.setycmd); 
-    lcd_write_data(y>>8);  
-    lcd_write_reg(g_lcd_info.setycmd+1); 
-    lcd_write_data(y&0xFF); 
-
-    LCD->LCD_REG = g_lcd_info.wramcmd; 
-    LCD->LCD_RAM = color; 
-}	
-
-static void lcd_showchar(uint16_t x, uint16_t y, uint8_t num, uint8_t size, uint8_t mode)
-{
-    uint8_t temp,t1,t;
-    uint16_t y0=y;
-    uint8_t csize=(size/8+((size%8)?1:0))*(size/2);		
-    num=num-' ';
-    for(t=0; t<csize; t++)
-    { 
-        switch(size)
-        {
-            #if SUPPORT_ASCII_1206 == 1
-            case 12:
-                temp = asc2_1206[num][t];
-                break;
-            #endif
-            
-            #if SUPPORT_ASCII_1608 == 1
-            case 16:
-                temp = asc2_1608[num][t];	
-                break;
-            #endif
-            
-            #if SUPPORT_ASCII_2412 == 1
-            case 24:
-                temp = asc2_2412[num][t];	
-                break; 
-            #endif
-            
-            #if SUPPORT_ASCII_3216 == 1
-            case 32:
-                temp = asc2_3216[num][t];	
-                break;
-            #endif
-            
-            default:
-                return;
-        }
-                            
-        for(t1=0; t1<8; t1++)
-        {			    
-            if(temp&0x80)
-            {
-                lcd_fast_drawpoint(x, y, POINT_COLOR);
-            }
-            else if(mode==0)
-            {
-                lcd_fast_drawpoint(x, y, BACK_COLOR);
-            }
-            
-            temp<<=1;
-            y++;
-            if(y >= g_lcd_info.lcd_height)
-            {
-                return;
-            }
-            if((y-y0)==size)
-            {
-                y=y0;
-                x++;
-                if(x>=g_lcd_info.lcd_width)
-                    return;	
-                break;
-            }
-        }
-    }
-}
-	
-
-static void lcd_test(void)
-{
-#if LCD_TEST == 1
-    lcd_driver_clear(WHITE);
-    HAL_Delay(100);
-    lcd_driver_clear(BLACK);
-    HAL_Delay(100);
-    lcd_driver_clear(BLUE);
-    HAL_Delay(100);
-    lcd_driver_clear(RED);
-    HAL_Delay(100);
-    lcd_driver_clear(MAGENTA);
-    HAL_Delay(100);
-    lcd_driver_clear(GREEN);
-    HAL_Delay(100);
-    lcd_driver_clear(WHITE);
-    
-    lcd_driver_showstring(10, 40, 320, 32, 32, (char *)"Apollo STM32F4/F7");
-    lcd_driver_showstring(10, 80, 240, 24, 24, (char *)"TFTLCD TEST");
-    lcd_driver_showstring(10, 110, 240, 16, 16, (char *)"ATOM@ALIENTEK");
-    lcd_driver_showstring(10, 140, 320, 16, 16, (char *)"TEMPERATE: 00.00C, Vol:00.00V");
-    lcd_driver_showstring(10, 160, 200, 16, 16, (char *)"Timer: 00-00-00 00:00:00");
-#endif
-}

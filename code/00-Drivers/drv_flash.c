@@ -101,6 +101,7 @@ FlashType_t flash_write_word(uint32_t address, uint32_t *pbuffer, uint32_t size)
         }
     } 
     HAL_FLASH_Lock();
+    
     return FLASH_OK;
 }
 

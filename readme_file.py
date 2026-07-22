@@ -14,7 +14,7 @@ def find_content_in_parentheses(file_path):
             for line in file:
                 matches = re.findall(r'\((.*?)\)', line)
                 for match in matches:
-                    if match.startswith("./src/"):
+                    if match.startswith("./modules/"):
                         file_name = match[2:]
                         if not os.path.exists(file_name):
                             all_files_exist = False
@@ -38,21 +38,21 @@ def find_content_in_parentheses(file_path):
                                 match = match.split('#')[0]
 
                             # print(match)
-                            match_src = match[:2] + 'src/' + match[2:]
+                            match_src = match[:2] + 'modules/' + match[2:]
                             if not os.path.exists(match_src):
                                 print(f"文件{file}:{match_src} 不存在。")
                                 all_files_exist = False
 
                         # 检查引用的图片文件，格式为./image/xx.png  
                         if match.startswith("./image"):
-                            match_src = match[:2] +'src/' + match[2:]
+                            match_src = match[:2] +'modules/' + match[2:]
                             if not os.path.exists(match_src):
                                 print(f"文件{file}:{match_src} 不存在。")
                                 all_files_exist = False
 
                         # 检查引用的工程文件 ./file/ch0x-xx/[directory，file]
                         if match.startswith("./file"):
-                            match_src = match[:2] +'src/' + match[2:]
+                            match_src = match[:2] +'modules/' + match[2:]
 
                             if not os.path.exists(match_src):
                                 print(f"文件{file}:{match_src} 不存在。")

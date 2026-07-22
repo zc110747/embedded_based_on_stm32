@@ -3,10 +3,10 @@
 //  All Rights Reserved
 //
 //  Name:
-//      lcd.hpp
+//      drv_lcd.h
 //
 //  Purpose:
-//      lcd driver interface use fmc.
+//      lcd driver use fmc.
 //
 // Author:
 //      @公众号：<嵌入式技术总结>
@@ -90,6 +90,8 @@ typedef struct
 #define LED_BACKLIGHT_ON	HAL_GPIO_WritePin(GPIOB, GPIO_PIN_5, GPIO_PIN_SET);
 #define LED_BACKLIGHT_OFF	HAL_GPIO_WritePin(GPIOB, GPIO_PIN_5, GPIO_PIN_RESET);
 
+#define POINT_COLOR     0xFF000000	
+#define BACK_COLOR      0xFFFFFFFF
 
 #ifdef __cplusplus
 extern "C" {
@@ -98,10 +100,10 @@ extern "C" {
 GlobalType_t lcd_driver_init(void);
 void lcd_write_ram_prepare(void);
 void lcd_driver_clear(uint32_t color);
+uint32_t lcd_pow(uint8_t m,uint8_t n);
 void lcd_set_cursor(uint16_t Xpos, uint16_t Ypos);
-void lcd_driver_showstring(uint16_t x,uint16_t y,uint16_t width,uint16_t height, uint8_t size, char *p);
-void lcd_driver_show_num(uint16_t x,uint16_t y,uint32_t num,uint8_t len,uint8_t size,uint8_t mode);
-void lcd_driver_show_extra_num(uint16_t x,uint16_t y, uint32_t num, uint8_t len, uint8_t size, uint8_t mode);
+void lcd_fast_drawpoint(uint16_t x, uint16_t y, uint32_t color);
+
 LCD_INFO *get_lcd_info(void);
 #ifdef __cplusplus
 }

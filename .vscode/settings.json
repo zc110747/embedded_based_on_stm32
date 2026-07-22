@@ -26,6 +26,7 @@
         "task.h": "c",
         "workflow_task.h": "c"
     },
+    "files.autoGuessEncoding": true,
     "marscode.codeCompletionPro": {
         "enableCodeCompletionPro": true
     },

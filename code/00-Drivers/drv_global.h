@@ -100,6 +100,7 @@ extern "C" {
 
 #if DRIVER_LCD_ENABLE == 1
 #include "drv_lcd.h"
+#include "drv_lcd_text.h"
 #endif
 
 #if DRIVER_CAN_ENABLE == 1
@@ -112,6 +113,10 @@ extern "C" {
 
 #if DRIVER_FLASH_ENABLE == 1
 #include "drv_flash.h"
+#endif
+
+#if DRIVER_WKUP_ENABLE == 1
+#include "drv_wkup.h"
 #endif
 
 #ifdef __cplusplus

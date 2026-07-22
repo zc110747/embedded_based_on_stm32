@@ -27,15 +27,32 @@ extern "C" {
 
 #include "includes.h"
 
+typedef struct
+{
+    uint8_t int_flag;
+    uint32_t delay_ticks;
+}KEY_INFO;
+
+#define KEY_NUM             2
+
+#define KEY_PRESSED         0
+#define KEY_UNPRESSED       1
+
+// KEY0的硬件
+#define KEY0_CLK_ENABLE()   __HAL_RCC_GPIOH_CLK_ENABLE()
+#define KEY0_PORT           GPIOH
+#define KEY0_PIN            GPIO_PIN_2
+#define KEY0_IRQn           EXTI2_IRQn
+#define KEY0_READ_PIN()     (HAL_GPIO_ReadPin(KEY0_PORT, KEY0_PIN)==GPIO_PIN_SET?1:0)
+
 #define KEY1_CLK_ENABLE()   __HAL_RCC_GPIOH_CLK_ENABLE()
 #define KEY1_PORT           GPIOH
-#define KEY1_PIN            GPIO_PIN_2
-
-#define KEY1_IRQn           EXTI2_IRQn
+#define KEY1_PIN            GPIO_PIN_3
+#define KEY1_IRQn           EXTI3_IRQn
 #define KEY1_READ_PIN()     (HAL_GPIO_ReadPin(KEY1_PORT, KEY1_PIN)==GPIO_PIN_SET?1:0)
 
 GlobalType_t drv_exti_init(void);
-uint8_t get_key1_press(void);
+uint8_t get_key_press(uint8_t key_num);
 #ifdef __cplusplus
 }
 #endif

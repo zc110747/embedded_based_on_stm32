@@ -18,7 +18,6 @@
 //
 /////////////////////////////////////////////////////////////////////////////
 #include "drv_rtc.h"
-#include <string.h>
 
 //internal defined
 #define RTC_SET_FLAGS       0x5B5B
@@ -58,6 +57,23 @@ GlobalType_t drv_rtc_init(void)
     }
     
     return result;
+}
+
+void drv_rtc_start_wakeup(void)
+{
+   HAL_RTCEx_DeactivateWakeUpTimer(&rtc_handler_);
+
+   HAL_RTCEx_SetWakeUpTimer_IT(&rtc_handler_, 2048, RTC_WAKEUPCLOCK_RTCCLK_DIV16);    
+}
+
+void RTC_WKUP_IRQHandler(void)
+{
+    HAL_RTCEx_WakeUpTimerIRQHandler(&rtc_handler_);
+}
+
+void HAL_RTCEx_WakeUpTimerEventCallback(RTC_HandleTypeDef *hrtc)
+{
+   HAL_RTCEx_DeactivateWakeUpTimer(hrtc);
 }
 
 void rtc_get_info(RTC_INFO *pGetInfo)
