@@ -19,7 +19,8 @@
 *.elf
 *.hex
 
-target/
+**/gpio/target
+
 stm32f429.uvguix.*
 code/*/build/*
 
