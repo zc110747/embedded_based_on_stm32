@@ -6,58 +6,103 @@
 
 另外可关注本人的微信公众号：<嵌入式技术总结>，获取更多技术分享和项目经验。
 
-## 本系课程内容
+## 本系列文章内容
 
-### 单片机基础功能模块
+### 基础功能模块
 
-- [综述和内核说明](./modules/ch01-00.overview_and_kernel.md)
-- [RCC系统时钟模块](./modules/ch01-01.rcc_system_clock.md)
-- [GPIO输入输出模块](./modules/ch01-02.gpio_input_output.md)
-- [EXTI外部中断模块](./modules/ch01-03.exti_nvic.md)
-- [串口通讯模块](./modules/ch01-04.usart_com.md)
-- [RTC时钟模块](./modules/ch01-05.rtc_clock.md)
-- [DAC输出模块](./modules/ch01-06.dac_output.md)
-- [ADC输入模块](./modules/ch01-07.adc_input.md)
-- [SPI通讯模块](./modules/ch01-08.spi_com.md)
-- [I2C通讯模块](./modules/ch01-09.i2c_com.md)
-- [Timer定时模块](./modules/ch01-10.timer_clock.md)
-- [看门狗监控模块](./modules/ch01-11.watchdog_monitor.md)
-- [DMA模块](./modules/ch01-12.dma.md)
-- [内部算法应用模块](./modules/ch01-13.algorithm.md)
-- [FLASH功能说明](./modules/ch01-14.flash_manage.md)
-- [电源管理和低功耗应用](./modules/ch01-15.pwr_lower_power.md)
+🚀 [系统综述和芯片架构说明](./modules/ch01-00.overview_and_kernel.md)  
+
+🚀 [RCC系统时钟模块](./modules/ch01-01.rcc_system_clock.md)  
+
+🚀 [GPIO输入输出模块](./modules/ch01-02.gpio_input_output.md)
+
+🚀  [EXTI外部中断模块](./modules/ch01-03.exti_nvic.md)
+
+🚀 [串口通讯模块](./modules/ch01-04.usart_com.md)
+
+🚀 [RTC时钟模块](./modules/ch01-05.rtc_clock.md)
+
+🚀 [DAC输出模块](./modules/ch01-06.dac_output.md)
+
+🚀 [ADC输入模块](./modules/ch01-07.adc_input.md)
+
+🚀 [SPI通讯模块](./modules/ch01-08.spi_com.md)
+
+🚀 [I2C通讯模块](./modules/ch01-09.i2c_com.md)
+
+🚀 [Timer定时模块](./modules/ch01-10.timer_clock.md)
+
+🚀 [看门狗监控模块](./modules/ch01-11.watchdog_monitor.md)
+
+🚀 [DMA模块](./modules/ch01-12.dma.md)
+
+🚀 [内部算法应用模块](./modules/ch01-13.algorithm.md)
+
+🚀 [FLASH功能说明](./modules/ch01-14.flash_manage.md)
+
+🚀 [电源管理和低功耗应用](./modules/ch01-15.pwr_lower_power.md)  
 
 ### 单片机复杂功能模块
 
-- [SDIO接口和Fatfs应用](./modules/ch02-01.sdio_interface.md)
-- [CAN接口模块](./modules/ch02-02.can_interface.md)
-- [FMC接口和SDRAM应用](./modules/ch02-03.fmc_sdram.md)
-- [基于FMC接口的LCD显示](./modules/ch02-04.fmc_lcd_tsc.md)
-- [DCMI接口和摄像头应用](./modules/ch02-05.dcmi_interface.md)
-- [SAI音频接口模块](./modules/ch02-06.sai.md)
-- [USB协议和Slave从机应用](./modules/ch02-07.usb_slave.md)
-- [USB Host主机应用](./modules/ch02-08.usb_host.md)
-- [TinyUSB协议移植和应用](./modules/ch02-09.tiny_usb.md)
-- [ETH接口和LWIP应用](./modules/ch02-10.eth_lwip.md)
+🚀 [SDIO接口和Fatfs应用](./modules/ch02-01.sdio_interface.md)
+
+🚀 [CAN通讯接口模块](./modules/ch02-02.can_interface.md)
+
+🚀 [FMC接口和SDRAM应用](./modules/ch02-03-01.fmc_sdram.md)
+
+🚀 [FMC接口的LCD显示和触摸管理](./modules/ch02-03-02.fmc_lcd_tsc.md)
+
+🚀 [LTDC接口的LCD显示和触摸管理](./modules/ch02-04.ltdc_lcd.md)
+
+🚀 [ETH接口和LWIP应用](./modules/ch02-05.eth_lwip.md)
+
+🚀 [SAI音频接口模块](./modules/ch02-06.sai.md)
+
+🚀 [USB协议和Slave从机应用](./modules/ch02-07-01.usb_slave.md)
+
+🚀 [USB Host主机应用](./modules/ch02-07-02.usb_host.md)
+
+🚀 [DCMI接口和摄像头应用](./modules/ch02-08.dcmi_interface.md)  
 
 ### 单片机应用模块
 
-- [FreeRTOS移植和应用说明](./modules/ch03-01.rtos_freertos.md)
-- [RT-Thread移植和应用说明](./modules/ch03-02.rtos_rtthread.md)
-- [Modbus协议和应用](./modules/ch03-03.modbus_protocol.md)
-- [Mqtt协议和应用](./modules/ch03-04.mqtt_protocol.md)
-- [基于emWin的UI界面开发](./modules/ch03-05.emwin_ui.md)
-- [基于LVGL的UI界面开发](./modules/ch03-06.lvgl_ui.md)
-- [基于TouchGFX的UI界面开发](./modules/ch03-07.touchgfx_ui.md)
-- [使用C++进行单片机开发](./modules/ch03-08.build_with_c++.md)
-- [使用rust进行单片机开发](./modules/ch03-09.build_with_rust.md)
-- [micropython移植和应用](./modules/ch03-10.micropython.md)
-- [使用Makefile进行单片机项目管理](./modules/ch03-x1.makefile.md)
-- [使用cmake进行项目管理](./modules/ch03-x2.cmake.md)
-- [MDK编译方法说明](./modules/ch03-x3.mdk_notes.md)
-- [基于vscode的arm-none-gcc开发和调试](./modules/ch03-x4.vscode_gcc_openocd.md)
-- [ARM平台的分散加载机制](./modules/ch03-x5.distributed_loading.md)
-- [其它嵌入式知识总结](./modules/ch03-x6.other_summy.md)
+🚀 [FreeRTOS移植和应用说明](./modules/ch03-01-01.rtos_freertos.md)
+
+🚀 [RT-Thread移植和应用说明](./modules/ch03-01-02.rtos_rtthread.md)
+
+🚀 [Threadx移植和应用说明](./modules/ch03-01-03.rtos_threadx.md)
+
+🚀 [Zephyr移植和应用说明](./modules/ch03-01-04.rtos_zephyr.md)
+
+🚀 [基于emWin的UI界面开发](./modules/ch03-02-01.emwin_ui.md)
+
+🚀 [基于LVGL的UI界面开发](./modules/ch03-02-02.lvgl_ui.md)
+
+🚀 [基于TouchGFX的UI界面开发](./modules/ch03-02-03.touchgfx_ui.md)
+
+🚀 [Modbus协议和应用](./modules/ch03-03.modbus_protocol.md)
+
+🚀 [MQTT协议和应用](./modules/ch03-04.mqtt_protocol.md)
+
+🚀 [基于tinyusb的项目移植和应用](./modules/ch03-05.tiny_usb.md)
+
+🚀 [使用C++进行单片机开发](./modules/ch03-06.build_with_c++.md)
+
+🚀 [使用rust进行单片机开发](./modules/ch03-07.build_with_rust.md)
+
+🚀 [micropython移植和应用](./modules/ch03-08.micropython.md)
+
+🚀 [使用Makefile进行单片机项目管理](./modules/ch03-x1.makefile.md)
+
+🚀 [使用cmake进行项目管理](./modules/ch03-x2.cmake.md)
+
+🚀 [MDK编译方法说明](./modules/ch03-x3.mdk_notes.md)
+
+🚀 [基于vscode的arm-none-gcc开发和调试](./modules/ch03-x4.vscode_gcc_openocd.md)
+
+🚀 [ARM平台的分散加载机制](./modules/ch03-x5.distributed_loading.md)
+
+🚀 [其它嵌入式知识总结](./modules/ch03-x6.other_summy.md)
 
 ## 单片机技术总结
 
@@ -98,7 +143,7 @@
 
 电子产品一般是由硬件板，电源(电池或者外部供电)在加上结构框架(外壳)构成的具有特定功能的器件。日常所见的手环，智能手表，雾化器，智能门锁，空气加湿器，智能音箱，电吹风机都属于电子产品的范畴，不过这类产品并不一定是单片机开发的，也有可能是基于嵌入式SOC开发，往往是性能，成本的权衡。这里以比较简单的手环为例去理解如何开发具体产品。
 
-第一步:梳理产品需求，定义产品功能，输出相关文档。
+🧩 **第一步:梳理产品需求，定义产品功能，输出相关文档**
 
 - 界面显示，支持滑动触摸
 - 各类检测(心率，血氧)
@@ -108,7 +153,7 @@
 - 支持充电，长时间待机
 - 其它附加功能，如表盘切换，闹钟，语音通话，调试接口等
 
-第二步:将功能转换成单片机环境下功能，输出相关文档。
+🧩 **第二步:将功能转换成单片机环境下功能，输出相关文档**
 
 - 带触摸的GUI屏幕驱动移植支持，界面开发，满足低功耗和少的接口(可选SPI的OLED屏幕)
   - SPI驱动和器件支持
@@ -133,18 +178,20 @@
   - 自绘图形或移植GUI图形库
   - 实现功能界面，并关联到具体硬件操作和硬件状态
 
-第三步: 根据功能，电子部分进行硬件器件选型，原理图设计，软件部分完成框架设计，进行原型验证。
+🧩 **第三步：根据功能，分解需求进行实现**
+
+电子部分进行硬件器件选型，原理图设计，软件部分完成框架设计，进行原型验证。
 
 - 硬件器件选型(电子)，主要选择产品的软件工作平台(单片机，满足合适的容量，频率，接口，功耗)，以及所有外部器件(传感器，屏幕，数模器件)。
 - 原理图设计，PCB打样投产，进行产品打样
 - 软件部分根据工作平台定义完成软件框架，创建项目，并基于相应开发板进行驱动相关的原型验证。
 
-第四步: 硬件更新迭代，软件产品开发。
+🧩 **第四步: 硬件更新迭代，软件产品开发**
 
 - 硬件基于软件开发中遇到到问题，进行版本更新迭代
 - 软件进行具体的功能开发，包含整合驱动，处理数据，实现协议和应用交互，低功耗功能，图形界面开发，实现最终产品。
 
-第五步: 产品测试，量产
+🧩 **第五步: 产品测试，量产**
 
 上述只能说简化的电子产品的开发流程，真实过程可能还有多次迭代和测试的情况，还有试投产和小批量的过程。事实上在第二步已经大概了解了电子产品中软件部分的主要开发工作。可以看到，驱动只涉及I2C，SPI和串口，大部分都是具体功能逻辑的实现，这不仅需要在产品开发中不断积累，还需要下意识的有技术管理的思想去理解项目，如果只看到单个驱动，或者单独的功能，很容易一叶障目，不见泰山。
 
@@ -156,20 +203,30 @@
 
 本系列主要基于正点原子的STM32F429IGT6平台，以模块和综合项目的形式展示单片机相关的技术，目录说明如下。
 
-- modules/ 分章节说明STM32F4的模块功能。
-- code/ 按章节提供可验证的代码，项目见code/xx-STM32F429_xx
+- **modules**/：分章节说明STM32F4的模块功能。
+- **code**/：按章节提供可验证的代码，项目见code/xx-STM32F429_xx
 
 ## 学习方法总结
 
 本节从开始梳理了嵌入式开发需要的技术，又拆解了手环产品的实现流程，描述了作为产品需求的单片机开发技术，这个可以讲明了单片机开发需要的技术总纲。本系列按照顺序，讲解了单片机支持的大部分模块，并在此基础上扩展了外部库的支持；但我不建议只是简单的按顺序复现功能，或者直接用STM32CubeMX生成代码，运行下就结束了，大部分情况下意义并不大，既不会对面试有帮助、或者对未来的开发有帮助，这也是很多人按照开发板的例程都练习了很久，仍然学习进度缓慢的原因。这里我按照自己工作学习的经历，分享下经验感悟。
 
-- 入门阶段
+🧩 **入门阶段**
 
-入门阶段主要包含熟悉常用编译工具Keil和下载工具Jlink、ST-Link，学会通过HAL库，创建工程、添加启动文件、完成基本的功能验证。这个阶段是为后续所有工作打基础，同时掌握基础的模块功能，包含RCC、GPIO、NVIC、串口的应用。能够不依赖图形工具，完成这些基本功能的调试和验证(可以参考本系列的相关章节说明)，涉及到不理解的配置项去看芯片手册分析解决。之后在基于STM32CubeMX生成项目，实现上述功能。这一步是打基础的关键步骤，如果上来基于图形界面，那么一切就是空中楼阁，后续复杂模块反而更难理解学习。
+入门阶段主要包含熟悉常用编译工具Keil和下载工具Jlink、ST-Link，学会通过HAL库，创建工程、添加启动文件、完成基本的功能验证。
 
-- 提高阶段
+这个阶段是为后续所有工作打基础，同时掌握基础的模块功能，包含RCC、GPIO、NVIC、串口的应用。完成这些模块基本功能的调试和验证(可以参考本系列的相关章节说明)，涉及到不理解的配置项去看芯片手册分析解决。之后在基于STM32CubeMX生成项目，实现上述功能。
 
-提高阶段主要就是进一步熟悉单片机的其它模块，这时候可以直接使用STM32CubeMX生成，也可以自己仍然手动添加(本系列的代码除了特别复杂的模块，如USB、ETH，其它都是自己手动添加的)。按照模块就比较多了，I2C、SPI、RTC、DAC、ADC、DMA、Timer、SDIO、CAN、ETH、DCMI、LTDC等。如果是按照顺序一个个去学习，一是花费时间特别长，二是学久了枯燥乏味，很多细节的知识即使说明很重要，单纯靠背诵记住也不可能，其实参考上面的手环开发流程说明，通过一个个小的应用去学习就是比较好的方法，这个要根据自己感兴趣的方向去实践；这里可以阐述些例子。
+这一步是打基础的关键步骤，这一步不仅学会如何使用生成工具，还要去理解背后工作机制，不然只是空中楼阁，后续复杂模块反而更难理解学习。
+
+🧩 **提高阶段**
+
+提高阶段主要就是进一步熟悉单片机的其它模块，这时候可以直接使用STM32CubeMX生成，也可以自己仍然手动添加(本系列的代码除了特别复杂的模块，如USB、ETH，其它都是自己手动添加的)。
+
+剩余的模块就比较多了，I2C、SPI、RTC、DAC、ADC、DMA、Timer、SDIO、CAN、ETH、DCMI、LTDC等。如果是按照顺序一个个去学习，一是花费时间特别长，二是学久了枯燥乏味，很多细节的知识即使说明很重要，单纯靠背诵记住也不可能。
+
+这里可以参考上面的手环开发流程说明，通过一个个小的应用去学习就是比较好的方法，根据自己感兴趣的方向去实践。
+
+例如上述项目就包含如下知识点去掌握。
 
 - 带闹钟功能钟表，支持时间设置、闹钟设置、时间显示、蜂鸣器报警功能。
   - 设置通过按键(GPIO)，时间显示最初可通过串口打印，后续可以通过LCD显示。时间通过RTC存储。
@@ -203,4 +260,14 @@
 - 多单片机系统构建
   - 多个单片机通过CAN、ETH等通信协议连接，实现数据交换和协调。
 
-上面列出了一系列包含多个功能模块的应用，在实践这些应用时，就可以根据需求去学习了解相应的模块。对于有些复杂的功能模块，可以分解成多步骤去实现；例如网络综合应用，可以按照步骤先尝试完成网络功能的移植，成功后在基础上实现HTTP服务器和web界面，之后在将学习调试过的硬件一个个添加到项目中，完善前后端逻辑实现，最终构建一个完整的项目。不要试图一下就全部完成，而是在实践中，发现自己的不足，然后去补足其中的知识。不过我这里提到的需求对比实际产品也只是冰山一角，如果自己想扩展思路，可以多去购物网站查一下那些电器设备，根据功能去反推需要实现的功能逻辑和需求，然后去模仿其中的一部分模块功能来实践。不要是千篇一律的智能小车，带着思考去学习实践，这样才可以事半功倍。
+上面列出了一系列包含多个功能模块的应用，在实践这些应用时，就可以根据需求去学习了解相应的模块。
+
+对于复杂的功能模块，可以分解成多步骤去实现；例如网络综合应用，可以按照步骤先尝试完成网络功能的移植，成功后在基础上实现HTTP服务器和web界面，之后在将学习调试过的硬件一个个添加到项目中，完善前后端逻辑实现，最终构建一个完整的项目。不要试图一下就全部完成，而是在实践中，发现自己的不足，然后去补足其中的知识。
+
+🧩 **整合提高**
+
+当有着多个项目开发经验后，就可以尝试从模块、协议、应用的角度，从局部到整体，去完整梳理单片机开发中的各种知识点和细节，以文档方式记录下来；时常回顾提高，这也是我这个系列的开发由来。
+
+## 结语
+
+不过我这里提到的需求对比实际产品也只是冰山一角，如果自己想扩展思路，可以多去购物网站查一下那些电器设备，根据功能去反推需要实现的功能逻辑和需求，然后去模仿其中的一部分模块功能来实践。不要是千篇一律的智能小车，带着思考去学习实践，这样才可以事半功倍。
