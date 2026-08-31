@@ -1060,7 +1060,7 @@
               <MiscControls></MiscControls>
               <Define></Define>
               <Undefine></Undefine>
-              <IncludePath>..\..\00-STM32F4xx_HAL_Driver\Inc;..\..\00-STM32F4xx_HAL_Driver\Inc\Legacy;..\..\00-Extend_Library\segger_rtt\Config;..\..\00-Extend_Library\segger_rtt\RTT;..\..\00-Usr_Library\logger;..\..\00-Extend_Library\dsp_lib\Include;..\..\00-Drivers;..\application;..\..\00-Extend_Library\FreeRTOS-Kernel\portable\GCC\ARM_CM4F;..\..\00-Extend_Library\FreeRTOS-Kernel\include</IncludePath>
+              <IncludePath>..\..\00-STM32F4xx_HAL_Driver\Inc;..\..\00-STM32F4xx_HAL_Driver\Inc\Legacy;..\..\00-Extend_Library\segger_rtt\Config;..\..\00-Extend_Library\segger_rtt\RTT;..\..\00-Usr_Library\logger;..\..\00-Extend_Library\dsp_lib\Include;..\..\00-Drivers;..\application;..\..\00-Extend_Library\FreeRTOS-Kernel\portable\GCC\ARM_CM4F;..\..\00-Extend_Library\FreeRTOS-Kernel\include;..\application\tests</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
