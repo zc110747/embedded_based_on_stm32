@@ -20,6 +20,7 @@
 #include "cmsis_os.h"
 #include "lwip.h"
 #include "logger_client.h"
+#include "mqtt_app.h"
 
 #define DEBUG_JTAG          0
 #define DEBUG_STLINK        1
@@ -77,6 +78,8 @@ void StartDefaultTask(void *argument)
     MX_LWIP_Init();
 
     logger_client_init();
+    
+    mqtt_app_init();
     
     for(;;)
     {

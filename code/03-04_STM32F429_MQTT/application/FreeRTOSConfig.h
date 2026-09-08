@@ -117,10 +117,6 @@ to exclude the API function. */
 #define INCLUDE_xTaskGetCurrentTaskHandle    1
 #define INCLUDE_eTaskGetState                1
 
-#define TICK_TYPE_WIDTH_16_BITS             0
-#define TICK_TYPE_WIDTH_32_BITS             1
-#define TICK_TYPE_WIDTH_64_BITS             2
-#define configTICK_TYPE_WIDTH_IN_BITS       TICK_TYPE_WIDTH_32_BITS
 /*
  * The CMSIS-RTOS V2 FreeRTOS wrapper is dependent on the heap implementation used
  * by the application thus the correct define need to be enabled below

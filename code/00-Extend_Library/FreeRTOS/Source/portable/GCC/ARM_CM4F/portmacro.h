@@ -26,6 +26,7 @@
  *
  */
 
+#include "FreeRTOSConfig.h"
 
 #ifndef PORTMACRO_H
     #define PORTMACRO_H

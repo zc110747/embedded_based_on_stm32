@@ -33,6 +33,8 @@
 extern "C" {
 #endif
 
+#include "FreeRTOSConfig.h"
+
 /*-----------------------------------------------------------
  * Port specific definitions.
  *
