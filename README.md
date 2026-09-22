@@ -7,6 +7,12 @@
 
 另外可关注本人的微信公众号：<嵌入式技术总结>，获取更多技术分享和项目经验。
 
+⚠️ **注意:本系列是对个人知识的梳理总结，目前vibe coding取代嵌入式编程形势下，学习硬件模块是事倍功半的事，可以大致了解后，从应用出发才是正确做法。**
+
+学习单片机应用，可以使用vibe coding复现如下开源项目，配合此文档解决问题。
+
+[基于vibe coding的MCU开发：https://github.com/zc110747/MCU-Agent](https://github.com/zc110747/MCU-Agent)
+
 ## 本系列文章内容
 
 ### 基础功能模块
@@ -17,7 +23,7 @@
 
 🚀 [GPIO输入输出模块](./modules/ch01-02.gpio_input_output.md)
 
-🚀  [EXTI外部中断模块](./modules/ch01-03.exti_nvic.md)
+🚀 [EXTI外部中断模块](./modules/ch01-03.exti_nvic.md)
 
 🚀 [串口通讯模块](./modules/ch01-04.usart_com.md)
 
