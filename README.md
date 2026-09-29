@@ -85,8 +85,6 @@
 
 🚀 [基于LVGL的UI界面开发](./modules/ch03-02-02.lvgl_ui.md)
 
-🚀 [基于TouchGFX的UI界面开发](./modules/ch03-02-03.touchgfx_ui.md)
-
 🚀 [Modbus协议和应用](./modules/ch03-03.modbus_protocol.md)
 
 🚀 [MQTT协议和应用](./modules/ch03-04.mqtt_protocol.md)

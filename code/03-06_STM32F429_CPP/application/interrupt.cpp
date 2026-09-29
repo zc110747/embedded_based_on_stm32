@@ -18,4 +18,16 @@
 /////////////////////////////////////////////////////////////////////////////
 #include "gpio.hpp"
 
+class INFO
+{
+public:
+    int a;
+    int b;
+};
 
+INFO info = {0};
+
+extern "C" int get_info_total(void)
+{
+    return info.a + info.b;
+}

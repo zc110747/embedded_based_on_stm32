@@ -99,10 +99,13 @@ void MemManage_Handler(void)
 /**
   * @brief This function handles Pre-fetch fault, memory access fault.
   */
+int get_info_total(void);
+
 void BusFault_Handler(void)
 {
   /* USER CODE BEGIN BusFault_IRQn 0 */
-
+  get_info_total();
+    
   /* USER CODE END BusFault_IRQn 0 */
   while (1)
   {

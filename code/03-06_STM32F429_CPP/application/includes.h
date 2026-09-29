@@ -26,6 +26,8 @@ extern "C" {
 #include "global_def.h"
 #include "logger.h"
 
+void get_info_total(void);
+    
 #ifdef __cplusplus
 }
 #endif   
