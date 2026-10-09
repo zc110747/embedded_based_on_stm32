@@ -93,10 +93,6 @@
 
 🚀 [使用C++进行单片机开发](./modules/ch03-06.build_with_c++.md)
 
-🚀 [使用rust进行单片机开发](./modules/ch03-07.build_with_rust.md)
-
-🚀 [micropython移植和应用](./modules/ch03-08.micropython.md)
-
 🚀 [使用Makefile进行单片机项目管理](./modules/ch03-x1.makefile.md)
 
 🚀 [使用cmake进行项目管理](./modules/ch03-x2.cmake.md)
