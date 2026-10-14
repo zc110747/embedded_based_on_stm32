@@ -3,5 +3,6 @@
         "*.cmd": "shellscript",
         "drv_global.h": "c"
     },
-    "marscode.chatLanguage": "cn"
+    "marscode.chatLanguage": "cn",
+    "cmake.sourceDirectory": "D:/user_project/git/embedded_based_on_stm32/code/03-x2_STM32F429_CMake"
 }
