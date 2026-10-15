@@ -28,7 +28,7 @@
 
 /* Private typedef -----------------------------------------------------------*/
 /* USER CODE BEGIN PTD */
-
+#define MS_TO_TICK(ms)  ((TX_TIMER_TICKS_PER_SECOND * (ms)) / 1000U)
 /* USER CODE END PTD */
 
 /* Private define ------------------------------------------------------------*/
@@ -135,5 +135,40 @@ void tx_app_thread_idle(ULONG thread_input)
 
         tx_thread_sleep(1000);
     }
+}
+
+static TX_MUTEX logger_tx_mutex = {0};
+
+LOG_STATUS logger_protect_init(void)
+{
+    LOG_STATUS ret = LOG_STATUS_OK;
+    
+    if (tx_mutex_create(&logger_tx_mutex, "logger tx mutex", TX_NO_INHERIT) != TX_SUCCESS)
+    {
+        ret = LOG_STATUS_ERROR;
+    }
+    
+    return ret;
+}
+
+LOG_STATUS logger_protect_entry(void)
+{
+    LOG_STATUS ret = LOG_STATUS_OK;
+
+    if(tx_mutex_get(&logger_tx_mutex, MS_TO_TICK(100)) != TX_SUCCESS)
+    {
+        ret =  LOG_STATUS_ERROR;
+    }
+    
+    return ret;
+}
+
+LOG_STATUS logger_protect_exit(void)
+{
+    LOG_STATUS ret = LOG_STATUS_OK;
+
+    tx_mutex_put(&logger_tx_mutex);
+    
+    return ret;
 }
 /* USER CODE END 1 */

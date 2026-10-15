@@ -31,17 +31,30 @@ extern "C" {
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-
+#include "tx_api.h"
+#include "logger.h"
 /* USER CODE END Includes */
 
 /* Exported types ------------------------------------------------------------*/
 /* USER CODE BEGIN ET */
-
+typedef enum
+{
+    RT_OK = 0,
+    RT_FAIL,
+}GlobalType_t;
 /* USER CODE END ET */
 
 /* Exported constants --------------------------------------------------------*/
 /* USER CODE BEGIN EC */
+#ifndef UINT_MAX
+#define UINT_MAX 0xFFFFFFFF
+#endif
 
+#define APP_QUEUE_ON                1
+#define APP_SEMAPHORE_MUTEX_ON      0
+#define APP_EVENT_FLAG_ON           0
+#define APP_TIMER_ON                0
+#define APP_PREFORMANCE_ON          0
 /* USER CODE END EC */
 
 /* Exported macro ------------------------------------------------------------*/
