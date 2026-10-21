@@ -28,18 +28,19 @@ GlobalType_t application_init(VOID *memory_ptr)
     GlobalType_t result = RT_OK;
 
     // queue application
-    app_queue_init(memory_ptr);
+    result = app_queue_init(memory_ptr);
     
     // semaphore_application
-    app_semap_mutex_init(memory_ptr);
+    result |= app_semap_mutex_init(memory_ptr);
     
     // event flag
-    app_event_flag_init(memory_ptr);
+    result |= app_event_flag_init(memory_ptr);
 
     // timer application
-    app_timer_init(memory_ptr);
+    result |= app_timer_init(memory_ptr);
     
     // performance application
-    app_performance_init(memory_ptr);
+    result |= app_performance_init(memory_ptr);
+    
     return result;
 }

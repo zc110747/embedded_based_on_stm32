@@ -96,6 +96,8 @@ void MX_ThreadX_Init(void)
 }
 
 /* USER CODE BEGIN 1 */
+#include "application.h"
+
 static UINT app_threadx_init(VOID *memory_ptr)
 {
     UINT ret = TX_SUCCESS;
@@ -120,6 +122,10 @@ static UINT app_threadx_init(VOID *memory_ptr)
         return TX_THREAD_ERROR;
     }
 
+    if (application_init(memory_ptr) != RT_OK)
+    {
+        return TX_THREAD_ERROR;
+    }        
     return ret;
 }
 
