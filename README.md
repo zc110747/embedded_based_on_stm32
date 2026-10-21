@@ -81,9 +81,7 @@
 
 🚀 [Zephyr移植和应用说明](./modules/ch03-01-04.rtos_zephyr.md)
 
-🚀 [基于emWin的UI界面开发](./modules/ch03-02-01.emwin_ui.md)
-
-🚀 [基于LVGL的UI界面开发](./modules/ch03-02-02.lvgl_ui.md)
+🚀 [基于LVGL的UI界面开发](./modules/ch03-02.lvgl_ui.md)
 
 🚀 [Modbus协议和应用](./modules/ch03-03.modbus_protocol.md)
 
