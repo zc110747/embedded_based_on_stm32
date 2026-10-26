@@ -346,7 +346,7 @@ int MQTTYield(MQTTClient* c, int timeout_ms)
     TimerInit(&timer);
     TimerCountdownMS(&timer, timeout_ms);
 
-	  do
+	do
     {
         if (cycle(c, &timer) < 0)
         {
@@ -383,7 +383,6 @@ void MQTTRun(void* parm)
 	}
 }
 
-
 #if defined(MQTT_TASK)
 int MQTTStartTask(MQTTClient* client)
 {
@@ -406,9 +405,6 @@ int waitfor(MQTTClient* c, int packet_type, Timer* timer)
 
     return rc;
 }
-
-
-
 
 int MQTTConnectWithResults(MQTTClient* c, MQTTPacket_connectData* options, MQTTConnackData* data)
 {
@@ -464,13 +460,11 @@ exit:
     return rc;
 }
 
-
 int MQTTConnect(MQTTClient* c, MQTTPacket_connectData* options)
 {
     MQTTConnackData data;
     return MQTTConnectWithResults(c, options, &data);
 }
-
 
 int MQTTSetMessageHandler(MQTTClient* c, const char* topicFilter, messageHandler messageHandler)
 {
