@@ -589,6 +589,16 @@
           <GroupName>Bsp</GroupName>
           <Files>
             <File>
+              <FileName>drv_bsp_target.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\bsp\drv_bsp_target.c</FilePath>
+            </File>
+            <File>
+              <FileName>drv_bsp_sdio.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\bsp\drv_bsp_sdio.c</FilePath>
+            </File>
+            <File>
               <FileName>drv_bsp.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\bsp\drv_bsp.c</FilePath>
@@ -637,16 +647,6 @@
               <FileName>ffunicode.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\third_party\FatFs\ffunicode.c</FilePath>
-            </File>
-            <File>
-              <FileName>drv_bsp_sdio.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\bsp\drv_bsp_sdio.c</FilePath>
-            </File>
-            <File>
-              <FileName>drv_bsp_target.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\bsp\drv_bsp_target.c</FilePath>
             </File>
           </Files>
         </Group>
