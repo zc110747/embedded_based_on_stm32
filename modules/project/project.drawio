@@ -1,0 +1,134 @@
+<mxfile host="65bd71144e">
+    <diagram id="xvoVg80fWy8ra_ekZ6NQ" name="001.mouse_project">
+        <mxGraphModel dx="992" dy="666" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+            <root>
+                <mxCell id="0"/>
+                <mxCell id="1" parent="0"/>
+                <mxCell id="akg2h5msj9lNhIQ5R6cP-4" parent="1" style="rounded=0;whiteSpace=wrap;html=1;dashed=1;" value="" vertex="1">
+                    <mxGeometry height="250" width="440" x="210" y="145" as="geometry"/>
+                </mxCell>
+                <mxCell id="XTrln05aZSB7L_kYTsQn-1" parent="1" style="rounded=0;whiteSpace=wrap;html=1;align=center;labelPosition=center;verticalLabelPosition=top;verticalAlign=bottom;" value="有线鼠标系统框架" vertex="1">
+                    <mxGeometry height="200" width="160" x="365" y="170" as="geometry"/>
+                </mxCell>
+                <mxCell id="XTrln05aZSB7L_kYTsQn-3" edge="1" parent="1" source="XTrln05aZSB7L_kYTsQn-4" style="endArrow=classic;html=1;entryX=-0.007;entryY=0.465;entryDx=0;entryDy=0;entryPerimeter=0;" target="XTrln05aZSB7L_kYTsQn-10" value="">
+                    <mxGeometry height="50" relative="1" width="50" as="geometry">
+                        <mxPoint x="240.98" y="210" as="sourcePoint"/>
+                        <mxPoint x="360" y="208.08000000000004" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="XTrln05aZSB7L_kYTsQn-5" edge="1" parent="1" style="endArrow=classic;html=1;entryX=0.025;entryY=0.146;entryDx=0;entryDy=0;entryPerimeter=0;" target="XTrln05aZSB7L_kYTsQn-4" value="">
+                    <mxGeometry height="50" relative="1" width="50" as="geometry">
+                        <mxPoint x="240.98" y="210" as="sourcePoint"/>
+                        <mxPoint x="364" y="211" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="XTrln05aZSB7L_kYTsQn-4" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="按键输入" vertex="1">
+                    <mxGeometry height="40" width="80" x="230" y="190" as="geometry"/>
+                </mxCell>
+                <mxCell id="XTrln05aZSB7L_kYTsQn-6" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="滚轮输入" vertex="1">
+                    <mxGeometry height="40" width="80" x="230" y="250" as="geometry"/>
+                </mxCell>
+                <mxCell id="XTrln05aZSB7L_kYTsQn-7" edge="1" parent="1" source="XTrln05aZSB7L_kYTsQn-6" style="edgeStyle=none;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" target="XTrln05aZSB7L_kYTsQn-11">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="360" y="270" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="XTrln05aZSB7L_kYTsQn-8" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="专用光学导航芯片" vertex="1">
+                    <mxGeometry height="40" width="80" x="230" y="310" as="geometry"/>
+                </mxCell>
+                <mxCell id="XTrln05aZSB7L_kYTsQn-9" edge="1" parent="1" source="XTrln05aZSB7L_kYTsQn-8" style="edgeStyle=none;html=1;entryX=0.008;entryY=0.398;entryDx=0;entryDy=0;entryPerimeter=0;" target="XTrln05aZSB7L_kYTsQn-12">
+                    <mxGeometry relative="1" x="-0.0968" as="geometry">
+                        <Array as="points">
+                            <mxPoint x="340" y="330"/>
+                            <mxPoint x="350" y="330"/>
+                        </Array>
+                        <mxPoint x="360" y="329.8799999999999" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="XTrln05aZSB7L_kYTsQn-10" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="GPIO" vertex="1">
+                    <mxGeometry height="40" width="45" x="380" y="190" as="geometry"/>
+                </mxCell>
+                <mxCell id="XTrln05aZSB7L_kYTsQn-11" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="旋转编码器" vertex="1">
+                    <mxGeometry height="40" width="45" x="380" y="250" as="geometry"/>
+                </mxCell>
+                <mxCell id="XTrln05aZSB7L_kYTsQn-12" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="SPI/I2C接口" vertex="1">
+                    <mxGeometry height="50" width="45" x="380" y="310" as="geometry"/>
+                </mxCell>
+                <mxCell id="akg2h5msj9lNhIQ5R6cP-3" edge="1" parent="1" source="akg2h5msj9lNhIQ5R6cP-1" style="edgeStyle=none;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" target="akg2h5msj9lNhIQ5R6cP-2">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="akg2h5msj9lNhIQ5R6cP-1" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="usb协议和接口" vertex="1">
+                    <mxGeometry height="60" width="45" x="470" y="240" as="geometry"/>
+                </mxCell>
+                <mxCell id="akg2h5msj9lNhIQ5R6cP-2" parent="1" style="whiteSpace=wrap;html=1;aspect=fixed;" value="HID设备(PC)" vertex="1">
+                    <mxGeometry height="80" width="80" x="560" y="230" as="geometry"/>
+                </mxCell>
+                <mxCell id="myumwIUc0R_rttcExwvx-2" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="" vertex="1">
+                    <mxGeometry height="200" width="361" x="256" y="501" as="geometry"/>
+                </mxCell>
+                <mxCell id="myumwIUc0R_rttcExwvx-3" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="Input Detect" vertex="1">
+                    <mxGeometry height="50" width="125.5" x="423.5" y="581" as="geometry"/>
+                </mxCell>
+                <mxCell id="myumwIUc0R_rttcExwvx-4" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="USB Data Upload" vertex="1">
+                    <mxGeometry height="50" width="125.5" x="423.5" y="511" as="geometry"/>
+                </mxCell>
+                <mxCell id="myumwIUc0R_rttcExwvx-5" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="GPIO" vertex="1">
+                    <mxGeometry height="40" width="34" x="423.5" y="651" as="geometry"/>
+                </mxCell>
+                <mxCell id="myumwIUc0R_rttcExwvx-6" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="Timer" vertex="1">
+                    <mxGeometry height="40" width="34" x="467" y="651" as="geometry"/>
+                </mxCell>
+                <mxCell id="myumwIUc0R_rttcExwvx-7" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="SPI" vertex="1">
+                    <mxGeometry height="40" width="34" x="510" y="651" as="geometry"/>
+                </mxCell>
+                <mxCell id="myumwIUc0R_rttcExwvx-8" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="USB" vertex="1">
+                    <mxGeometry height="40" width="85" x="326" y="651" as="geometry"/>
+                </mxCell>
+                <mxCell id="myumwIUc0R_rttcExwvx-10" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="USB Protocol" vertex="1">
+                    <mxGeometry height="50" width="85" x="326" y="581" as="geometry"/>
+                </mxCell>
+                <mxCell id="myumwIUc0R_rttcExwvx-11" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="USB Device Application" vertex="1">
+                    <mxGeometry height="50" width="85" x="326" y="511" as="geometry"/>
+                </mxCell>
+                <mxCell id="myumwIUc0R_rttcExwvx-14" edge="1" parent="1" source="myumwIUc0R_rttcExwvx-2" style="endArrow=none;html=1;exitX=0.005;exitY=0.371;exitDx=0;exitDy=0;exitPerimeter=0;dashed=1;entryX=1;entryY=0.368;entryDx=0;entryDy=0;entryPerimeter=0;" target="myumwIUc0R_rttcExwvx-2" value="">
+                    <mxGeometry height="50" relative="1" width="50" as="geometry">
+                        <mxPoint x="461" y="591" as="sourcePoint"/>
+                        <mxPoint x="612.27" y="574.4" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="myumwIUc0R_rttcExwvx-15" edge="1" parent="1" source="myumwIUc0R_rttcExwvx-2" style="endArrow=none;html=1;exitX=0.01;exitY=0.704;exitDx=0;exitDy=0;exitPerimeter=0;dashed=1;entryX=1.007;entryY=0.681;entryDx=0;entryDy=0;entryPerimeter=0;" target="myumwIUc0R_rttcExwvx-2" value="">
+                    <mxGeometry height="50" relative="1" width="50" as="geometry">
+                        <mxPoint x="311" y="642" as="sourcePoint"/>
+                        <mxPoint x="612.75" y="638.12" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="myumwIUc0R_rttcExwvx-17" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" value="物理层(bsp接口)" vertex="1">
+                    <mxGeometry height="30" width="60" x="261" y="656" as="geometry"/>
+                </mxCell>
+                <mxCell id="myumwIUc0R_rttcExwvx-19" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" value="应用层" vertex="1">
+                    <mxGeometry height="30" width="60" x="256" y="521" as="geometry"/>
+                </mxCell>
+                <mxCell id="myumwIUc0R_rttcExwvx-20" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" value="协议驱动层" vertex="1">
+                    <mxGeometry height="30" width="70" x="256" y="598" as="geometry"/>
+                </mxCell>
+                <mxCell id="myumwIUc0R_rttcExwvx-21" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="UART" vertex="1">
+                    <mxGeometry height="40" width="52" x="556" y="651" as="geometry"/>
+                </mxCell>
+                <mxCell id="myumwIUc0R_rttcExwvx-22" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="COM Interface" vertex="1">
+                    <mxGeometry height="50" width="52" x="556" y="581" as="geometry"/>
+                </mxCell>
+                <mxCell id="myumwIUc0R_rttcExwvx-23" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="LOG" vertex="1">
+                    <mxGeometry height="50" width="52" x="560" y="511" as="geometry"/>
+                </mxCell>
+            </root>
+        </mxGraphModel>
+    </diagram>
+    <diagram id="knNhZpuCI5s7JSZ-yafO" name="Page-2">
+        <mxGraphModel dx="992" dy="666" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+            <root>
+                <mxCell id="k1LPCFUIc7XsGMj_1NNo-0"/>
+                <mxCell id="k1LPCFUIc7XsGMj_1NNo-1" parent="k1LPCFUIc7XsGMj_1NNo-0"/>
+            </root>
+        </mxGraphModel>
+    </diagram>
+</mxfile>

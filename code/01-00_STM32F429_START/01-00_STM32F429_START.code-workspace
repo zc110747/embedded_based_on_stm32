@@ -1,0 +1,17 @@
+{
+	"folders": [
+		{
+			"path": "."
+		},
+		{
+			"path": "../00-STM32F4xx_HAL_Driver"
+		},
+		{
+			"path": "../00-Drivers"
+		},
+		{
+			"path": "../00-Extend_Library"
+		}
+	],
+	"settings": {}
+}
